@@ -6,6 +6,43 @@ $color_yellow: #e4d536;
 $color_blue: #b1c8f5;
 $color_purple: #8a70d4;
 
-.wrapper{
+$border_style: 1px solid black;
+
+body {
   background-color: $color_pink;
+  height: 100vh;
+}
+
+.wrapper {
+  margin: 70px;
+}
+
+.header__wrapper {
+  display: flex;
+  background-color: white;
+  border-bottom: $border_style;
+
+  .header__wrapper__title {
+    background-color: black;
+    color: white;
+  }
+
+  .header__wrapper__total-amount {
+    border-right: $border_style;
+    p {
+      display: inline-block;
+    }
+  }
+
+  .header__wrapper__cart{
+    .header__wrapper__cart_circle-with-number{
+      background-color: $color_red;
+      border-radius: 50%;
+      width: 27px;
+      height: 27px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
