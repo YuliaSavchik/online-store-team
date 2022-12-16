@@ -80,4 +80,36 @@ body {
   background: linear-gradient( $color_pink, transparent 1px), linear-gradient( 90deg, $color_pink, white 1px);
   background-size: 40px 40px;
   background-position: center center;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+
+  .footer__wrapper__github{
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    a{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: black;
+      &:hover{
+        text-decoration: underline;
+      }
+      img{
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .footer__wrapper__create-year{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer__wrapper__school-logo{
+    padding: 30px 50px;
+  }
 }
