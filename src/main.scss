@@ -28,6 +28,10 @@ body {
   }
 
   .header__wrapper__total-amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
     border-right: $border_style;
     p {
       display: inline-block;
@@ -35,6 +39,11 @@ body {
   }
 
   .header__wrapper__cart{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .header__wrapper__cart_image{
+    }
     .header__wrapper__cart_circle-with-number{
       background-color: $color_red;
       border-radius: 50%;
