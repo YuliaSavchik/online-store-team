@@ -1,6 +1,6 @@
 //project fonts
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
 //project colors
 
@@ -9,6 +9,7 @@ $color_red: #f2634c;
 $color_yellow: #e4d536;
 $color_blue: #b1c8f5;
 $color_purple: #8a70d4;
+$color_green: #76b56c;
 
 $border_style: 1px solid black;
 
@@ -36,7 +37,7 @@ body {
     color: white;
     font-weight: 700;
     font-size: 32px;
-    span{
+    span {
       display: inline-block;
       padding: 10px 50px;
     }
@@ -69,4 +70,14 @@ body {
       font-size: 18px;
     }
   }
+}
+
+.main{
+  min-height: 60vh;
+}
+
+.footer__wrapper{
+  background: linear-gradient( $color_pink, transparent 1px), linear-gradient( 90deg, $color_pink, white 1px);
+  background-size: 40px 40px;
+  background-position: center center;
 }
