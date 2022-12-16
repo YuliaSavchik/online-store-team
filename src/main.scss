@@ -16,6 +16,7 @@ body {
   background-color: $color_pink;
   height: 100vh;
   font-family: "Noto Sans";
+  font-size: 14px;
 }
 
 .wrapper {
@@ -28,10 +29,17 @@ body {
   border-bottom: $border_style;
 
   .header__wrapper__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: black;
     color: white;
     font-weight: 700;
     font-size: 32px;
+    span{
+      display: inline-block;
+      padding: 10px 50px;
+    }
   }
 
   .header__wrapper__total-amount {
@@ -40,12 +48,14 @@ body {
     justify-content: center;
     flex-grow: 1;
     border-right: $border_style;
+    font-size: 20px;
   }
 
   .header__wrapper__cart {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px 40px;
     .header__wrapper__cart_image {
     }
     .header__wrapper__cart_circle-with-number {
@@ -56,6 +66,7 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: 18px;
     }
   }
 }
