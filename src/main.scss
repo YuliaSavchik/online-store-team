@@ -1,0 +1,116 @@
+//project fonts
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+
+//project colors
+
+$color_pink: #f5b2d2;
+$color_red: #f2634c;
+$color_yellow: #e4d536;
+$color_blue: #b1c8f5;
+$color_purple: #8a70d4;
+$color_green: #76b56c;
+
+$border_style: 1px solid black;
+
+body {
+  background-color: $color_pink;
+  height: 100vh;
+  font-family: "Noto Sans";
+  font-size: 14px;
+}
+
+.wrapper {
+  margin: 2%;
+}
+
+.header__wrapper {
+  display: flex;
+  background-color: white;
+  border-bottom: $border_style;
+
+  .header__wrapper__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    font-weight: 700;
+    font-size: 2.3em;
+    a {
+      display: inline-block;
+      padding: 10px 50px;
+      text-decoration: none;
+      color: white;
+    }
+  }
+
+  .header__wrapper__total-amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    border-right: $border_style;
+    font-size: 1.4em;
+  }
+
+  .header__wrapper__cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 40px;
+    .header__wrapper__cart_image {
+    }
+    .header__wrapper__cart_circle-with-number {
+      background-color: $color_red;
+      border-radius: 50%;
+      width: 27px;
+      height: 27px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.3em;
+    }
+  }
+}
+
+.main{
+  min-height: 65vh;
+}
+
+.footer__wrapper{
+  background: linear-gradient( $color_pink, transparent 1px), linear-gradient( 90deg, $color_pink, white 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+  font-size: 1.3em;
+
+  .footer__wrapper__github{
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+    a{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: black;
+      &:hover{
+        text-decoration: underline;
+      }
+      img{
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .footer__wrapper__create-year{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer__wrapper__school-logo{
+    padding: 30px 50px;
+  }
+}
