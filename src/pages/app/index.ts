@@ -1,8 +1,8 @@
-import Page from "../../components/templates/page";
-import MainPage from "../main/index";
-import ProductDiscriptionPage from "../productDiscription/index";
-import CartPage from "../cart/index";
-import ErrorPage from "../error/index";
+import Page from '../../components/templates/page';
+import MainPage from '../main/index';
+import ProductDiscriptionPage from '../productDiscription/index';
+import CartPage from '../cart/index';
+import ErrorPage from '../error/index';
 
 export const enum PagesId {
   MainPage = 'main-page',

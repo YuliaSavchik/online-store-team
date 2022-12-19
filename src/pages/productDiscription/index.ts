@@ -1,10 +1,11 @@
-import Page from "../../components/templates/page";
+import Page from '../../components/templates/page';
 
 class ProductDiscriptionPage extends Page {
   constructor(id: string) {
     super(id);
   }
   private createContent() {
+    //test content
     const content = document.createElement('h1');
     content.innerHTML = 'Discription Page';
     return content;
