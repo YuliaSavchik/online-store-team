@@ -1,12 +1,12 @@
 import Page from '../../components/templates/page';
 import MainPage from '../main/index';
-import ProductDiscriptionPage from '../productDiscription/index';
+import ProductDescriptionPage from '../productDescription/index';
 import CartPage from '../cart/index';
 import ErrorPage from '../error/index';
 
 export const enum PagesId {
   MainPage = 'main-page',
-  ProductDiscriptionPage = 'product-discription-page',
+  ProductDescriptionPage = 'product-description-page',
   CartPage = 'cart-page',
   ErrorPage = 'error-page'
 }
@@ -23,8 +23,8 @@ class App {
 
     if(idPage === PagesId.MainPage) {
       page = new MainPage(idPage);
-    } else if (idPage === PagesId.ProductDiscriptionPage) {
-      page = new ProductDiscriptionPage(idPage);
+    } else if (idPage === PagesId.ProductDescriptionPage) {
+      page = new ProductDescriptionPage(idPage);
     } else if (idPage === PagesId.CartPage) {
       page = new CartPage(idPage);
     } else if (idPage === PagesId.ErrorPage) {
@@ -50,7 +50,7 @@ class App {
   }
 
   renderPage() {
-    App.renderNewPage('product-discription-page');
+    App.renderNewPage('main-page');
     this.enableRouteChange();
   }
 }

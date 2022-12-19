@@ -1,13 +1,13 @@
 import Page from '../../components/templates/page';
 
-class ProductDiscriptionPage extends Page {
+class ProductDescriptionPage extends Page {
   constructor(id: string) {
     super(id);
   }
   private createContent() {
     //test content
     const content = document.createElement('h1');
-    content.innerHTML = 'Discription Page';
+    content.innerHTML = 'Description Page';
     return content;
   }
   render() {
@@ -17,4 +17,4 @@ class ProductDiscriptionPage extends Page {
   }
 }
 
-export default ProductDiscriptionPage;
+export default ProductDescriptionPage;
