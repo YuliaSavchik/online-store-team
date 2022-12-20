@@ -30,3 +30,10 @@ export enum Color {
   pink = "pink",
   black = "black",
 }
+
+export const enum PagesId {
+  MainPage = 'main-page',
+  ProductDescriptionPage = 'product-description-page',
+  CartPage = 'cart-page',
+  ErrorPage = 'error-page'
+}

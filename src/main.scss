@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
+
 //project colors
 
 $color_pink: #f5b2d2;
@@ -114,3 +115,5 @@ body {
     padding: 30px 50px;
   }
 }
+
+@import "components/buttons/button.style";

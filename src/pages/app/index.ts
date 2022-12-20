@@ -3,13 +3,7 @@ import MainPage from '../main/index';
 import ProductDescriptionPage from '../productDescription/index';
 import CartPage from '../cart/index';
 import ErrorPage from '../error/index';
-
-export const enum PagesId {
-  MainPage = 'main-page',
-  ProductDescriptionPage = 'product-description-page',
-  CartPage = 'cart-page',
-  ErrorPage = 'error-page'
-}
+import { PagesId } from '../../types/enums';
 
 export const wrapperForPage = (document.querySelector('.main__wrapper') as HTMLElement);
 
