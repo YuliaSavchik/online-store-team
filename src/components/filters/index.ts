@@ -1,7 +1,9 @@
 import { Color, Device, Material } from "../../types/enums";
+import { createArrowButtons } from "../buttons/index";
 import "./filters.scss";
 
 const main = document.querySelector(".main");
+const btnArrowTop = createArrowButtons('button-arrow_top');
 
 class Filter {
   items: string[];
@@ -25,7 +27,7 @@ class Filter {
 
     this.filter_header.innerHTML = `<span>${this.title.toUpperCase()}</span>`;
 
-    this.arrow.appendChild(document.createTextNode("^"));
+    this.arrow.appendChild(btnArrowTop.cloneNode(true));
     this.arrow.classList.add("arrow");
     this.filter_header.appendChild(this.arrow);
 
