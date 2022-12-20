@@ -4,9 +4,6 @@ import './main.scss';
 
 import App from './pages/app/index';
 
-import './components/filters/index'
-import './components/buttons/index'
-
 const app = new App;
 app.renderPage();
 
