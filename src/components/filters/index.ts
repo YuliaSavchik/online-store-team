@@ -40,7 +40,7 @@ class Filter {
 
     this.arrow.addEventListener("click", () => {
       this.arrow.classList.toggle("rotate");
-      this.checkbox_field.classList.toggle("hide");
+      this.device_filter.classList.toggle("collapsible");
     });
 
     return this.device_filter;
