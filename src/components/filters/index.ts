@@ -14,14 +14,14 @@ class Filter {
     this.items = items;
   }
 
-  device_filter = document.createElement("div");
+  filter = document.createElement("div");
   arrow = document.createElement("span");
   filter_header = document.createElement("div");
   checkbox_field = document.createElement("div");
   form = document.createElement("form");
 
   render() {
-    this.device_filter.classList.add("filter");
+    this.filter.classList.add("filter");
 
     this.filter_header.classList.add("filter-header");
 
@@ -31,21 +31,21 @@ class Filter {
     this.arrow.classList.add("arrow");
     this.filter_header.appendChild(this.arrow);
 
-    this.device_filter.appendChild(this.filter_header);
+    this.filter.appendChild(this.filter_header);
 
     this.checkbox_field.classList.add("checkbox-field");
 
     this.createElements();
 
     this.checkbox_field.appendChild(this.form);
-    this.device_filter.appendChild(this.checkbox_field);
+    this.filter.appendChild(this.checkbox_field);
 
     this.arrow.addEventListener("click", () => {
       this.arrow.classList.toggle("rotate");
-      this.device_filter.classList.toggle("collapsible");
+      this.filter.classList.toggle("collapsible");
     });
 
-    return this.device_filter;
+    return this.filter;
   }
 
   createElements() {
@@ -79,10 +79,10 @@ class ColorFilter extends Filter {
   render() {
     super.render();
 
-    this.device_filter.classList.add("color-filter");
+    this.filter.classList.add("color-filter");
 
     this.form.classList.add("color-form");
-    return this.device_filter;
+    return this.filter;
   }
   createElements(): void {
     for (let i = 0; i < this.items.length; i++) {
