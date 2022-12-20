@@ -1,5 +1,4 @@
 import Page from '../../components/templates/page';
-
 class MainPage extends Page {
   constructor(id: string) {
     super(id);
@@ -8,7 +7,8 @@ class MainPage extends Page {
   private createContent() {
     //test content
     const content = document.createElement('h1');
-    content.innerHTML = 'Main Page';
+    content.textContent = 'Main page'
+    
     return content;
   }
   render() {
