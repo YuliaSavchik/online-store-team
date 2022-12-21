@@ -1,0 +1,122 @@
+.button {
+  height: 40px;
+  border: none;
+  font-size: 14px;
+  line-height: 19px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.button_small-size {
+  height: 22px;
+  width: 79px;
+}
+
+.button_meddium-size {
+  width: 120px;
+}
+
+.button_large-size {
+  width: 220px;
+}
+
+.btn-reset {
+  background-color: $color_red;
+}
+
+.btn-copy-link {
+  background-color: $color_blue;
+}
+
+.btn-sopt {
+  border: $border_style;
+  background-color: $color_pink;
+}
+
+.btn-add,
+.btn-more {
+  border: $border_style;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.btn-add-card {
+  width: 140px;
+  background-color: $color_green;
+}
+
+.product-description__btn-buy-now{
+  width: 140px;
+  background-color: $color_blue;
+}
+
+.cart__btn-buy-now {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  border: $border_style;
+  background-color: $color_pink;
+}
+
+.btn-confirm {
+  width: 200px;
+  height: 50px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  border: $border_style;
+  background-color: $color_green;
+}
+
+.button-arrow {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-arrow-direction($w, $h, $deg) {
+  width: $w;
+  height: $h;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  transform: rotate($deg);
+}
+
+.button-arrow_top {
+  @include button-arrow-direction(14px, 14px, 45deg);
+}
+
+.button-arrow_down {
+  @include button-arrow-direction(14px, 14px, 225deg);
+}
+
+.button-arrow_left {
+  @include button-arrow-direction(11px, 11px, 315deg);
+}
+
+.button-arrow_right {
+  @include button-arrow-direction(11px, 11px, 135deg);
+}
+
+.button-view {
+  width: 40px;
+  height: 40px;
+  border: $border_style;
+  border-radius: 2px;
+  background-color: $color_pink;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.button-view_three-colums {
+  background-image: url('assets/view-three-columns.png');
+}
+
+.button-view_two-colums {
+  background-image: url('assets/view-two-columns.png');
+}
