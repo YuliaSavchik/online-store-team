@@ -1,0 +1,49 @@
+@mixin font-size($size, $line-height) {
+  font-size: $size;
+  line-height: $line-height;
+}
+.summary-container {
+  width: 350px;
+  height: 400px;
+  box-sizing: border-box;
+  padding: 40px 0 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: $border_style;
+  border-radius: 2px;
+  background-color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.summary-container > * {
+  box-sizing: border-box;
+  margin: 0;
+}
+.summary-container__title {
+  @include font-size(24px, 33px);
+  text-decoration: underline;
+}
+
+.summary-container__product-count,
+.summary-container__total {
+  @include font-size(18px, 25px);
+}
+
+.product-count_num,
+.total_sum {
+  @include font-size(24px, 33px);
+}
+
+.summary-container__input-promo-code {
+  width: 220px;
+  @include font-size(18px, 25px);
+  background-color: $color-pink;
+}
+
+.summary-container__input-promo-code::placeholder {
+  text-align: center;
+  text-transform: uppercase;
+}

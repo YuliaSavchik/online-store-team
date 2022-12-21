@@ -1,4 +1,5 @@
 import Page from '../../components/templates/page';
+import { creatSummaryBlock } from '../../components/summary/index';
 class MainPage extends Page {
   constructor(id: string) {
     super(id);
@@ -6,8 +7,10 @@ class MainPage extends Page {
 
   private createContent() {
     //test content
-    const content = document.createElement('h1');
-    content.textContent = 'Main page'
+    //const content = document.createElement('h1');
+    //content.textContent = 'Main page'
+
+    const content = creatSummaryBlock();
 
     return content;
   }
