@@ -17,4 +17,19 @@ export function createInputCoutnInCart() {
   return inputCount;
 }
 
+export function createInputs(type: string, placeholder: string) {
+  const input: HTMLInputElement = document.createElement('input');
+  input.setAttribute('type', `${type}`);
+  input.setAttribute('placeholder', `${placeholder}`);
+  input.classList.add('input');
 
+  return input;
+}
+
+export function createSearchInput() {
+  const input = createInputs('text', 'Search');
+  input.classList.add('input-search');
+  input.classList.add('input-search_bg-img');
+  
+  return input;
+}

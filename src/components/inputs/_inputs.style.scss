@@ -34,3 +34,24 @@
 .btn-count_minus {
   background-image: url("assets/ico-minus.png");
 }
+
+.input {
+  height: 40px;
+  padding: 8px;
+  border: $border_style;
+  box-shadow: inset 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  outline: none;
+}
+
+.input-search {
+  width: 220px;
+  background-color: $color-pink;
+}
+
+.input-search_bg-img {
+  padding: 0 0 0 40px;
+  background-image: url("assets/ico-search.png");
+  background-position: left 8px center;
+  background-repeat: no-repeat;
+}
