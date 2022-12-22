@@ -2,7 +2,7 @@ import { Color, Device, Material } from "../../types/enums";
 import { createArrowButtons } from "../buttons/index";
 
 const main = document.querySelector(".main");
-const btnArrowTop = createArrowButtons('button-arrow_top');
+const btnArrowTop = createArrowButtons("button-arrow_top");
 
 class Filter {
   items: string[];
@@ -15,29 +15,29 @@ class Filter {
 
   filter = document.createElement("div");
   arrow = document.createElement("span");
-  filter_header = document.createElement("div");
-  checkbox_field = document.createElement("div");
+  filterHeader = document.createElement("div");
+  checkboxField = document.createElement("div");
   form = document.createElement("form");
 
   render() {
     this.filter.classList.add("filter");
 
-    this.filter_header.classList.add("filter-header");
+    this.filterHeader.classList.add("filter-header");
 
-    this.filter_header.innerHTML = `<span>${this.title.toUpperCase()}</span>`;
+    this.filterHeader.innerHTML = `<span>${this.title.toUpperCase()}</span>`;
 
     this.arrow.appendChild(btnArrowTop.cloneNode(true));
     this.arrow.classList.add("arrow");
-    this.filter_header.appendChild(this.arrow);
+    this.filterHeader.appendChild(this.arrow);
 
-    this.filter.appendChild(this.filter_header);
+    this.filter.appendChild(this.filterHeader);
 
-    this.checkbox_field.classList.add("checkbox-field");
+    this.checkboxField.classList.add("checkbox-field");
 
     this.createElements();
 
-    this.checkbox_field.appendChild(this.form);
-    this.filter.appendChild(this.checkbox_field);
+    this.checkboxField.appendChild(this.form);
+    this.filter.appendChild(this.checkboxField);
 
     this.arrow.addEventListener("click", () => {
       this.arrow.classList.toggle("rotate");
@@ -96,14 +96,14 @@ class ColorFilter extends Filter {
       label.setAttribute("for", `${this.title}-checkbox-${i}`);
       label.classList.add("color-label");
 
-      const color_circle = document.createElement("div");
+      const colorCircle = document.createElement("div");
 
-      color_circle.style.backgroundColor =
+      colorCircle.style.backgroundColor =
         this.colorHash.get(this.items[i]) ?? "white";
 
-      color_circle.classList.add("color-circle");
+      colorCircle.classList.add("color-circle");
 
-      label.appendChild(color_circle);
+      label.appendChild(colorCircle);
       label.appendChild(document.createTextNode(this.items[i]));
       this.form.appendChild(label);
     }
@@ -135,8 +135,8 @@ const colorFilter = new ColorFilter("color", [
   Color.black,
 ]);
 
-main?.append(
-  deviceFilter.render(),
-  materialFilter.render(),
-  colorFilter.render()
-);
+//filters
+
+// deviceFilter.render(),
+// materialFilter.render(),
+// colorFilter.render()
