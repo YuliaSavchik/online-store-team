@@ -1,6 +1,5 @@
 import { Color, Device, Material } from "../../types/enums";
 import { createArrowButtons } from "../buttons/index";
-import "./filters.scss";
 
 const main = document.querySelector(".main");
 const btnArrowTop = createArrowButtons('button-arrow_top');
