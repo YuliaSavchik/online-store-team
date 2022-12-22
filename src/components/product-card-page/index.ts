@@ -53,13 +53,13 @@ class ProductCardPage {
     description_block_description.classList.add('prod-card__description__desc_main-desc')
 
     description_block_description.innerHTML = `<span><b>Description: </b>${this.data.description}</span> 
-    <br>
+    <br><br>
     <span><b>Material: </b>${this.data.material}</span> 
-    <br>
+    <br><br>
     <span><b>Color: </b>${this.data.color}</span> 
-    <br>
+    <br><br>
     <span><b>Rating: </b>${this.data.rating}/5</span> 
-    <br>
+    <br><br>
     <span><b>Stock: </b>${this.data.stock}</span>`
 
     //block with price

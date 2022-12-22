@@ -17,6 +17,7 @@
       height: 450px;
       border-radius: 2px;
       border: $border_style;
+      cursor: pointer;
     }
 
     .prod-card__images_image-1,
@@ -25,6 +26,7 @@
       height: 200px;
       border-radius: 2px;
       border: $border_style;
+      cursor: pointer;
     }
   }
 
@@ -32,20 +34,34 @@
     display: grid;
     grid-template-rows: auto auto;
 
-    .prod-card__description__desc_title,
-    .prod-card__description__desc_price {
-      font-size: 1.8em;
-      font-weight: 600;
-      text-decoration-line: underline;
-      text-transform: uppercase;
+    .prod-card__description__desc {
+      display: grid;
+      grid-template-rows: auto auto auto;
+      align-items: center;
+
+      .prod-card__description__desc_title,
+      .prod-card__description__desc_price {
+        font-size: 1.8em;
+        font-weight: 600;
+        text-decoration-line: underline;
+        text-transform: uppercase;
+        justify-self: center;
+      }
+
+      .prod-card__description__desc_main-desc {
+        font-size: 1.3em;
+      }
+
+      .prod-card__description__desc_price {
+        text-decoration: none;
+      }
     }
 
-    .prod-card__description__desc_main-desc{
-      font-size: 1.3em;
-    }
-
-    .prod-card__description__desc_price{
-      text-decoration: none;
+    .prod-card__description__buttons{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
     }
   }
 }
