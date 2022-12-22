@@ -83,7 +83,7 @@ class ProductCardPage {
 }
 
 
-const product_card_page = new ProductCardPage(products[0])
+const product_card_page = new ProductCardPage(products[17])
 
 const main = document.querySelector(".main");
 
