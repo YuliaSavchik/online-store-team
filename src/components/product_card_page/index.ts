@@ -1,11 +1,10 @@
-import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
 import { createMainButtons } from "../buttons/index";
 
 const btnAddToCard = createMainButtons('add to card', 'button_meddium-size', 'btn-add-card');
 const btnBuyNowInDescription = createMainButtons('buy now', 'button_meddium-size', 'product-description__btn-buy-now');
 
-class ProductCardPage {
+export class ProductCardPage {
   data: Product;
 
   constructor(data: Product) {
@@ -81,10 +80,3 @@ class ProductCardPage {
     return product_card_block
   }
 }
-
-
-const product_card_page = new ProductCardPage(products[17])
-
-const main = document.querySelector(".main");
-
-main?.appendChild(product_card_page.render())
