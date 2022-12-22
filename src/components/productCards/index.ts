@@ -59,8 +59,8 @@ class ProductCard {
 function createCardsArea() {
   const colorsArr = ["#f2634c", "#b1c8f5", "#e4d536", "#8a70d4", "#f5b2d2"];
   const main = document.querySelector(".main");
-  const cards_area = document.createElement("div");
-  cards_area.classList.add("product-cards-area");
+  const cardsArea = document.createElement("div");
+  cardsArea.classList.add("product-cards-area");
 
   for (let i = 0; i < products.length; i++) {
     const card = new ProductCard(products[i]);
@@ -69,10 +69,12 @@ function createCardsArea() {
 
     console.log(i % colorsArr.length);
 
-    cards_area.appendChild(card.render());
+    cardsArea.appendChild(card.render());
   }
 
-  main?.appendChild(cards_area);
+  main?.appendChild(cardsArea);
 }
 
-createCardsArea();
+
+//cards area
+// createCardsArea();

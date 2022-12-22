@@ -1,3 +1,4 @@
+import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
 import { createMainButtons } from "../buttons/index";
 
@@ -13,45 +14,45 @@ export class ProductCardPage {
 
   render(){
     //main block 'product card page'
-    const product_card_block = document.createElement('div');
-    product_card_block.classList.add('prod-card');
+    const productCardBlock = document.createElement('div');
+    productCardBlock.classList.add('prod-card');
 
     //block with product images
-    const images_block = document.createElement('div');
-    images_block.classList.add('prod-card__images');
+    const imagesBlock = document.createElement('div');
+    imagesBlock.classList.add('prod-card__images');
 
-    const main_image = document.createElement('img');
-    main_image.classList.add('prod-card__images_main-image');
-    main_image.setAttribute('src', this.data.mainImage)
+    const mainImage = document.createElement('img');
+    mainImage.classList.add('prod-card__images_main-image');
+    mainImage.setAttribute('src', this.data.mainImage)
 
-    const image_1 = document.createElement('img');
-    image_1.classList.add('prod-card__images_image-1');
-    image_1.setAttribute('src', this.data.image_1)
+    const image1 = document.createElement('img');
+    image1.classList.add('prod-card__images_image-1');
+    image1.setAttribute('src', this.data.image_1)
 
-    const image_2 = document.createElement('img');
-    image_2.classList.add('prod-card__images_image-2');
-    image_2.setAttribute('src', this.data.image_2)
+    const image2 = document.createElement('img');
+    image2.classList.add('prod-card__images_image-2');
+    image2.setAttribute('src', this.data.image_2)
 
-    images_block.append(main_image, image_1, image_2)
+    imagesBlock.append(mainImage, image1, image2)
 
     //block with description
-    const page_description_block = document.createElement('div');
-    page_description_block.classList.add('prod-card__description')
+    const pageDescriptionBlock = document.createElement('div');
+    pageDescriptionBlock.classList.add('prod-card__description')
 
-    const description_block = document.createElement('div');
-    description_block.classList.add('prod-card__description__desc');
+    const descriptionBlock = document.createElement('div');
+    descriptionBlock.classList.add('prod-card__description__desc');
 
     //description title
-    const title_description_block = document.createElement('div');
-    title_description_block.classList.add('prod-card__description__desc_title');
+    const titleDescriptionBlock = document.createElement('div');
+    titleDescriptionBlock.classList.add('prod-card__description__desc_title');
 
-    title_description_block.appendChild(document.createTextNode(this.data.name))
+    titleDescriptionBlock.appendChild(document.createTextNode(this.data.name))
 
     //main description
-    const description_block_description = document.createElement('div');
-    description_block_description.classList.add('prod-card__description__desc_main-desc')
+    const descriptionBlockMain = document.createElement('div');
+    descriptionBlockMain.classList.add('prod-card__description__desc_main-desc')
 
-    description_block_description.innerHTML = `<span><b>Description: </b>${this.data.description}</span> 
+    descriptionBlockMain.innerHTML = `<span><b>Description: </b>${this.data.description}</span> 
     <br><br>
     <span><b>Material: </b>${this.data.material}</span> 
     <br><br>
@@ -62,21 +63,27 @@ export class ProductCardPage {
     <span><b>Stock: </b>${this.data.stock}</span>`
 
     //block with price
-    const price_block = document.createElement('div');
-    price_block.classList.add('prod-card__description__desc_price');
+    const priceBlock = document.createElement('div');
+    priceBlock.classList.add('prod-card__description__desc_price');
 
-    price_block.appendChild(document.createTextNode(`PRICE: ${this.data.price}$`))
+    priceBlock.appendChild(document.createTextNode(`PRICE: ${this.data.price}$`))
 
     //buttons
-    const buttons_area = document.createElement('div');
-    buttons_area.classList.add('prod-card__description__buttons');
+    const buttonsArea = document.createElement('div');
+    buttonsArea.classList.add('prod-card__description__buttons');
 
-    buttons_area.append(btnAddToCard.cloneNode(true), btnBuyNowInDescription.cloneNode(true))
+    buttonsArea.append(btnAddToCard.cloneNode(true), btnBuyNowInDescription.cloneNode(true))
 
-    description_block.append(title_description_block, description_block_description, price_block)
-    page_description_block.append(description_block, buttons_area)
-    product_card_block.append(images_block, page_description_block)
+    descriptionBlock.append(titleDescriptionBlock, descriptionBlockMain, priceBlock)
+    pageDescriptionBlock.append(descriptionBlock, buttonsArea)
+    productCardBlock.append(imagesBlock, pageDescriptionBlock)
 
-    return product_card_block
+    return productCardBlock
   }
 }
+
+
+const productCardPage = new ProductCardPage(products[1])
+
+//Product card page
+// productCardPage.render()
