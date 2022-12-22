@@ -7,7 +7,7 @@ class MainPage extends Page {
   private createContent() {
     //test content
     const content = document.createElement('h1');
-    content.textContent = 'Main page'
+    content.textContent = 'Main page';
     
     return content;
   }

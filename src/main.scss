@@ -2,7 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 
-
 //project colors
 
 $color_pink: #f5b2d2;
@@ -14,6 +13,12 @@ $color_green: #76b56c;
 
 $border_style: 1px solid black;
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: $color_pink;
   height: 100vh;
@@ -22,7 +27,7 @@ body {
 }
 
 .wrapper {
-  margin: 2%;
+  padding: 2% 4% 4% 4%;
 }
 
 .header__wrapper {
@@ -60,7 +65,7 @@ body {
     justify-content: center;
     padding: 10px 40px;
     .header__wrapper__cart_image {
-      img{
+      img {
         width: 35px;
         height: 35px;
       }
@@ -77,46 +82,47 @@ body {
   }
 }
 
-.main{
+.main {
   min-height: 65vh;
 }
 
-.footer__wrapper{
-  background: linear-gradient( $color_pink, transparent 1px), linear-gradient( 90deg, $color_pink, white 1px);
-  background-size: 40px 40px;
+.footer__wrapper {
+  background: linear-gradient($color_pink, transparent 1px),
+    linear-gradient(90deg, $color_pink, white 1px);
+  background-size: 31px 31px;
   background-position: center center;
   display: flex;
   align-items: center;
   font-size: 1.3em;
 
-  .footer__wrapper__github{
+  .footer__wrapper__github {
     display: flex;
     flex-direction: column;
     padding-left: 50px;
-    a{
+    a {
       display: flex;
       justify-content: center;
       align-items: center;
       text-decoration: none;
       color: black;
-      &:hover{
+      &:hover {
         text-decoration: underline;
       }
-      img{
+      img {
         margin-right: 10px;
       }
     }
   }
 
-  .footer__wrapper__create-year{
+  .footer__wrapper__create-year {
     flex-grow: 1;
     display: flex;
     justify-content: center;
   }
 
-  .footer__wrapper__school-logo{
+  .footer__wrapper__school-logo {
     padding: 20px 50px;
-    a{
+    a {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -125,3 +131,8 @@ body {
 }
 
 @import "components/buttons/button.style";
+@import "components/inputs/inputs.style";
+@import "components/summary/summary.style";
+@import "components/filters/filters.style";
+@import "components/productCards/productCards.style";
+@import "components/productCardPage/productCardPage.style";

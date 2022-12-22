@@ -110,7 +110,7 @@ export const products: Product[] = [
   {
     id: 7,
     name: Name.ip_12,
-    description: "Case for iphone 12 Pro MET Red Logo Case",
+    description: "Case for iphone 12 Pro Angel Luv",
     device: Device.ip_12,
     material: Material.leather,
     color: Color.black,
@@ -118,11 +118,11 @@ export const products: Product[] = [
     stock: 3,
     price: 55,
     mainImage:
-      "https://cdn-image02.casetify.com/usr/25821/14455821/~v8/26507716x2_iphone12__color_white_16002473.png.1000x1000-w.m80.jpg",
+      "https://cdn-image02.casetify.com/usr/25821/14455821/~v72/7744388x2_iphone12-pro_16002478.png.1000x1000-w.m80.jpg",
     image_1:
-      "https://cdn-image02.casetify.com/usr/25821/14455821/~v8/26507716_iphone12_16002473__render8.png.560x560-w.m80.jpg",
+      "https://cdn-image02.casetify.com/usr/25821/14455821/~v72/7744388_iphone12-pro_16002478__render8.png.560x560-w.m80.jpg",
     image_2:
-      "https://ctgimage1.s3.amazonaws.com/cms/image/b51b4e52d8889b997b7713e9e25824e6.png",
+      "https://ctgimage1.s3.amazonaws.com/cms/image/303943381ac10dcc9206fba4f122e12c.png",
   },
   {
     id: 8,
