@@ -4,7 +4,7 @@ import 'normalize.css';
 
 import App from './pages/app/index';
 
-import './components/product_cards/index'
+import './components/product-card-page/index'
 
 const app = new App;
 app.renderPage();
