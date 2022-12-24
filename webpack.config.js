@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist"),
     filename: "index.[contenthash].js",
-    assetModuleFilename: path.join("assets", "[name].[contenthash][ext]"),
+    assetModuleFilename: path.posix.join("assets", "[name].[contenthash][ext]"),
   },
   mode: "development",
   module: {

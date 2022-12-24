@@ -14,42 +14,42 @@ export class ProductCardPage {
 
   render(){
     //main block 'product card page'
-    const productCardBlock = document.createElement('div');
+    const productCardBlock : HTMLDivElement = document.createElement('div');
     productCardBlock.classList.add('prod-card');
 
     //block with product images
-    const imagesBlock = document.createElement('div');
+    const imagesBlock : HTMLDivElement = document.createElement('div');
     imagesBlock.classList.add('prod-card__images');
 
-    const mainImage = document.createElement('img');
+    const mainImage : HTMLImageElement = document.createElement('img');
     mainImage.classList.add('prod-card__images_main-image');
     mainImage.setAttribute('src', this.data.mainImage)
 
-    const image1 = document.createElement('img');
+    const image1 : HTMLImageElement = document.createElement('img');
     image1.classList.add('prod-card__images_image-1');
     image1.setAttribute('src', this.data.image_1)
 
-    const image2 = document.createElement('img');
+    const image2 : HTMLImageElement = document.createElement('img');
     image2.classList.add('prod-card__images_image-2');
     image2.setAttribute('src', this.data.image_2)
 
     imagesBlock.append(mainImage, image1, image2)
 
     //block with description
-    const pageDescriptionBlock = document.createElement('div');
+    const pageDescriptionBlock : HTMLDivElement = document.createElement('div');
     pageDescriptionBlock.classList.add('prod-card__description')
 
-    const descriptionBlock = document.createElement('div');
+    const descriptionBlock : HTMLDivElement = document.createElement('div');
     descriptionBlock.classList.add('prod-card__description__desc');
 
     //description title
-    const titleDescriptionBlock = document.createElement('div');
+    const titleDescriptionBlock : HTMLDivElement = document.createElement('div');
     titleDescriptionBlock.classList.add('prod-card__description__desc_title');
 
     titleDescriptionBlock.appendChild(document.createTextNode(this.data.name))
 
     //main description
-    const descriptionBlockMain = document.createElement('div');
+    const descriptionBlockMain : HTMLDivElement = document.createElement('div');
     descriptionBlockMain.classList.add('prod-card__description__desc_main-desc')
 
     descriptionBlockMain.innerHTML = `<span><b>Description: </b>${this.data.description}</span> 
@@ -63,13 +63,13 @@ export class ProductCardPage {
     <span><b>Stock: </b>${this.data.stock}</span>`
 
     //block with price
-    const priceBlock = document.createElement('div');
+    const priceBlock : HTMLDivElement = document.createElement('div');
     priceBlock.classList.add('prod-card__description__desc_price');
 
     priceBlock.appendChild(document.createTextNode(`PRICE: ${this.data.price}$`))
 
     //buttons
-    const buttonsArea = document.createElement('div');
+    const buttonsArea : HTMLDivElement = document.createElement('div');
     buttonsArea.classList.add('prod-card__description__buttons');
 
     buttonsArea.append(btnAddToCard.cloneNode(true), btnBuyNowInDescription.cloneNode(true))
@@ -83,7 +83,7 @@ export class ProductCardPage {
 }
 
 
-const productCardPage = new ProductCardPage(products[1])
+const productCardPage : ProductCardPage = new ProductCardPage(products[1])
 
 //Product card page
 // productCardPage.render()
