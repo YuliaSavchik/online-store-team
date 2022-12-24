@@ -1,5 +1,6 @@
 import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
+import {createInputCoutnInCart} from "../inputs/index"
 
 export class CartProducts {
   data: Product;
@@ -42,6 +43,23 @@ export class CartProducts {
     //range
     const productRange = document.createElement("div");
     productRange.classList.add('cart-products__range');
+
+    const rangeStock = document.createElement("div");
+    rangeStock.classList.add('cart-products__range_stock');
+
+    rangeStock.innerHTML = `Stock: <b>${this.data.stock}</b>`
+
+    const rangeInput = document.createElement("div");
+    rangeInput.classList.add('cart-products__range_input');
+
+    rangeInput.appendChild(createInputCoutnInCart())
+
+    const rangePrice = document.createElement("div");
+    rangePrice.classList.add('cart-products__range_price');
+
+    rangePrice.innerHTML = `Price: <b>${this.data.price}$</b>`
+
+    productRange.append(rangeStock, rangeInput, rangePrice)
 
     cartProductBlock.append(productNumber, productImg, productDesc, productRange)
 
