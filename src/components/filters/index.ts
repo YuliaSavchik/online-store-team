@@ -1,7 +1,7 @@
 import { Color, Device, Material } from "../../types/enums";
 import { createArrowButtons } from "../buttons/index";
 
-const main : Element | null = document.querySelector(".main");
+const main: Element | null = document.querySelector(".main");
 const btnArrowTop = createArrowButtons("button-arrow_top");
 
 class Filter {
@@ -13,11 +13,11 @@ class Filter {
     this.items = items;
   }
 
-  filter : HTMLDivElement = document.createElement("div");
-  arrow : HTMLSpanElement = document.createElement("span");
-  filterHeader : HTMLDivElement = document.createElement("div");
-  checkboxField : HTMLDivElement = document.createElement("div");
-  form : HTMLFormElement = document.createElement("form");
+  filter: HTMLDivElement = document.createElement("div");
+  arrow: HTMLSpanElement = document.createElement("span");
+  filterHeader: HTMLDivElement = document.createElement("div");
+  checkboxField: HTMLDivElement = document.createElement("div");
+  form: HTMLFormElement = document.createElement("form");
 
   render() {
     this.filter.classList.add("filter");
@@ -49,12 +49,12 @@ class Filter {
 
   createElements() {
     for (let i = 0; i < this.items.length; i++) {
-      const checkbox : HTMLInputElement = document.createElement("input");
+      const checkbox: HTMLInputElement = document.createElement("input");
       checkbox.setAttribute("type", "checkbox");
       checkbox.setAttribute("id", `${this.title}-checkbox-${i}`);
       checkbox.classList.add("checkbox");
       this.form.appendChild(checkbox);
-      const label : HTMLLabelElement = document.createElement("label");
+      const label: HTMLLabelElement = document.createElement("label");
       label.setAttribute("for", `${this.title}-checkbox-${i}`);
       label.classList.add("label");
       label.innerHTML = this.items[i];
@@ -85,18 +85,18 @@ class ColorFilter extends Filter {
   }
   createElements(): void {
     for (let i = 0; i < this.items.length; i++) {
-      const checkbox : HTMLInputElement = document.createElement("input");
+      const checkbox: HTMLInputElement = document.createElement("input");
       checkbox.setAttribute("type", "checkbox");
       checkbox.setAttribute("id", `${this.title}-checkbox-${i}`);
       checkbox.classList.add("checkbox");
 
       this.form.appendChild(checkbox);
-      const label : HTMLLabelElement = document.createElement("label");
+      const label: HTMLLabelElement = document.createElement("label");
 
       label.setAttribute("for", `${this.title}-checkbox-${i}`);
       label.classList.add("color-label");
 
-      const colorCircle : HTMLDivElement = document.createElement("div");
+      const colorCircle: HTMLDivElement = document.createElement("div");
 
       colorCircle.style.backgroundColor =
         this.colorHash.get(this.items[i]) ?? "white";
@@ -110,33 +110,43 @@ class ColorFilter extends Filter {
   }
 }
 
-const deviceFilter = new Filter("device", [
-  Device.i_12,
-  Device.ip_12,
-  Device.i_13_14,
-  Device.ip_13,
-  Device.ip_14,
-]);
+function createFilterBlock() {
+  const filterBlock: HTMLElement = document.createElement("div");
 
-const materialFilter = new Filter("material", [
-  Material.bamboo,
-  Material.leather,
-  Material.recycled,
-]);
+  const deviceFilter = new Filter("device", [
+    Device.i_12,
+    Device.ip_12,
+    Device.i_13_14,
+    Device.ip_13,
+    Device.ip_14,
+  ]);
 
-const colorFilter = new ColorFilter("color", [
-  Color.red,
-  Color.orange,
-  Color.yellow,
-  Color.blue,
-  Color.green,
-  Color.purple,
-  Color.pink,
-  Color.black,
-]);
+  const materialFilter = new Filter("material", [
+    Material.bamboo,
+    Material.leather,
+    Material.recycled,
+  ]);
 
-//filters
+  const colorFilter = new ColorFilter("color", [
+    Color.red,
+    Color.orange,
+    Color.yellow,
+    Color.blue,
+    Color.green,
+    Color.purple,
+    Color.pink,
+    Color.black,
+  ]);
 
-// deviceFilter.render(),
-// materialFilter.render(),
-// colorFilter.render()
+  filterBlock.append(
+    deviceFilter.render(),
+    materialFilter.render(),
+    colorFilter.render()
+  );
+
+  return filterBlock
+}
+
+
+//You can create filter block: 
+const addFilterBlock = createFilterBlock()

@@ -28,4 +28,5 @@ export function infinitySlider() {
 }
 
 
-// const addHeaderSlider = infinitySlider()
+// //You can create infinity header slider: 
+const addHeaderSlider = infinitySlider()
