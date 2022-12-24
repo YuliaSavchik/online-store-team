@@ -12,8 +12,12 @@ export class CartProducts {
   }
 
   render() {
+    const colorsArr : string[] = ["#b1c8f5", "#e4d536", "#8a70d4"];
+
     const cartProductBlock : HTMLDivElement = document.createElement("div");
     cartProductBlock.classList.add('cart-products');
+
+    cartProductBlock.style.backgroundColor = colorsArr[this.num - 1 % colorsArr.length];
 
     //product number
     const productNumber : HTMLDivElement = document.createElement("div");
