@@ -82,4 +82,4 @@ function createCardsArea() {
 }
 
 //You can create cards:
-const addCardsArea = createCardsArea();
+const addCardsArea : HTMLDivElement = createCardsArea();

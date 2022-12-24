@@ -149,4 +149,4 @@ function createFilterBlock() {
 
 
 //You can create filter block: 
-const addFilterBlock = createFilterBlock()
+const addFilterBlock : HTMLElement = createFilterBlock()
