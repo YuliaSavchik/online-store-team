@@ -1,0 +1,10 @@
+.cart-products{
+  height: 222px;
+  background-color: $color_blue;
+  .cart-products__image{
+    img{
+      height: 200px;
+      width: 200px;
+    }
+  }
+}

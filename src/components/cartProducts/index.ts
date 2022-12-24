@@ -10,25 +10,25 @@ export class CartProducts {
   }
 
   render() {
-    const cartProductBlock = document.createElement("div");
+    const cartProductBlock : HTMLDivElement = document.createElement("div");
     cartProductBlock.classList.add('cart-products');
 
     //product number
-    const productNumber = document.createElement("div");
+    const productNumber : HTMLDivElement = document.createElement("div");
     productNumber.classList.add('cart-products__number');
 
     //image
-    const productImg = document.createElement("div");
+    const productImg : HTMLDivElement = document.createElement("div");
     productImg.classList.add('cart-products__image');
-    const img = document.createElement('img')
+    const img : HTMLImageElement = document.createElement('img')
     img.setAttribute('src', this.data.mainImage)
 
     productImg.appendChild(img)
 
     //description
-    const productDesc = document.createElement("div");
+    const productDesc : HTMLDivElement = document.createElement("div");
     productDesc.classList.add('cart-products__desc');
-    const text = document.createElement('div');
+    const text : HTMLDivElement = document.createElement('div');
     text.classList.add('cart-products__desc_text');
     text.innerHTML = `<span>${this.data.name}</span>
     <br>
@@ -41,20 +41,20 @@ export class CartProducts {
     productDesc.appendChild(text)
 
     //range
-    const productRange = document.createElement("div");
+    const productRange : HTMLDivElement = document.createElement("div");
     productRange.classList.add('cart-products__range');
 
-    const rangeStock = document.createElement("div");
+    const rangeStock : HTMLDivElement = document.createElement("div");
     rangeStock.classList.add('cart-products__range_stock');
 
     rangeStock.innerHTML = `Stock: <b>${this.data.stock}</b>`
 
-    const rangeInput = document.createElement("div");
+    const rangeInput : HTMLDivElement = document.createElement("div");
     rangeInput.classList.add('cart-products__range_input');
 
     rangeInput.appendChild(createInputCoutnInCart())
 
-    const rangePrice = document.createElement("div");
+    const rangePrice : HTMLDivElement = document.createElement("div");
     rangePrice.classList.add('cart-products__range_price');
 
     rangePrice.innerHTML = `Price: <b>${this.data.price}$</b>`
@@ -67,8 +67,8 @@ export class CartProducts {
   }
 }
 
-const main = document.querySelector('.main');
+const main : Element | null = document.querySelector('.main');
 
-const result = new CartProducts(products[1])
+const result : CartProducts = new CartProducts(products[1])
 
 main?.appendChild(result.render())
