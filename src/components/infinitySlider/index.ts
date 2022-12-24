@@ -26,3 +26,6 @@ export function infinitySlider() {
 
   return slider;
 }
+
+
+// const addHeaderSlider = infinitySlider()
