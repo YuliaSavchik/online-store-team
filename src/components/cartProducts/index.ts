@@ -4,9 +4,11 @@ import {createInputCoutnInCart} from "../inputs/index"
 
 export class CartProducts {
   data: Product;
+  num: number;
 
-  constructor(data: Product) {
+  constructor(data: Product, num : number) {
     this.data = data;
+    this.num = num;
   }
 
   render() {
@@ -16,6 +18,7 @@ export class CartProducts {
     //product number
     const productNumber : HTMLDivElement = document.createElement("div");
     productNumber.classList.add('cart-products__number');
+    productNumber.appendChild(document.createTextNode(String(this.num)))
 
     //image
     const productImg : HTMLDivElement = document.createElement("div");
@@ -30,13 +33,13 @@ export class CartProducts {
     productDesc.classList.add('cart-products__desc');
     const text : HTMLDivElement = document.createElement('div');
     text.classList.add('cart-products__desc_text');
-    text.innerHTML = `<span>${this.data.name}</span>
+    text.innerHTML = `<span><b>${this.data.name}</b></span>
     <br>
-    <span>${this.data.material}</span>
+    <span>Material: ${this.data.material}</span>
     <br>
-    <span>${this.data.color}</span>
+    <span>Color: ${this.data.color}</span>
     <br>
-    <span>${this.data.rating}/5</span>`
+    <span>Rating: ${this.data.rating}/5</span>`
 
     productDesc.appendChild(text)
 
@@ -69,6 +72,6 @@ export class CartProducts {
 
 const main : Element | null = document.querySelector('.main');
 
-const result : CartProducts = new CartProducts(products[1])
+const result : CartProducts = new CartProducts(products[1], 1)
 
 main?.appendChild(result.render())

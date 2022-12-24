@@ -1,10 +1,14 @@
 .cart-products{
   height: 222px;
   background-color: $color_blue;
+  display: flex;
   .cart-products__image{
     img{
       height: 200px;
       width: 200px;
     }
+  }
+  .cart-products__desc{
+    flex-grow: 1;
   }
 }
