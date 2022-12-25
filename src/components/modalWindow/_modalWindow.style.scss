@@ -47,6 +47,7 @@
 .modal-window__input {
   width: 400px;
   height: 45px;
+  padding: 0 0 0 20px;
   background-color: $color-pink;
 }
 
@@ -78,12 +79,14 @@
 
 .input-card-number {
   width: 270px;
+  padding: 0 0 0 20px;
   background-color: $color_blue;
 }
 
 .input-card-date,
 .input-card-cvv {
   width: 150px;
+  text-align: center;
   background-color: $color_blue;
 }
 
