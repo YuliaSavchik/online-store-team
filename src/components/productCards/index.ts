@@ -12,13 +12,13 @@ class ProductCard {
     this.data = data;
   }
 
-  card : HTMLDivElement = document.createElement("div");
+  card: HTMLDivElement = document.createElement("div");
 
   createDescription() {
-    const shadowDiv : HTMLDivElement = document.createElement("div");
+    const shadowDiv: HTMLDivElement = document.createElement("div");
     shadowDiv.classList.add("product-card_shadow");
 
-    const nameText : HTMLDivElement = document.createElement("div");
+    const nameText: HTMLDivElement = document.createElement("div");
     nameText.appendChild(document.createTextNode(`${this.data.name}`));
     nameText.style.fontWeight = "600";
 
@@ -40,9 +40,9 @@ class ProductCard {
   render() {
     this.card.classList.add("product-card");
 
-    const img : HTMLImageElement = document.createElement("img");
+    const img: HTMLImageElement = document.createElement("img");
 
-    const buttons : HTMLDivElement = document.createElement("div");
+    const buttons: HTMLDivElement = document.createElement("div");
     buttons.classList.add("product-card_buttons");
     buttons.appendChild(btnAdd.cloneNode(true));
     buttons.appendChild(btnMore.cloneNode(true));
@@ -57,13 +57,19 @@ class ProductCard {
 }
 
 function createCardsArea() {
-  const colorsArr : string[] = ["#f2634c", "#b1c8f5", "#e4d536", "#8a70d4", "#f5b2d2"];
-  const main : Element | null = document.querySelector(".main");
-  const cardsArea : HTMLDivElement = document.createElement("div");
+  const colorsArr: string[] = [
+    "#f2634c",
+    "#b1c8f5",
+    "#e4d536",
+    "#8a70d4",
+    "#f5b2d2",
+  ];
+
+  const cardsArea: HTMLDivElement = document.createElement("div");
   cardsArea.classList.add("product-cards-area");
 
   for (let i = 0; i < products.length; i++) {
-    const card : ProductCard = new ProductCard(products[i]);
+    const card: ProductCard = new ProductCard(products[i]);
 
     card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
 
@@ -72,9 +78,8 @@ function createCardsArea() {
     cardsArea.appendChild(card.render());
   }
 
-  main?.appendChild(cardsArea);
+  return cardsArea;
 }
 
-
-//cards area
-// createCardsArea();
+//You can create cards:
+const addCardsArea : HTMLDivElement = createCardsArea();

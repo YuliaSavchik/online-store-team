@@ -85,5 +85,5 @@ export class ProductCardPage {
 
 const productCardPage : ProductCardPage = new ProductCardPage(products[1])
 
-//Product card page
-// productCardPage.render()
+//You can create product card page:
+const addProductCardPage : HTMLDivElement = productCardPage.render()
