@@ -1,8 +1,8 @@
 import { Color, Device, Material } from "../../types/enums";
 import { createArrowButtons } from "../buttons/index";
 
-const main = document.querySelector(".main");
-const btnArrowTop = createArrowButtons('button-arrow_top');
+const main: Element | null = document.querySelector(".main");
+const btnArrowTop = createArrowButtons("button-arrow_top");
 
 class Filter {
   items: string[];
@@ -13,31 +13,31 @@ class Filter {
     this.items = items;
   }
 
-  filter = document.createElement("div");
-  arrow = document.createElement("span");
-  filter_header = document.createElement("div");
-  checkbox_field = document.createElement("div");
-  form = document.createElement("form");
+  filter: HTMLDivElement = document.createElement("div");
+  arrow: HTMLSpanElement = document.createElement("span");
+  filterHeader: HTMLDivElement = document.createElement("div");
+  checkboxField: HTMLDivElement = document.createElement("div");
+  form: HTMLFormElement = document.createElement("form");
 
   render() {
     this.filter.classList.add("filter");
 
-    this.filter_header.classList.add("filter-header");
+    this.filterHeader.classList.add("filter-header");
 
-    this.filter_header.innerHTML = `<span>${this.title.toUpperCase()}</span>`;
+    this.filterHeader.innerHTML = `<span>${this.title.toUpperCase()}</span>`;
 
     this.arrow.appendChild(btnArrowTop.cloneNode(true));
     this.arrow.classList.add("arrow");
-    this.filter_header.appendChild(this.arrow);
+    this.filterHeader.appendChild(this.arrow);
 
-    this.filter.appendChild(this.filter_header);
+    this.filter.appendChild(this.filterHeader);
 
-    this.checkbox_field.classList.add("checkbox-field");
+    this.checkboxField.classList.add("checkbox-field");
 
     this.createElements();
 
-    this.checkbox_field.appendChild(this.form);
-    this.filter.appendChild(this.checkbox_field);
+    this.checkboxField.appendChild(this.form);
+    this.filter.appendChild(this.checkboxField);
 
     this.arrow.addEventListener("click", () => {
       this.arrow.classList.toggle("rotate");
@@ -49,12 +49,12 @@ class Filter {
 
   createElements() {
     for (let i = 0; i < this.items.length; i++) {
-      const checkbox = document.createElement("input");
+      const checkbox: HTMLInputElement = document.createElement("input");
       checkbox.setAttribute("type", "checkbox");
       checkbox.setAttribute("id", `${this.title}-checkbox-${i}`);
       checkbox.classList.add("checkbox");
       this.form.appendChild(checkbox);
-      const label = document.createElement("label");
+      const label: HTMLLabelElement = document.createElement("label");
       label.setAttribute("for", `${this.title}-checkbox-${i}`);
       label.classList.add("label");
       label.innerHTML = this.items[i];
@@ -85,58 +85,68 @@ class ColorFilter extends Filter {
   }
   createElements(): void {
     for (let i = 0; i < this.items.length; i++) {
-      const checkbox = document.createElement("input");
+      const checkbox: HTMLInputElement = document.createElement("input");
       checkbox.setAttribute("type", "checkbox");
       checkbox.setAttribute("id", `${this.title}-checkbox-${i}`);
       checkbox.classList.add("checkbox");
 
       this.form.appendChild(checkbox);
-      const label = document.createElement("label");
+      const label: HTMLLabelElement = document.createElement("label");
 
       label.setAttribute("for", `${this.title}-checkbox-${i}`);
       label.classList.add("color-label");
 
-      const color_circle = document.createElement("div");
+      const colorCircle: HTMLDivElement = document.createElement("div");
 
-      color_circle.style.backgroundColor =
+      colorCircle.style.backgroundColor =
         this.colorHash.get(this.items[i]) ?? "white";
 
-      color_circle.classList.add("color-circle");
+      colorCircle.classList.add("color-circle");
 
-      label.appendChild(color_circle);
+      label.appendChild(colorCircle);
       label.appendChild(document.createTextNode(this.items[i]));
       this.form.appendChild(label);
     }
   }
 }
 
-const deviceFilter = new Filter("device", [
-  Device.i_12,
-  Device.ip_12,
-  Device.i_13_14,
-  Device.ip_13,
-  Device.ip_14,
-]);
+function createFilterBlock() {
+  const filterBlock: HTMLElement = document.createElement("div");
 
-const materialFilter = new Filter("material", [
-  Material.bamboo,
-  Material.leather,
-  Material.recycled,
-]);
+  const deviceFilter = new Filter("device", [
+    Device.i_12,
+    Device.ip_12,
+    Device.i_13_14,
+    Device.ip_13,
+    Device.ip_14,
+  ]);
 
-const colorFilter = new ColorFilter("color", [
-  Color.red,
-  Color.orange,
-  Color.yellow,
-  Color.blue,
-  Color.green,
-  Color.purple,
-  Color.pink,
-  Color.black,
-]);
+  const materialFilter = new Filter("material", [
+    Material.bamboo,
+    Material.leather,
+    Material.recycled,
+  ]);
 
-main?.append(
-  deviceFilter.render(),
-  materialFilter.render(),
-  colorFilter.render()
-);
+  const colorFilter = new ColorFilter("color", [
+    Color.red,
+    Color.orange,
+    Color.yellow,
+    Color.blue,
+    Color.green,
+    Color.purple,
+    Color.pink,
+    Color.black,
+  ]);
+
+  filterBlock.append(
+    deviceFilter.render(),
+    materialFilter.render(),
+    colorFilter.render()
+  );
+
+  return filterBlock
+}
+
+
+//You can create filter block: 
+const addFilterBlock : HTMLElement = createFilterBlock()
