@@ -3,6 +3,7 @@ import { createMainButtons } from '../../components/buttons/index';
 import { createSearchInput } from '../../components/inputs/index';
 import { createViewPageButtons } from '../../components/buttons/index';
 import { createFilterBlock } from '../../components/filters/index';
+import { createNoUiSliderBlock } from '../../components/noUiSlider/index';
 import { createCardsArea } from '../../components/productCards/index';
 class MainPage extends Page {
   constructor(id: string) {
@@ -49,7 +50,10 @@ class MainPage extends Page {
     const filtersBlock: HTMLDivElement = document.createElement('div');
     filtersBlock.classList.add('filters-block');
     const addFilterBlock: HTMLElement = createFilterBlock();
-    filtersBlock.append(addFilterBlock);
+    const rangePrice = createNoUiSliderBlock('price');
+    rangePrice.classList.add('range-slider_border');
+    const rangeStock = createNoUiSliderBlock('stock');
+    filtersBlock.append(addFilterBlock, rangePrice, rangeStock);
     
     const productsBlock: HTMLDivElement = document.createElement('div');
     productsBlock.classList.add('products-block');
