@@ -3,6 +3,7 @@ import { createMainButtons } from '../../components/buttons/index';
 import { createSearchInput } from '../../components/inputs/index';
 import { createViewPageButtons } from '../../components/buttons/index';
 import { createFilterBlock } from '../../components/filters/index';
+import { createCardsArea } from '../../components/productCards/index';
 class MainPage extends Page {
   constructor(id: string) {
     super(id);
@@ -50,10 +51,10 @@ class MainPage extends Page {
     const addFilterBlock: HTMLElement = createFilterBlock();
     filtersBlock.append(addFilterBlock);
     
-
-
     const productsBlock: HTMLDivElement = document.createElement('div');
     productsBlock.classList.add('products-block');
+    const addCardsArea : HTMLDivElement = createCardsArea();
+    productsBlock.append(addCardsArea);
 
     mainContent.append(filtersBlock, productsBlock);
     mainWrapper.append(settings, mainContent);
