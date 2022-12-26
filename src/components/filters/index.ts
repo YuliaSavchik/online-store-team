@@ -1,7 +1,6 @@
 import { Color, Device, Material } from "../../types/enums";
 import { createArrowButtons } from "../buttons/index";
 
-const main: Element | null = document.querySelector(".main");
 const btnArrowTop = createArrowButtons("button-arrow_top");
 
 class Filter {
@@ -110,7 +109,7 @@ class ColorFilter extends Filter {
   }
 }
 
-function createFilterBlock() {
+export function createFilterBlock() {
   const filterBlock: HTMLElement = document.createElement("div");
 
   const deviceFilter = new Filter("device", [
@@ -147,6 +146,3 @@ function createFilterBlock() {
   return filterBlock
 }
 
-
-//You can create filter block: 
-const addFilterBlock : HTMLElement = createFilterBlock()

@@ -56,7 +56,7 @@ class ProductCard {
   }
 }
 
-function createCardsArea() {
+export function createCardsArea() {
   const colorsArr: string[] = [
     "#f2634c",
     "#b1c8f5",
@@ -82,4 +82,4 @@ function createCardsArea() {
 }
 
 //You can create cards:
-const addCardsArea : HTMLDivElement = createCardsArea();
+//const addCardsArea : HTMLDivElement = createCardsArea();

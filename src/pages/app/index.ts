@@ -5,7 +5,7 @@ import CartPage from '../cart/index';
 import ErrorPage from '../error/index';
 import { PagesId } from '../../types/enums';
 
-export const wrapperForPage = (document.querySelector('.main__wrapper') as HTMLElement);
+export const wrapperForPage = (document.querySelector('.main') as HTMLElement);
 
 class App {
   private static container: HTMLElement = wrapperForPage;
