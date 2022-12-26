@@ -29,4 +29,4 @@ export function infinitySlider() {
 
 
 // //You can create infinity header slider: 
-const addHeaderSlider : HTMLDivElement = infinitySlider()
+//const addHeaderSlider : HTMLDivElement = infinitySlider()
