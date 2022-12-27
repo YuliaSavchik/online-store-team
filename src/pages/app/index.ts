@@ -20,7 +20,7 @@ class App {
     } else if (idPage === PagesId.ProductDescriptionPage) {
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage === PagesId.CartPage) {
-      page = new CartPage(idPage);
+      page = new CartPage(idPage, idCard as string);
     } else if (idPage === PagesId.ErrorPage) {
       page = new ErrorPage(idPage);
     }
@@ -64,12 +64,18 @@ function updateURL(pageId: string) {
 wrapperForPage.addEventListener('click', function(event) {
   
   const item = event.target;
-  console.log(item);
+
   if (!item) return;
 
   if ((item as HTMLDivElement).closest('.product-card_shadow')) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage('product-description-page', `${dataSetId}`);
     updateURL('product-description-page');
+  }
+
+  if ((item as HTMLDivElement).closest('.product-description__btn-buy-now')) {
+    const dataSetId = (item as HTMLDivElement).dataset.idbtn;
+    App.renderNewPage('cart-page', `${dataSetId}`);
+    updateURL('cart-page');
   }
 });
