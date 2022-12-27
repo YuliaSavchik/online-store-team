@@ -1,4 +1,4 @@
-import { products } from "../../data/data";
+//import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
 import { createMainButtons } from "../buttons/index";
 
@@ -83,7 +83,7 @@ export class ProductCardPage {
 }
 
 
-const productCardPage : ProductCardPage = new ProductCardPage(products[1])
+//const productCardPage : ProductCardPage = new ProductCardPage(products[1])
 
 //You can create product card page:
-const addProductCardPage : HTMLDivElement = productCardPage.render()
+//const addProductCardPage : HTMLDivElement = productCardPage.render()

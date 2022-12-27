@@ -11,14 +11,14 @@ class App {
   private static container: HTMLElement = wrapperForPage;
   private mainPage: MainPage;
 
-  static renderNewPage(idPage: string) {
+  static renderNewPage(idPage: string, idCard?: string) {
     App.container.innerHTML = '';
     let page: Page | null = null;
 
     if(idPage === PagesId.MainPage) {
       page = new MainPage(idPage);
     } else if (idPage === PagesId.ProductDescriptionPage) {
-      page = new ProductDescriptionPage(idPage);
+      page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage === PagesId.CartPage) {
       page = new CartPage(idPage);
     } else if (idPage === PagesId.ErrorPage) {
@@ -50,3 +50,26 @@ class App {
 }
 
 export default App;
+
+function updateURL(pageId: string) {
+  if (history.pushState) {
+      const baseUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      const newUrl = baseUrl + `#${pageId}`;
+      history.pushState(null, `${pageId}`, newUrl);
+  }
+  else {
+      console.warn('History API не поддерживается');
+  }
+}
+wrapperForPage.addEventListener('click', function(event) {
+  
+  const item = event.target;
+  console.log(item);
+  if (!item) return;
+
+  if ((item as HTMLDivElement).closest('.product-card_shadow')) {
+    const dataSetId = (item as HTMLDivElement).dataset.idcard;
+    App.renderNewPage('product-description-page', `${dataSetId}`);
+    updateURL('product-description-page');
+  }
+});
