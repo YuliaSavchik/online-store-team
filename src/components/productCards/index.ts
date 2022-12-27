@@ -17,6 +17,7 @@ class ProductCard {
   createDescription() {
     const shadowDiv: HTMLDivElement = document.createElement("div");
     shadowDiv.classList.add("product-card_shadow");
+    shadowDiv.setAttribute('data-idCard', `${this.data.id}`);
 
     const nameText: HTMLDivElement = document.createElement("div");
     nameText.appendChild(document.createTextNode(`${this.data.name}`));
@@ -73,7 +74,7 @@ export function createCardsArea() {
 
     card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
 
-    console.log(i % colorsArr.length);
+    //console.log(i % colorsArr.length);
 
     cardsArea.appendChild(card.render());
   }
