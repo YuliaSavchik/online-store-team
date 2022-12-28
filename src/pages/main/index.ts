@@ -4,7 +4,7 @@ import { createSearchInput } from '../../components/inputs/index';
 import { createViewPageButtons } from '../../components/buttons/index';
 import { createFilterBlock } from '../../components/filters/index';
 import { createNoUiSliderBlock } from '../../components/noUiSlider/index';
-import { createCardsArea, sortSelect } from '../../components/productCards/index';
+import { productsBlock, sortSelect } from '../../components/productCards/index';
 class MainPage extends Page {
   constructor(id: string) {
     super(id);
@@ -55,10 +55,6 @@ class MainPage extends Page {
     const rangeStock = createNoUiSliderBlock('stock');
     filtersBlock.append(addFilterBlock, rangePrice, rangeStock);
     
-    const productsBlock: HTMLDivElement = document.createElement('div');
-    productsBlock.classList.add('products-block');
-    const addCardsArea : HTMLDivElement = createCardsArea();
-    productsBlock.append(addCardsArea);
 
     mainContent.append(filtersBlock, productsBlock);
     mainWrapper.append(settings, mainContent);

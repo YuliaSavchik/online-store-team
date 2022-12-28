@@ -14,3 +14,9 @@ export interface Product {
   image_1: string;
   image_2: string;
 }
+
+export interface IFilters {
+  device: string[];
+  material: string[];
+  color: string[];
+}
