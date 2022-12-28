@@ -64,6 +64,7 @@ class CartPage extends Page {
 
     const summatyBlock: HTMLDivElement = document.createElement('div');
     summatyBlock.classList.add('cart__summaty-block');
+
     summatyBlock.append(
       creatSummaryBlock(pricesArr)
     );

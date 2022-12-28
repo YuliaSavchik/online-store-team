@@ -1,4 +1,5 @@
 import Page from '../../components/templates/page';
+import { infinitySlider } from '../../components/infinitySlider/index';
 import { createMainButtons } from '../../components/buttons/index';
 import { createSearchInput } from '../../components/inputs/index';
 import { createViewPageButtons } from '../../components/buttons/index';
@@ -13,6 +14,11 @@ class MainPage extends Page {
   private createContent() {
     const mainWrapper: HTMLDivElement = document.createElement('div');
     mainWrapper.classList.add('main__wrapper');
+
+    const sliderBlock: HTMLDivElement = document.createElement('div');
+    sliderBlock.classList.add('main__slider');
+    const addHeaderSlider : HTMLDivElement = infinitySlider();
+    sliderBlock.append(addHeaderSlider);
 
     const settings: HTMLDivElement = document.createElement('div');
     settings.classList.add('main__settings');
@@ -61,7 +67,7 @@ class MainPage extends Page {
     productsBlock.append(addCardsArea);
 
     mainContent.append(filtersBlock, productsBlock);
-    mainWrapper.append(settings, mainContent);
+    mainWrapper.append(sliderBlock, settings, mainContent);
     return mainWrapper;
   }
   render() {

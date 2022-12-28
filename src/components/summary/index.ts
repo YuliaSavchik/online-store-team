@@ -42,7 +42,7 @@ export function creatSummaryBlock(pricesCollection: number[]) {
 }
 
 function countProducts(pricesCollection: number[]) {
-  if (pricesCollection.length < 0) {
+  if (pricesCollection.length > 0) {
     const count: number = pricesCollection.length;
     return count;
   }
@@ -51,7 +51,7 @@ function countProducts(pricesCollection: number[]) {
 }
 
 function countTotalSum(pricesCollection: number[]) {
-  if (pricesCollection.length < 0) {
+  if (pricesCollection.length > 0) {
     const count: number = pricesCollection.reduce((acc: number, price: number) => acc + price);
     return count;
   }
