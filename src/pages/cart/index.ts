@@ -82,8 +82,14 @@ class CartPage extends Page {
 export default CartPage;
 
 export function showCountProductInCart() {
+  const countContainer = document.querySelector<HTMLElement>('.header__wrapper__cart_circle-with-number');
   const countItem = document.querySelector('.circle-with-number__count') as HTMLElement;
   countItem.textContent = `${productsInCart.length}`;
+  if (productsInCart.length > 0) {
+    countContainer?.classList.add('circle-with-number_colored');
+  } else {
+    countContainer?.classList.remove('circle-with-number_colored');
+  }
 }
 
 function addProductInCartClickBtnAdd(item: HTMLElement) {
