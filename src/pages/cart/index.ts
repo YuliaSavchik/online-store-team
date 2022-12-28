@@ -4,6 +4,10 @@ import { CartProducts } from '../../components/cartProducts/index';
 import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
 import { productsInCart } from '../../index';
+
+import { countTotalSum } from '../../components/summary/index';
+import { priceProductsInCart } from '../../index';
+
 class CartPage extends Page {
   constructor(id: string) {
     super(id);
@@ -70,6 +74,7 @@ class CartPage extends Page {
     );
     
     cartWrapper.append(mainBlock, summatyBlock);
+    console.log(pricesArr)
 
     return cartWrapper; 
   }
@@ -93,6 +98,11 @@ export function showCountProductInCart() {
   }
 }
 
+function showTotalSumInHeader() {
+  const totalProductSum = document.querySelector('.header__wrapper__total-amount_number') as HTMLElement;
+  totalProductSum.textContent = `${countTotalSum(priceProductsInCart)}`;
+}
+
 function addProductInCart(item: HTMLElement, className: string) {
   if ((item as HTMLElement).closest(className)) {
     const dataSetId = Number((item as HTMLElement).dataset.idbtn);
@@ -100,7 +110,9 @@ function addProductInCart(item: HTMLElement, className: string) {
     const result = productsInCart.findIndex((product) => product.id === dataSetId);
 
     if (result === -1) {
-      productsInCart.push(products[index])
+      productsInCart.push(products[index]);
+      priceProductsInCart.push(products[index].price);
+      showTotalSumInHeader();
     }
   }
 }
@@ -128,6 +140,8 @@ export function addProductInCartClickByNow(dataSetId: string | undefined) {
   const result = productsInCart.findIndex((product) => product.id === itemId )
 
   if (result === -1) {
-    productsInCart.push(products[itemId - 1])
+    productsInCart.push(products[itemId - 1]);
+    priceProductsInCart.push(products[itemId - 1].price);
+    showTotalSumInHeader();
   }
 }

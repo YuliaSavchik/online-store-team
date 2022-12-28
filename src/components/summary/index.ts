@@ -50,7 +50,7 @@ function countProducts(pricesCollection: number[]) {
 
 }
 
-function countTotalSum(pricesCollection: number[]) {
+export function countTotalSum(pricesCollection: number[]) {
   if (pricesCollection.length > 0) {
     const count: number = pricesCollection.reduce((acc: number, price: number) => acc + price);
     return count;

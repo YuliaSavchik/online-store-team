@@ -78,3 +78,4 @@ class MainPage extends Page {
 }
 
 export default MainPage;
+
