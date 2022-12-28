@@ -72,7 +72,8 @@ export class ProductCardPage {
     const buttonsArea : HTMLDivElement = document.createElement('div');
     buttonsArea.classList.add('prod-card__description__buttons');
     btnBuyNowInDescription.setAttribute('data-idbtn', `${this.data.id}`);
-
+    btnAddToCard.setAttribute('data-idbtn', `${this.data.id}`);
+    
     buttonsArea.append(btnAddToCard.cloneNode(true), btnBuyNowInDescription.cloneNode(true))
 
     descriptionBlock.append(titleDescriptionBlock, descriptionBlockMain, priceBlock)

@@ -5,7 +5,7 @@ import CartPage from '../cart/index';
 import ErrorPage from '../error/index';
 import { PagesId } from '../../types/enums';
 import { showCountProductInCart } from '../cart/index';
-import { addProductInCartFromDescriprion } from '../cart/index';
+import { addProductInCartClickByNow } from '../cart/index';
 
 export const wrapperForPage = (document.querySelector('.main') as HTMLElement);
 
@@ -83,7 +83,7 @@ wrapperForPage.addEventListener('click', function(event) {
 
   if ((item as HTMLDivElement).closest('.product-description__btn-buy-now')) {
     const dataSetId = (item as HTMLDivElement).dataset.idbtn;
-    addProductInCartFromDescriprion(dataSetId);
+    addProductInCartClickByNow(dataSetId);
     showCountProductInCart();
 
     App.renderNewPage('cart-page');

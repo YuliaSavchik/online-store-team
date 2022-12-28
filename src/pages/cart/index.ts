@@ -99,21 +99,35 @@ function addProductInCartClickBtnAdd(item: HTMLElement) {
     productsInCart.push(products[index]);
   }
 }
+
+function addProductInCartClickByAddToCard(item: HTMLElement) {
+  if ((item as HTMLElement).closest('.btn-add-card')) {
+    const dataSetId = Number((item as HTMLElement).dataset.idbtn);
+    const index = dataSetId - 1;
+    const result = productsInCart.findIndex((product) => product.id === dataSetId);
+
+    if (result === -1) {
+      productsInCart.push(products[index])
+    }
+  }
+}
+
 const wrapperForPage = (document.querySelector('.main') as HTMLElement);
 
 wrapperForPage.addEventListener('click', function(event) {
   const item = event.target;
   if (!item) return;
+
+  addProductInCartClickByAddToCard(item as HTMLElement);
   addProductInCartClickBtnAdd(item as HTMLDivElement);
   showCountProductInCart();
 });
 
-export function addProductInCartFromDescriprion(dataSetId: string | undefined) {
+export function addProductInCartClickByNow(dataSetId: string | undefined) {
   const itemId = Number(dataSetId);
-    const result = productsInCart.findIndex((product) => product.id === itemId )
-    if (result === -1) {
-      productsInCart.push(products[itemId - 1])
-    }
+  const result = productsInCart.findIndex((product) => product.id === itemId )
 
-    console.log(productsInCart);
+  if (result === -1) {
+    productsInCart.push(products[itemId - 1])
+  }
 }
