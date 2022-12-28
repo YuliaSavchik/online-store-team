@@ -92,16 +92,8 @@ export function showCountProductInCart() {
   }
 }
 
-function addProductInCartClickBtnAdd(item: HTMLElement) {
-  if ((item as HTMLDivElement).closest('.btn-add')) {
-    const dataSetId = (item as HTMLDivElement).dataset.idcard;
-    const index = Number(dataSetId) - 1;
-    productsInCart.push(products[index]);
-  }
-}
-
-function addProductInCartClickByAddToCard(item: HTMLElement) {
-  if ((item as HTMLElement).closest('.btn-add-card')) {
+function addProductInCart(item: HTMLElement, className: string) {
+  if ((item as HTMLElement).closest(className)) {
     const dataSetId = Number((item as HTMLElement).dataset.idbtn);
     const index = dataSetId - 1;
     const result = productsInCart.findIndex((product) => product.id === dataSetId);
@@ -110,6 +102,13 @@ function addProductInCartClickByAddToCard(item: HTMLElement) {
       productsInCart.push(products[index])
     }
   }
+}
+function addProductInCartClickBtnAdd(item: HTMLElement) {
+  addProductInCart(item, '.btn-add');
+}
+
+function addProductInCartClickByAddToCard(item: HTMLElement) {
+  addProductInCart(item, '.btn-add-card');
 }
 
 const wrapperForPage = (document.querySelector('.main') as HTMLElement);
