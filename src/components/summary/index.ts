@@ -42,13 +42,18 @@ export function creatSummaryBlock(pricesCollection: number[]) {
 }
 
 function countProducts(pricesCollection: number[]) {
-  const count: number = pricesCollection.length;
+  if (pricesCollection.length < 0) {
+    const count: number = pricesCollection.length;
+    return count;
+  }
+  return 0;
 
-  return count;
 }
 
 function countTotalSum(pricesCollection: number[]) {
-  const count: number = pricesCollection.reduce((acc: number, price: number) => acc + price);
-
-  return count;
+  if (pricesCollection.length < 0) {
+    const count: number = pricesCollection.reduce((acc: number, price: number) => acc + price);
+    return count;
+  }
+  return 0;
 }
