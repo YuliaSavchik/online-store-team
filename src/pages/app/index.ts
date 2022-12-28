@@ -4,6 +4,8 @@ import ProductDescriptionPage from '../productDescription/index';
 import CartPage from '../cart/index';
 import ErrorPage from '../error/index';
 import { PagesId } from '../../types/enums';
+import { showCountProductInCart } from '../cart/index';
+import { addProductInCartFromDescriprion } from '../cart/index';
 
 export const wrapperForPage = (document.querySelector('.main') as HTMLElement);
 
@@ -73,8 +75,17 @@ wrapperForPage.addEventListener('click', function(event) {
     updateURL('product-description-page');
   }
 
+  if ((item as HTMLDivElement).closest('.btn-more')) {
+    const dataSetId = (item as HTMLDivElement).dataset.idcard;
+    App.renderNewPage('product-description-page', `${dataSetId}`);
+    updateURL('product-description-page');
+  }
+
   if ((item as HTMLDivElement).closest('.product-description__btn-buy-now')) {
     const dataSetId = (item as HTMLDivElement).dataset.idbtn;
+    addProductInCartFromDescriprion(dataSetId);
+    showCountProductInCart();
+
     App.renderNewPage('cart-page', `${dataSetId}`);
     updateURL('cart-page');
   }

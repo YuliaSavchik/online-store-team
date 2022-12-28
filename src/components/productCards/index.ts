@@ -45,6 +45,8 @@ class ProductCard {
 
     const buttons: HTMLDivElement = document.createElement("div");
     buttons.classList.add("product-card_buttons");
+    btnAdd.setAttribute('data-idcard', `${this.data.id}`);
+    btnMore.setAttribute('data-idcard', `${this.data.id}`);
     buttons.appendChild(btnAdd.cloneNode(true));
     buttons.appendChild(btnMore.cloneNode(true));
 

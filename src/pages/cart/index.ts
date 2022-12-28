@@ -3,6 +3,7 @@ import { createArrowButtons } from '../../components/buttons/index';
 import { CartProducts } from '../../components/cartProducts/index';
 import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
+import { productsInCart } from '../../index';
 class CartPage extends Page {
   idCard: string;
 
@@ -76,3 +77,34 @@ class CartPage extends Page {
 }
 
 export default CartPage;
+
+function addProductInCartClickBtnAdd(item: HTMLElement) {
+  if ((item as HTMLDivElement).closest('.btn-add')) {
+    const dataSetId = (item as HTMLDivElement).dataset.idcard;
+    const index = Number(dataSetId) - 1;
+    productsInCart.push(products[index]);
+  }
+}
+const wrapperForPage = (document.querySelector('.main') as HTMLElement);
+
+wrapperForPage.addEventListener('click', function(event) {
+  const item = event.target;
+  if (!item) return;
+  addProductInCartClickBtnAdd(item as HTMLDivElement);
+  showCountProductInCart();
+});
+
+export function showCountProductInCart() {
+  const countItem = document.querySelector('.circle-with-number__count') as HTMLElement;
+  countItem.textContent = `${productsInCart.length}`;
+}
+
+export function addProductInCartFromDescriprion(dataSetId: string | undefined) {
+  const itemId = Number(dataSetId);
+    const result = productsInCart.findIndex((product) => product.id === itemId )
+    if (result === -1) {
+      productsInCart.push(products[itemId - 1])
+    }
+
+    console.log(productsInCart);
+}
