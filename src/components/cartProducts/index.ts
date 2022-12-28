@@ -1,4 +1,4 @@
-import { products } from "../../data/data";
+//import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
 import {createInputCoutnInCart} from "../inputs/index";
 
@@ -59,7 +59,7 @@ export class CartProducts {
     const rangeInput : HTMLDivElement = document.createElement("div");
     rangeInput.classList.add('cart-products__range_input');
 
-    rangeInput.appendChild(createInputCoutnInCart())
+    rangeInput.appendChild(createInputCoutnInCart(this.data.id));
 
     const rangePrice : HTMLDivElement = document.createElement("div");
     rangePrice.classList.add('cart-products__range_price');
@@ -74,8 +74,8 @@ export class CartProducts {
   }
 }
 
-const main : Element | null = document.querySelector('.main');
+// const main : Element | null = document.querySelector('.main');
 
-const result : CartProducts = new CartProducts(products[1], 1)
+// const result : CartProducts = new CartProducts(products[1], 1)
 
-main?.appendChild(result.render())
+// main?.appendChild(result.render())

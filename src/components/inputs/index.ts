@@ -1,4 +1,4 @@
-export function createInputCoutnInCart() {
+export function createInputCoutnInCart(id: number) {
   const inputCount: HTMLElement = document.createElement('div');
   inputCount.classList.add('input-count');
   const input: HTMLInputElement = document.createElement('input');
@@ -7,9 +7,11 @@ export function createInputCoutnInCart() {
   input.setAttribute('value', '1');
   input.classList.add('input-count__number');
   const btnPlus: HTMLElement = document.createElement('div');
+  btnPlus.setAttribute('data-idbtn', `${id}`);
   btnPlus.classList.add('input-count__btn-count');
   btnPlus.classList.add('btn-count_plus');
   const btnMinus: HTMLElement = document.createElement('div');
+  btnMinus.setAttribute('data-idbtn', `${id}`);
   btnMinus.classList.add('input-count__btn-count');
   btnMinus.classList.add('btn-count_minus');
   inputCount.append(btnMinus, input, btnPlus);
