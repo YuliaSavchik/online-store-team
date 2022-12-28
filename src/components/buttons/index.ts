@@ -44,6 +44,7 @@ export function createSortSelect(selectClassName: string){
    
   return select;
 }
+
 /* 
 main page
 const btnReset = createMainButtons('reset', 'button_meddium-size', 'btn-reset');

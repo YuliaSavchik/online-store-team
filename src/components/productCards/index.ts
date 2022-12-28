@@ -61,10 +61,13 @@ class ProductCard {
 export const productsBlock: HTMLDivElement = document.createElement("div");
 productsBlock.classList.add("products-block");
 
-export const sortSelect = createSortSelect("select-sort");
+export const sortSelect : HTMLSelectElement = createSortSelect("select-sort");
 sortSelect.addEventListener("change", fillFiltersObj);
 
-export function createCardsArea(filtersObj: IFilters) {
+export const cardsArea: HTMLDivElement = document.createElement("div");
+cardsArea.classList.add("product-cards-area");
+
+export function createCardsArea(filtersObj: IFilters): void {
   const colorsArr: string[] = [
     "#f2634c",
     "#b1c8f5",
@@ -101,9 +104,6 @@ export function createCardsArea(filtersObj: IFilters) {
   } else if (sortSelect.options[4].selected) {
     cardsArr.sort((a, b) => b.rating - a.rating);
   }
-
-  const cardsArea: HTMLDivElement = document.createElement("div");
-  cardsArea.classList.add("product-cards-area");
 
   //create cards accordin to filter values
   for (let i = 0; i < cardsArr.length; i++) {
