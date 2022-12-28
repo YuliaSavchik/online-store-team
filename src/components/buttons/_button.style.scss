@@ -41,9 +41,13 @@
   background-color: $color_blue;
 }
 
-.btn-sopt {
+.select-sort {
   border: $border_style;
   background-color: $color_pink;
+  outline: none;
+  width: 220px;
+  height: 40px;
+  padding-left: 40px;
 }
 
 .btn-add,

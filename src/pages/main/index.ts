@@ -4,7 +4,7 @@ import { createSearchInput } from '../../components/inputs/index';
 import { createViewPageButtons } from '../../components/buttons/index';
 import { createFilterBlock } from '../../components/filters/index';
 import { createNoUiSliderBlock } from '../../components/noUiSlider/index';
-import { createCardsArea } from '../../components/productCards/index';
+import { createCardsArea, sortSelect } from '../../components/productCards/index';
 class MainPage extends Page {
   constructor(id: string) {
     super(id);
@@ -23,7 +23,7 @@ class MainPage extends Page {
     const btnCopyLink = createMainButtons('copy link', 'button_meddium-size', 'btn-copy-link');
     btnBlock.append(btnReset, btnCopyLink);
 
-    const btnSort = createMainButtons('sort', 'button_large-size', 'btn-sopt');
+    const btnSort = sortSelect;
 
     const found: HTMLDivElement = document.createElement('div');
     found.classList.add('found');

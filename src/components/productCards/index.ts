@@ -1,6 +1,6 @@
 import { Product } from "../../types/interfaces";
 import { products } from "../../data/data";
-import { createMainButtons } from "../buttons/index";
+import { createMainButtons, createSortSelect } from "../buttons/index";
 
 const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
 const btnMore = createMainButtons("more", "button_small-size", "btn-more");
@@ -56,6 +56,8 @@ class ProductCard {
     return this.card;
   }
 }
+
+export const sortSelect = createSortSelect("select-sort");
 
 export function createCardsArea() {
   const colorsArr: string[] = [
