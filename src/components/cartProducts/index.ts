@@ -1,6 +1,6 @@
 import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
-import {createInputCoutnInCart} from "../inputs/index"
+import {createInputCoutnInCart} from "../inputs/index";
 
 export class CartProducts {
   data: Product;

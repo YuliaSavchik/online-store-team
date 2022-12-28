@@ -5,14 +5,13 @@ import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
 import { productsInCart } from '../../index';
 class CartPage extends Page {
-  idCard: string;
-
-  constructor(id: string, idCard: string) {
+  constructor(id: string) {
     super(id);
-    this.idCard = idCard;
   }
+
   private createContent() {
-    const pricesArr: number[] = []
+    const pricesArr: number[] = [];
+
     const cartWrapper: HTMLDivElement = document.createElement('div');
     cartWrapper.classList.add('cart__wrapper');
 
@@ -27,7 +26,6 @@ class CartPage extends Page {
 
     const itemsCount: HTMLDivElement = document.createElement('div');
     itemsCount.classList.add('title-block__item-count');
-    itemsCount.textContent = `items: ${3}`;
 
     const paginationBlock: HTMLDivElement = document.createElement('div');
     paginationBlock.classList.add('pagination-block');
@@ -47,17 +45,22 @@ class CartPage extends Page {
       btnArrowleft,
       pageNumber,
       btnArrowRight
-    )
+    );
 
     titleBlock.append(
       title,
       itemsCount, 
       paginationBlock
-    )
-    const result: CartProducts = new CartProducts(products[Number(this.idCard) - 1], 1);
-    const price: number = products[Number(this.idCard) - 1].price;
-    pricesArr.push(price);
-    mainBlock.append(titleBlock, result.render());
+    );
+
+    mainBlock.append(titleBlock);
+
+    productsInCart.forEach((prod, item) => {
+      const product: CartProducts = new CartProducts(prod, item + 1);
+      pricesArr.push(prod.price);
+      mainBlock.append(product.render());
+    })
+    itemsCount.textContent = `items: ${pricesArr.length}`;
 
     const summatyBlock: HTMLDivElement = document.createElement('div');
     summatyBlock.classList.add('cart__summaty-block');
@@ -78,6 +81,11 @@ class CartPage extends Page {
 
 export default CartPage;
 
+export function showCountProductInCart() {
+  const countItem = document.querySelector('.circle-with-number__count') as HTMLElement;
+  countItem.textContent = `${productsInCart.length}`;
+}
+
 function addProductInCartClickBtnAdd(item: HTMLElement) {
   if ((item as HTMLDivElement).closest('.btn-add')) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
@@ -93,11 +101,6 @@ wrapperForPage.addEventListener('click', function(event) {
   addProductInCartClickBtnAdd(item as HTMLDivElement);
   showCountProductInCart();
 });
-
-export function showCountProductInCart() {
-  const countItem = document.querySelector('.circle-with-number__count') as HTMLElement;
-  countItem.textContent = `${productsInCart.length}`;
-}
 
 export function addProductInCartFromDescriprion(dataSetId: string | undefined) {
   const itemId = Number(dataSetId);

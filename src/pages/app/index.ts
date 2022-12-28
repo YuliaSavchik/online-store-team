@@ -22,7 +22,7 @@ class App {
     } else if (idPage === PagesId.ProductDescriptionPage) {
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage === PagesId.CartPage) {
-      page = new CartPage(idPage, idCard as string);
+      page = new CartPage(idPage);
     } else if (idPage === PagesId.ErrorPage) {
       page = new ErrorPage(idPage);
     }
@@ -86,7 +86,7 @@ wrapperForPage.addEventListener('click', function(event) {
     addProductInCartFromDescriprion(dataSetId);
     showCountProductInCart();
 
-    App.renderNewPage('cart-page', `${dataSetId}`);
+    App.renderNewPage('cart-page');
     updateURL('cart-page');
   }
 });
