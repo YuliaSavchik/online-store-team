@@ -5,9 +5,8 @@ import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
 import { productsInCart } from '../../index';
 
-import { countTotalSum } from '../../components/summary/index';
 import { priceProductsInCart } from '../../index';
-//import { Product } from '../../types/interfaces';
+import { Product } from '../../types/interfaces';
 
 class CartPage extends Page {
   constructor(id: string) {
@@ -15,8 +14,6 @@ class CartPage extends Page {
   }
 
   private createContent() {
-    const pricesArr: number[] = [];
-
     const cartWrapper: HTMLDivElement = document.createElement('div');
     cartWrapper.classList.add('cart__wrapper');
 
@@ -31,6 +28,7 @@ class CartPage extends Page {
 
     const itemsCount: HTMLDivElement = document.createElement('div');
     itemsCount.classList.add('title-block__item-count');
+    itemsCount.textContent = 'items: 0';
 
     const paginationBlock: HTMLDivElement = document.createElement('div');
     paginationBlock.classList.add('pagination-block');
@@ -43,7 +41,7 @@ class CartPage extends Page {
 
     const pageNumber: HTMLDivElement = document.createElement('div');
     pageNumber.classList.add('pagination-block__page-namber');
-    pageNumber.textContent = `${pricesArr.length}`;
+    pageNumber.textContent = `${1}`;
 
     paginationBlock.append(
       paginationTitle,
@@ -58,24 +56,20 @@ class CartPage extends Page {
       paginationBlock
     );
 
-    mainBlock.append(titleBlock);
+    const productCartBlock: HTMLDivElement = document.createElement('div');
+    productCartBlock.classList.add('main-block__product-card-block');
+    createCartProduct(productCartBlock, itemsCount);
 
-    productsInCart.forEach((prod, item) => {
-      const product: CartProducts = new CartProducts(prod, item + 1);
-      pricesArr.push(prod.price);
-      mainBlock.append(product.render());
-    })
-    itemsCount.textContent = `items: ${pricesArr.length}`;
+    mainBlock.append(titleBlock, productCartBlock);
 
     const summatyBlock: HTMLDivElement = document.createElement('div');
     summatyBlock.classList.add('cart__summaty-block');
 
     summatyBlock.append(
-      creatSummaryBlock(pricesArr)
+      creatSummaryBlock(countProductInCart(),countSumProductInCart())
     );
     
     cartWrapper.append(mainBlock, summatyBlock);
-    console.log(pricesArr)
 
     return cartWrapper; 
   }
@@ -88,11 +82,54 @@ class CartPage extends Page {
 
 export default CartPage;
 
+function createCartProduct(container: HTMLElement, itemsCount: HTMLElement) {
+  productsInCart.forEach((prod, item) => {
+    const product: CartProducts = new CartProducts(prod, item + 1);
+    container.append(product.render());
+    itemsCount.textContent = `items: ${countItemsInCart()}`;
+  })
+  return container;
+}
+
+function countSumProductInCart() {
+  const productPrices: number[] = [];
+  productsInCart.forEach((product) => {
+    productPrices.push(product.priceForCart);
+  })
+  console.log(productPrices)
+  return countTotalSum(productPrices);
+}
+
+function countItemsInCart() {
+  const productPrices: number[] = [];
+  productsInCart.forEach((product) => {
+    productPrices.push(product.priceForCart);
+  })
+  return productPrices.length;
+}
+
+function countProductInCart() {
+  const productCount: number[] = [];
+  productsInCart.forEach((product) => {
+    productCount.push(product.initialQuality);
+  })
+  return countTotalSum(productCount);
+}
+
+function countTotalSum(pricesCollection: number[]) {
+  if (pricesCollection.length > 0) {
+    const count: number = pricesCollection.reduce((acc, item) => acc + item);
+    return count;
+  }
+  return 0;
+}
+
 export function showCountProductInCart() {
   const countContainer = document.querySelector<HTMLElement>('.header__wrapper__cart_circle-with-number');
   const countItem = document.querySelector('.circle-with-number__count') as HTMLElement;
-  countItem.textContent = `${priceProductsInCart.length}`;
-  if (priceProductsInCart.length > 0) {
+  const count = countProductInCart();
+  countItem.textContent = `${count}`;
+  if (count > 0) {
     countContainer?.classList.add('circle-with-number_colored');
   } else {
     countContainer?.classList.remove('circle-with-number_colored');
@@ -101,7 +138,7 @@ export function showCountProductInCart() {
 
 function showTotalSumInHeader() {
   const totalProductSum = document.querySelector('.header__wrapper__total-amount_number') as HTMLElement;
-  totalProductSum.textContent = `${countTotalSum(priceProductsInCart)}`;
+  totalProductSum.textContent = `${countSumProductInCart()}`;
 }
 
 function addProductInCart(item: HTMLElement, className: string) {
@@ -131,8 +168,8 @@ wrapperForPage.addEventListener('click', function(event) {
   const item = event.target;
   if (!item) return;
 
-  addProductInCartClickByAddToCard(item as HTMLElement);
   addProductInCartClickBtnAdd(item as HTMLDivElement);
+  addProductInCartClickByAddToCard(item as HTMLElement);
   showCountProductInCart();
   increaseCountProductInCart(item as HTMLElement);
   decreaseCountProductInCart(item as HTMLElement);
@@ -164,9 +201,9 @@ function increaseCountProductInCart(item: HTMLElement) {
       productsInCart[id].initialQuality += 1;
       productsInCart[id].stockForCart -= 1;
       productsInCart[id].priceForCart = productsInCart[id].priceForCart + productsInCart[id].price;
-      priceProductsInCart.push(productsInCart[id].price);
-      summaryCount.textContent = `${priceProductsInCart.length}`;
-      summaryTotal.textContent = `${countTotalSum(priceProductsInCart)}`;
+
+      summaryCount.textContent = `${countProductInCart()}`;
+      summaryTotal.textContent = `${countSumProductInCart()}`;
       showTotalSumInHeader();
       showCountProductInCart();
 
@@ -198,26 +235,37 @@ function decreaseCountProductInCart (item: HTMLElement) {
       productsInCart[id].initialQuality -= 1;
       productsInCart[id].stockForCart += 1;
       productsInCart[id].priceForCart = productsInCart[id].priceForCart - productsInCart[id].price;
-      removePriceProductInTotalCount(priceProductsInCart, productsInCart[id].price);
-      summaryCount.textContent = `${priceProductsInCart.length}`;
-      summaryTotal.textContent = `${countTotalSum(priceProductsInCart)}`;
+
+      summaryCount.textContent = `${countProductInCart()}`;
+      summaryTotal.textContent = `${countSumProductInCart()}`;
       showTotalSumInHeader();
       showCountProductInCart();
+      console.log(priceProductsInCart)
 
       inputNumber.textContent = `${productsInCart[id].initialQuality}`;
       stock.textContent = `${productsInCart[id].stockForCart}`;
       price.textContent = `${productsInCart[id].priceForCart}`;
     }
     else if (productsInCart[id].initialQuality === 1) {
+      const cardBlock = document.querySelector('.main-block__product-card-block') as HTMLElement;
+      const itemCount = document.querySelector('.title-block__item-count') as HTMLElement;
       inputNumber.textContent = `${productsInCart[id].initialQuality}`;
       stock.textContent = `${productsInCart[id].stockForCart}`;
       price.textContent = `${productsInCart[id].priceForCart}`;
+
+      removeProductInCart(productsInCart, (dataSetId as string));
+      cardBlock.innerHTML = '';
+      createCartProduct(cardBlock, itemCount);
+      summaryCount.textContent = `${countProductInCart()}`;
+      summaryTotal.textContent = `${countSumProductInCart()}`;
+      showTotalSumInHeader();
+      showCountProductInCart();
     }
   }
 }
 
-function removePriceProductInTotalCount(arr: number[], value: number) {
-  const index = arr.findIndex((item) => item === value)
+function removeProductInCart(arr: Product[], value: string) {
+  const id = Number(value);
+  const index = arr.findIndex((item) => item.id === id)
   return arr.splice(index, 1);
 }
-
