@@ -52,11 +52,25 @@
   }
 }
 
-// .two-col{
-//   width: 320px !important;
-//   height: 370px !important;
-//   img {
-//     width: 300px !important;
-//     height: 300px !important;
-//   }
-// }
+.two-col{
+  width: 320px !important;
+  height: 370px !important;
+  img {
+    width: 300px !important;
+    height: 300px !important;
+  }
+}
+
+.two-col-shadow{
+  width: 300px !important;
+  height: 300px !important;
+  font-size: 1.3em;
+}
+
+.two-col-button{
+  width: 150px !important;
+}
+
+.two-col-btn-area{
+  width: 280px !important;
+}

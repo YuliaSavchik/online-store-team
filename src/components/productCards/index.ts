@@ -61,7 +61,7 @@ class ProductCard {
 export const productsBlock: HTMLDivElement = document.createElement("div");
 productsBlock.classList.add("products-block");
 
-export const sortSelect : HTMLSelectElement = createSortSelect("select-sort");
+export const sortSelect: HTMLSelectElement = createSortSelect("select-sort");
 sortSelect.addEventListener("change", fillFiltersObj);
 
 export const cardsArea: HTMLDivElement = document.createElement("div");
@@ -76,7 +76,7 @@ export function createCardsArea(filtersObj: IFilters): void {
     "#f5b2d2",
   ];
 
-  cardsArea.innerHTML = '';
+  cardsArea.innerHTML = "";
 
   let cardsArr: Product[] = [];
   for (let i = 0; i < products.length; i++) {
@@ -88,12 +88,12 @@ export function createCardsArea(filtersObj: IFilters): void {
     cardsArr = cardsArr.filter((item) =>
       filtersObj.device.includes(item.device)
     );
-  } 
+  }
   if (filtersObj.material.length > 0) {
     cardsArr = cardsArr.filter((item) =>
       filtersObj.material.includes(item.material)
     );
-  } 
+  }
   if (filtersObj.color.length > 0) {
     cardsArr = cardsArr.filter((item) => filtersObj.color.includes(item.color));
   }
@@ -116,7 +116,25 @@ export function createCardsArea(filtersObj: IFilters): void {
     cardsArea.appendChild(card.render());
   }
 
+  if (cardsArea.style.gridTemplateColumns === "auto auto") {
+    for (const elem of cardsArea.children) {
+      elem.classList.add("two-col");
+      for (const el of elem.children) {
+        if (el.classList.contains("product-card_shadow")) {
+          el.classList.add("two-col-shadow");
+        }
+        if (el.classList.contains("product-card_buttons")) {
+          el.classList.add("two-col-btn-area");
+          for (const btn of el.children) {
+            if (btn.classList.contains("button")) {
+              btn.classList.add("two-col-button");
+            }
+          }
+        }
+      }
+    }
+  }
+
   productsBlock.innerHTML = "";
   productsBlock.appendChild(cardsArea);
 }
-
