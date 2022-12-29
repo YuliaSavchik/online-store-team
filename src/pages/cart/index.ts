@@ -7,6 +7,7 @@ import { productsInCart } from '../../index';
 
 import { countTotalSum } from '../../components/summary/index';
 import { priceProductsInCart } from '../../index';
+//import { Product } from '../../types/interfaces';
 
 class CartPage extends Page {
   constructor(id: string) {
@@ -90,8 +91,8 @@ export default CartPage;
 export function showCountProductInCart() {
   const countContainer = document.querySelector<HTMLElement>('.header__wrapper__cart_circle-with-number');
   const countItem = document.querySelector('.circle-with-number__count') as HTMLElement;
-  countItem.textContent = `${productsInCart.length}`;
-  if (productsInCart.length > 0) {
+  countItem.textContent = `${priceProductsInCart.length}`;
+  if (priceProductsInCart.length > 0) {
     countContainer?.classList.add('circle-with-number_colored');
   } else {
     countContainer?.classList.remove('circle-with-number_colored');
@@ -133,6 +134,8 @@ wrapperForPage.addEventListener('click', function(event) {
   addProductInCartClickByAddToCard(item as HTMLElement);
   addProductInCartClickBtnAdd(item as HTMLDivElement);
   showCountProductInCart();
+  increaseCountProductInCart(item as HTMLElement);
+  decreaseCountProductInCart(item as HTMLElement);
 });
 
 export function addProductInCartClickByNow(dataSetId: string | undefined) {
@@ -145,3 +148,76 @@ export function addProductInCartClickByNow(dataSetId: string | undefined) {
     showTotalSumInHeader();
   }
 }
+
+function increaseCountProductInCart(item: HTMLElement) {
+  if ((item as HTMLElement).closest('.btn-count_plus')) {
+    const dataSetId = (item as HTMLElement).dataset.idbtn;
+    const cartProductNum = document.getElementById(`product-num-id-${dataSetId}`) as HTMLElement;
+    const id = Number(cartProductNum.textContent) - 1;
+    const inputNumber = document.getElementById(`input-id-${dataSetId}`) as HTMLElement;
+    const stock = document.getElementById(`stock-id-${dataSetId}`) as HTMLElement;
+    const price = document.getElementById(`price-id-${dataSetId}`) as HTMLElement;
+    const summaryCount = document.querySelector('.product-count_num') as HTMLElement;
+    const summaryTotal = document.querySelector('.total_sum') as HTMLElement;
+
+    if(productsInCart[id].stockForCart > 0) {
+      productsInCart[id].initialQuality += 1;
+      productsInCart[id].stockForCart -= 1;
+      productsInCart[id].priceForCart = productsInCart[id].priceForCart + productsInCart[id].price;
+      priceProductsInCart.push(productsInCart[id].price);
+      summaryCount.textContent = `${priceProductsInCart.length}`;
+      summaryTotal.textContent = `${countTotalSum(priceProductsInCart)}`;
+      showTotalSumInHeader();
+      showCountProductInCart();
+
+      inputNumber.textContent = `${productsInCart[id].initialQuality}`;
+      stock.textContent = `${productsInCart[id].stockForCart}`;
+      price.textContent = `${productsInCart[id].priceForCart}`;
+    }
+    else if (productsInCart[id].stockForCart === 0) {
+      inputNumber.textContent = `${productsInCart[id].initialQuality}`;
+      stock.textContent = `${productsInCart[id].stockForCart}`;
+      price.textContent = `${productsInCart[id].priceForCart}`;
+    }
+    
+  }
+}
+
+function decreaseCountProductInCart (item: HTMLElement) {
+  if ((item as HTMLElement).closest('.btn-count_minus')) {
+    const dataSetId = (item as HTMLElement).dataset.idbtn;
+    const cartProductNum = document.getElementById(`product-num-id-${dataSetId}`) as HTMLElement;
+    const id = Number(cartProductNum.textContent) - 1;
+    const inputNumber = document.getElementById(`input-id-${dataSetId}`) as HTMLElement;
+    const stock = document.getElementById(`stock-id-${dataSetId}`) as HTMLElement;
+    const price = document.getElementById(`price-id-${dataSetId}`) as HTMLElement;
+    const summaryCount = document.querySelector('.product-count_num') as HTMLElement;
+    const summaryTotal = document.querySelector('.total_sum') as HTMLElement;
+
+    if (productsInCart[id].initialQuality > 1) {
+      productsInCart[id].initialQuality -= 1;
+      productsInCart[id].stockForCart += 1;
+      productsInCart[id].priceForCart = productsInCart[id].priceForCart - productsInCart[id].price;
+      removePriceProductInTotalCount(priceProductsInCart, productsInCart[id].price);
+      summaryCount.textContent = `${priceProductsInCart.length}`;
+      summaryTotal.textContent = `${countTotalSum(priceProductsInCart)}`;
+      showTotalSumInHeader();
+      showCountProductInCart();
+
+      inputNumber.textContent = `${productsInCart[id].initialQuality}`;
+      stock.textContent = `${productsInCart[id].stockForCart}`;
+      price.textContent = `${productsInCart[id].priceForCart}`;
+    }
+    else if (productsInCart[id].initialQuality === 1) {
+      inputNumber.textContent = `${productsInCart[id].initialQuality}`;
+      stock.textContent = `${productsInCart[id].stockForCart}`;
+      price.textContent = `${productsInCart[id].priceForCart}`;
+    }
+  }
+}
+
+function removePriceProductInTotalCount(arr: number[], value: number) {
+  const index = arr.findIndex((item) => item === value)
+  return arr.splice(index, 1);
+}
+

@@ -13,4 +13,7 @@ export interface Product {
   mainImage: string;
   image_1: string;
   image_2: string;
+  initialQuality: number;
+  stockForCart: number;
+  priceForCart: number;
 }

@@ -1,10 +1,11 @@
+import { products } from "../../data/data";
+
 export function createInputCoutnInCart(id: number) {
   const inputCount: HTMLElement = document.createElement('div');
   inputCount.classList.add('input-count');
-  const input: HTMLInputElement = document.createElement('input');
-  input.setAttribute('type', 'text');
-  input.setAttribute('pattern', '^[0-9]+$');
-  input.setAttribute('value', '1');
+  const input: HTMLElement = document.createElement('div');
+  input.textContent = `${products[id - 1].initialQuality}`;
+  input.setAttribute('id', `input-id-${id}`);
   input.classList.add('input-count__number');
   const btnPlus: HTMLElement = document.createElement('div');
   btnPlus.setAttribute('data-idbtn', `${id}`);
