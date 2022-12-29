@@ -53,12 +53,20 @@ class MainPage extends Page {
       btnViewTwoColums.classList.remove("checked");
       btnViewThreeColums.classList.add("checked");
       cardsArea.style.gridTemplateColumns = 'auto auto auto';
+
+      for(const elem of cardsArea.children){
+        elem.classList.remove('two-col')
+      }
     });
 
     btnViewTwoColums.addEventListener("click", () => {
       btnViewThreeColums.classList.remove("checked");
       btnViewTwoColums.classList.add("checked");
-      cardsArea.style.gridTemplateColumns = 'auto auto';     
+      cardsArea.style.gridTemplateColumns = 'auto auto';
+      
+      for(const elem of cardsArea.children){
+        elem.classList.add('two-col')
+      }
     });
 
     settings.append(btnBlock, btnSort, found, searchInput, btnViewBlock);

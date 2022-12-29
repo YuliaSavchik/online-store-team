@@ -224,6 +224,6 @@ export function fillFiltersObj(event: Event) {
       }
     }
   }
-  
+
   return createCardsArea(filtersObj);
 }

@@ -76,6 +76,8 @@ export function createCardsArea(filtersObj: IFilters): void {
     "#f5b2d2",
   ];
 
+  cardsArea.innerHTML = '';
+
   let cardsArr: Product[] = [];
   for (let i = 0; i < products.length; i++) {
     cardsArr.push(products[i]);
@@ -86,11 +88,13 @@ export function createCardsArea(filtersObj: IFilters): void {
     cardsArr = cardsArr.filter((item) =>
       filtersObj.device.includes(item.device)
     );
-  } else if (filtersObj.material.length > 0) {
+  } 
+  if (filtersObj.material.length > 0) {
     cardsArr = cardsArr.filter((item) =>
       filtersObj.material.includes(item.material)
     );
-  } else if (filtersObj.color.length > 0) {
+  } 
+  if (filtersObj.color.length > 0) {
     cardsArr = cardsArr.filter((item) => filtersObj.color.includes(item.color));
   }
 
