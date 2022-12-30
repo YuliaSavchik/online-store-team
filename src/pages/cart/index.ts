@@ -87,13 +87,23 @@ function createCartProduct(container: HTMLElement, itemsCount: HTMLElement) {
       const product: CartProducts = new CartProducts(prod, item + 1);
       container.append(product.render());
       itemsCount.textContent = `items: ${countItemsInCart()}`;
-      console.log('корзина перерисована')
-      console.log(countItemsInCart())
     })
     return container;
   }
-  container.innerHTML = '';
-  itemsCount.textContent = `items: 0`;
+  emptyCart()
+}
+
+function emptyCart() {
+  const cartBlock = document.querySelector<HTMLElement>('.cart__main-block');
+  const summary = document.querySelector<HTMLElement>('.cart__summaty-block');
+  if (!cartBlock) return;
+  cartBlock.innerHTML = '';
+  const text: HTMLDivElement = document.createElement('div');
+  text.classList.add('empty-text');
+  text.textContent = 'Cart is Empty';
+  cartBlock.append(text);
+  if(!summary) return;
+  summary.style.display = 'none';
 }
 
 function countSumProductInCart() {
