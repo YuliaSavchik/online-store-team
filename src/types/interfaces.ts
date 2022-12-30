@@ -17,3 +17,9 @@ export interface Product {
   stockForCart: number;
   priceForCart: number;
 }
+
+export interface IFilters {
+  device: string[];
+  material: string[];
+  color: string[];
+}

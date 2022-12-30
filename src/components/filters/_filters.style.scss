@@ -32,7 +32,7 @@
     &:checked + .color-label:before {
       content: "✔";
       position: absolute;
-      top: 20px;
+      top: 25px;
       color: white;
       cursor: pointer;
     }

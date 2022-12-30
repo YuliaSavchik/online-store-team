@@ -7,6 +7,17 @@
   border-radius: 2px;
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.25);
+  }
 }
 
 .button_small-size {
@@ -30,9 +41,13 @@
   background-color: $color_blue;
 }
 
-.btn-sopt {
+.select-sort {
   border: $border_style;
   background-color: $color_pink;
+  outline: none;
+  width: 220px;
+  height: 40px;
+  padding-left: 40px;
 }
 
 .btn-add,
@@ -47,7 +62,7 @@
   background-color: $color_green;
 }
 
-.product-description__btn-buy-now{
+.product-description__btn-buy-now {
   width: 140px;
   background-color: $color_blue;
 }
@@ -114,9 +129,27 @@
 }
 
 .button-view_three-colums {
-  background-image: url('assets/view-three-columns.png');
+  background-image: url("assets/view-three-columns.png");
 }
 
 .button-view_two-colums {
-  background-image: url('assets/view-two-columns.png');
+  background-image: url("assets/view-two-columns.png");
+}
+
+.button-view_three-colums,
+.button-view_two-colums {
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.25);
+  }
+  &:active {
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
+.checked {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.25);
 }
