@@ -27,6 +27,24 @@ export function createViewPageButtons(btnClassName: string) {
   return btn;
 }
 
+export function createSortSelect(selectClassName: string){
+  const select : HTMLSelectElement = document.createElement('select');
+  select.classList.add(selectClassName);
+  const option1 : HTMLOptionElement = document.createElement('option');
+  option1.innerHTML = 'SORT';
+  const option2 : HTMLOptionElement = document.createElement('option');
+  option2.innerHTML = 'ascending price';
+  const option3 : HTMLOptionElement = document.createElement('option');
+  option3.innerHTML = 'descending price';
+  const option4 : HTMLOptionElement = document.createElement('option');
+  option4.innerHTML = 'ascending rating';
+  const option5 : HTMLOptionElement = document.createElement('option');
+  option5.innerHTML = 'descending rating';
+  select.append(option1, option2, option3, option4, option5);
+   
+  return select;
+}
+
 /* 
 main page
 const btnReset = createMainButtons('reset', 'button_meddium-size', 'btn-reset');

@@ -35,6 +35,14 @@ export class ProductCardPage {
 
     imagesBlock.append(mainImage, image1, image2)
 
+    image1.addEventListener("click", () => {
+      [mainImage.src, image1.src] = [image1.src, mainImage.src];
+    });
+
+    image2.addEventListener("click", () => {
+      [mainImage.src, image2.src] = [image2.src, mainImage.src];
+    });
+
     //block with description
     const pageDescriptionBlock : HTMLDivElement = document.createElement('div');
     pageDescriptionBlock.classList.add('prod-card__description')
