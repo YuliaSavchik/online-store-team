@@ -67,7 +67,10 @@ sortSelect.addEventListener("change", fillFiltersObj);
 export const cardsArea: HTMLDivElement = document.createElement("div");
 cardsArea.classList.add("product-cards-area");
 
-export function createCardsArea(filtersObj: IFilters): void {
+export const found: HTMLDivElement = document.createElement("div");
+found.classList.add("found");
+
+export function createCardsArea(filtersObj: IFilters) : void{
   const colorsArr: string[] = [
     "#f2634c",
     "#b1c8f5",
@@ -134,7 +137,8 @@ export function createCardsArea(filtersObj: IFilters): void {
       }
     }
   }
-
+  
+  found.textContent = `Found: ${cardsArr.length}`;
   productsBlock.innerHTML = "";
   productsBlock.appendChild(cardsArea);
 }

@@ -6,6 +6,7 @@ import { createFilterBlock } from "../../components/filters/index";
 import { createNoUiSliderBlock } from "../../components/noUiSlider/index";
 import {
   cardsArea,
+  found,
   productsBlock,
   sortSelect,
 } from "../../components/productCards/index";
@@ -36,10 +37,6 @@ class MainPage extends Page {
     btnBlock.append(btnReset, btnCopyLink);
 
     const btnSort = sortSelect;
-
-    const found: HTMLDivElement = document.createElement("div");
-    found.classList.add("found");
-    found.textContent = `Found: ${15}`;
 
     const searchInput = createSearchInput();
 
