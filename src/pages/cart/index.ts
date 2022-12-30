@@ -4,8 +4,8 @@ import { CartProducts } from '../../components/cartProducts/index';
 import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
 import { productsInCart } from '../../index';
-import { priceProductsInCart } from '../../index';
 import { Product } from '../../types/interfaces';
+import { createModalWindow } from '../../components/modalWindow/index';
 
 class CartPage extends Page {
   constructor(id: string) {
@@ -74,7 +74,8 @@ class CartPage extends Page {
   }
   render() {
     const content = this.createContent();
-    this.container.append(content)
+    this.container.append(content);
+    showAvailablePromoCode();
     return this.container;
   }
 }
@@ -93,7 +94,7 @@ function createCartProduct(container: HTMLElement, itemsCount: HTMLElement) {
   emptyCart()
 }
 
-function emptyCart() {
+export function emptyCart() {
   const cartBlock = document.querySelector<HTMLElement>('.cart__main-block');
   const summary = document.querySelector<HTMLElement>('.cart__summaty-block');
   if (!cartBlock) return;
@@ -164,7 +165,6 @@ function addProductInCart(item: HTMLElement, className: string) {
 
     if (result === -1) {
       productsInCart.push(products[index]);
-      priceProductsInCart.push(products[index].price);
       showTotalSumInHeader();
     }
   }
@@ -187,15 +187,16 @@ function changeTotalInSummaryAndHeader() {
   showCountProductInCartIco();
 }
 
-export function addProductInCartClickByNow(dataSetId: string | undefined) {
+export function addProductInCartClickByNow(dataSetId: string | undefined, item: HTMLElement) {
   const itemId = Number(dataSetId);
   const result = productsInCart.findIndex((product) => product.id === itemId )
 
   if (result === -1) {
     productsInCart.push(products[itemId - 1]);
-    priceProductsInCart.push(products[itemId - 1].price);
     showTotalSumInHeader();
   }
+
+  openModalWindowInProductCart(item);
 }
 
 function changeCountsProductsInCard(dataSetId: string, countData: number, stockData: number, priceData: number) {
@@ -278,6 +279,171 @@ function removeProductInCart(arr: Product[], value: string) {
   return arr.splice(index, 1);
 }
 
+function createDescriptionPromoCode(promoId: string, namePromo: string, btnName: string, contaiter: HTMLElement) {
+  const promoCodeName: HTMLElement = document.createElement('div');
+  promoCodeName.classList.add('promo-code-name');
+  promoCodeName.textContent = `${namePromo} - 10%`;
+  const promoCodeBtn: HTMLButtonElement = document.createElement('button');
+  promoCodeBtn.classList.add('promo-code-btn');
+  promoCodeBtn.classList.add(`promo-code-btn_${btnName}`);
+  promoCodeBtn.setAttribute(`data-id${btnName}`, `id-${promoId}`);
+  promoCodeBtn.textContent = `${btnName}`;
+  contaiter.append(promoCodeName, promoCodeBtn);
+  contaiter.classList.remove('promo-code-none');
+
+  return contaiter;
+}
+
+export function showAvailablePromoCode() {
+  const input = document.querySelector<HTMLInputElement>('.summary-container__input-promo-code');
+  if(!input) return;
+  const containerForPromo = document.querySelector<HTMLElement>('.promo-code__block-add');
+  if(!containerForPromo) return;
+
+  input.addEventListener('input', () => {
+    if (input.value === 'RS') {
+      createDescriptionPromoCode(input.value, 'RSSchool', 'add', containerForPromo);
+    }
+    else if (input.value === 'EPM') {
+      createDescriptionPromoCode(input.value, 'EPAM System', 'add', containerForPromo);
+    }
+    else {
+      containerForPromo.textContent = '';
+    }
+  });
+}
+
+function addPromoCode(item: HTMLElement) {
+  const summary = document.querySelector<HTMLElement>('.summary-container');
+  if (!summary) return;
+  const containerForAdd = document.querySelector<HTMLElement>('.applied-promo-code-block');
+  if (!containerForAdd) return;
+  const conteinerAppliedRS = document.querySelector<HTMLElement>('.applied-promo-code-rs');
+  if(!conteinerAppliedRS) return;
+  const conteinerAppliedEPM = document.querySelector<HTMLElement>('.applied-promo-code-epm');
+  if(!conteinerAppliedEPM) return;
+  const containerForPromo = document.querySelector<HTMLElement>('.promo-code__block-add');
+  if(!containerForPromo) return;
+  const summaryTotalSum = document.querySelector<HTMLElement>('.total_sum');
+  if (!summaryTotalSum) return;
+
+  if ((item as HTMLElement).closest('.promo-code-btn_add')) {
+    if (item.dataset.idadd === 'id-RS') {
+      conteinerAppliedRS.setAttribute('id', 'id-RS');
+      containerForAdd.append(createDescriptionPromoCode('RS', 'RSSchool', 'drop', conteinerAppliedRS));
+      containerForAdd.classList.remove('promo-code-none');
+      containerForPromo.textContent = '';
+      summary.classList.add('add-promo-block');
+      if (summaryTotalSum.closest('.total-with-promo')) {
+        addSecondPromoCodeToPrice();
+      } else {
+        addFirstPromoCodeToPrice();
+      }
+     
+    }
+    else if (item.dataset.idadd === 'id-EPM') {
+      conteinerAppliedEPM.setAttribute('id', 'id-EPM')
+      containerForAdd.append(createDescriptionPromoCode('EPM', 'EPAM System', 'drop', conteinerAppliedEPM));
+      containerForAdd.classList.remove('promo-code-none');
+      containerForPromo.textContent = '';
+      summary.classList.add('add-promo-block');
+      if (summaryTotalSum.closest('.total-with-promo')) {
+        addSecondPromoCodeToPrice();
+      } else {
+        addFirstPromoCodeToPrice();
+      }
+    }
+  }
+}
+
+function addFirstPromoCodeToPrice() {
+  const summaryTotalSum = document.querySelector<HTMLElement>('.total_sum');
+  if (!summaryTotalSum) return;
+  const summaryTotalSumWithPromo = document.querySelector<HTMLElement>('.total_sum-with-promo');
+  if (!summaryTotalSumWithPromo) return;
+  const total = Number(summaryTotalSum.textContent);
+  summaryTotalSum.classList.add('total-with-promo');
+  summaryTotalSumWithPromo.textContent = `${countSumWithPromo(total)}`;
+}
+
+function addSecondPromoCodeToPrice() {
+  const summaryTotalSumWithPromo = document.querySelector<HTMLElement>('.total_sum-with-promo');
+  if (!summaryTotalSumWithPromo) return;
+  const totalWithPromo = Number(summaryTotalSumWithPromo.textContent);
+  summaryTotalSumWithPromo.textContent = `${countSumWithPromo(totalWithPromo)}`;
+}
+
+function removePromoCode(item: HTMLElement) {
+  const summary = document.querySelector<HTMLElement>('.summary-container');
+  if (!summary) return;
+  const containerForAdd = document.querySelector<HTMLElement>('.applied-promo-code-block');
+  if (!containerForAdd) return;
+  const summaryTotalSum = document.querySelector<HTMLElement>('.total_sum');
+  if (!summaryTotalSum) return;
+  const totalSum = Number(summaryTotalSum.textContent);
+  const summaryTotalSumWithPromo = document.querySelector<HTMLElement>('.total_sum-with-promo');
+  if (!summaryTotalSumWithPromo) return;
+  if ((item as HTMLElement).closest('.promo-code-btn_drop')) {
+    const dataSetId = item.dataset.iddrop;
+    const delPromoBlock = document.getElementById(dataSetId as string) as HTMLElement;
+    if (summaryTotalSumWithPromo.textContent !== '') {
+      const total = Number(summaryTotalSumWithPromo.textContent);
+      summaryTotalSumWithPromo.textContent = `${countSumDelitePromo(total)}`;
+      delPromoBlock.innerHTML = '';
+      const sumWithPromo = countSumDelitePromo(total)
+      if ( totalSum === sumWithPromo) {
+        summaryTotalSumWithPromo.textContent = '';
+        containerForAdd.classList.add('promo-code-none');
+        summaryTotalSum.classList.remove('total-with-promo');
+        summary.classList.remove('add-promo-block');
+      }
+    }
+
+  }
+}
+
+function countSumWithPromo(sum: number) {
+  const percent = (sum / 100) * 10;
+  const result = Math.round(sum - percent);
+  console.log(result)
+  return result;
+}
+
+function countSumDelitePromo(sum: number) {
+  const percent = (sum / 100) * 10;
+  const result = Math.round(sum + percent);
+  console.log(result)
+  return result;
+}
+
+function openModalWindowInCart(item: HTMLElement) {
+  if ((item as HTMLElement).closest('.cart__btn-buy-now')) {
+    createModalWindow();
+    clouseModalWindow();
+  }
+}
+
+function openModalWindowInProductCart(item: HTMLElement) {
+  if ((item as HTMLElement).closest('.product-description__btn-buy-now')) {
+    createModalWindow();
+    clouseModalWindow();
+  }
+}
+
+function clouseModalWindow() {
+  const modal = document.querySelector<HTMLElement>('.modal-window__shadow');
+    if (!modal) return; 
+    modal.addEventListener('click', (event) => {
+      const item = event.target;
+      if (!item) return;
+
+      if ((item as HTMLElement).closest('.modal-window__shadow')) {
+        modal.remove();
+      }
+    })
+}
+
+
 const wrapperForPage = (document.querySelector('.main') as HTMLElement);
 
 wrapperForPage.addEventListener('click', function(event) {
@@ -289,4 +455,11 @@ wrapperForPage.addEventListener('click', function(event) {
   showCountProductInCartIco();
   increaseCountProductInCart(item as HTMLElement);
   decreaseCountProductInCart(item as HTMLElement);
+  addPromoCode(item as HTMLDivElement);
+  removePromoCode(item as HTMLDivElement);
+  openModalWindowInCart(item as HTMLElement);
 });
+
+
+
+

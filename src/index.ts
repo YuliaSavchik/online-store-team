@@ -9,4 +9,3 @@ const app = new App;
 app.renderPage();
 
 export const productsInCart: Product[] = [];
-export const priceProductsInCart: number[] = [];

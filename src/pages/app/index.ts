@@ -6,6 +6,9 @@ import ErrorPage from '../error/index';
 import { PagesId } from '../../types/enums';
 import { showCountProductInCartIco } from '../cart/index';
 import { addProductInCartClickByNow } from '../cart/index';
+import { showAvailablePromoCode } from '../cart/index';
+import { productsInCart } from '../../index';
+import { emptyCart } from '../cart/index';
 
 export const wrapperForPage = (document.querySelector('.main') as HTMLElement);
 
@@ -63,6 +66,7 @@ function updateURL(pageId: string) {
       console.warn('History API не поддерживается');
   }
 }
+
 wrapperForPage.addEventListener('click', function(event) {
   
   const item = event.target;
@@ -83,10 +87,26 @@ wrapperForPage.addEventListener('click', function(event) {
 
   if ((item as HTMLDivElement).closest('.product-description__btn-buy-now')) {
     const dataSetId = (item as HTMLDivElement).dataset.idbtn;
-    addProductInCartClickByNow(dataSetId);
+    addProductInCartClickByNow(dataSetId, (item as HTMLElement));
     showCountProductInCartIco();
 
     App.renderNewPage('cart-page');
     updateURL('cart-page');
+  }
+});
+
+const headerBtnCart = document.querySelector('.header__wrapper__cart') as HTMLElement;
+headerBtnCart.addEventListener('click', (event) => {
+  const item = event.target;
+  if (!item) return;
+
+  if ((item as HTMLDivElement).closest('.header__wrapper__cart')) {
+    App.renderNewPage('cart-page');
+    updateURL('cart-page');
+    showAvailablePromoCode();
+
+    if (productsInCart.length === 0) {
+      emptyCart();
+    }
   }
 });
