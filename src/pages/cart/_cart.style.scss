@@ -7,7 +7,12 @@
 
 .cart__wrapper {
   width: 100%;
+  background-color: #ffffff;
   @include display-flex(row, center, flex-start);
+}
+
+.main-block__product-card-block {
+  width: 100%;
 }
 
 .cart__main-block {
@@ -33,6 +38,16 @@
 }
 
 .cart__summaty-block {
-  background-color: #ffffff;
+  width: calc(100% - 866px);
+  padding: 100px 0;
   @include display-flex(row, center, center);
+}
+
+.empty-text {
+  width: 100%;
+  font-size: 22px;
+  line-height: 25px;
+  font-weight: 600;
+  text-align: center;
+  margin: 30px 0;
 }

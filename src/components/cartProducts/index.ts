@@ -1,6 +1,6 @@
-import { products } from "../../data/data";
+//import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
-import {createInputCoutnInCart} from "../inputs/index"
+import {createInputCoutnInCart} from "../inputs/index";
 
 export class CartProducts {
   data: Product;
@@ -22,6 +22,7 @@ export class CartProducts {
     //product number
     const productNumber : HTMLDivElement = document.createElement("div");
     productNumber.classList.add('cart-products__number');
+    productNumber.setAttribute('id', `product-num-id-${this.data.id}`);
     productNumber.appendChild(document.createTextNode(String(this.num)))
 
     //image
@@ -54,17 +55,17 @@ export class CartProducts {
     const rangeStock : HTMLDivElement = document.createElement("div");
     rangeStock.classList.add('cart-products__range_stock');
 
-    rangeStock.innerHTML = `Stock: <b>${this.data.stock}</b>`
+    rangeStock.innerHTML = `Stock: <b id="stock-id-${this.data.id}">${this.data.stockForCart}</b>`
 
     const rangeInput : HTMLDivElement = document.createElement("div");
     rangeInput.classList.add('cart-products__range_input');
 
-    rangeInput.appendChild(createInputCoutnInCart())
+    rangeInput.appendChild(createInputCoutnInCart(this.data.id));
 
     const rangePrice : HTMLDivElement = document.createElement("div");
     rangePrice.classList.add('cart-products__range_price');
 
-    rangePrice.innerHTML = `Price: <b>${this.data.price}$</b>`
+    rangePrice.innerHTML = `Price: <b id="price-id-${this.data.id}">${this.data.priceForCart}</b>$`;
 
     productRange.append(rangeStock, rangeInput, rangePrice)
 
@@ -74,8 +75,8 @@ export class CartProducts {
   }
 }
 
-const main : Element | null = document.querySelector('.main');
+// const main : Element | null = document.querySelector('.main');
 
-const result : CartProducts = new CartProducts(products[1], 1)
+// const result : CartProducts = new CartProducts(products[1], 1)
 
-main?.appendChild(result.render())
+// main?.appendChild(result.render())

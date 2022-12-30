@@ -64,6 +64,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 10px 40px;
+    cursor: pointer;
     .header__wrapper__cart_image {
       img {
         width: 35px;
@@ -79,7 +80,14 @@ body {
       justify-content: center;
       align-items: center;
     }
+    .circle-with-number_colored {
+      background-color: $color_green;
+    }
   }
+}
+
+.header__wrapper__total-amount_number {
+  margin: 0 0 0 5px;
 }
 
 .main {

@@ -1,3 +1,6 @@
+import Page from '../../components/templates/page';
+import { infinitySlider } from '../../components/infinitySlider/index';
+//import { createCardsArea } from '../../components/productCards/index';
 import Page from "../../components/templates/page";
 import { createMainButtons } from "../../components/buttons/index";
 import { createSearchInput } from "../../components/inputs/index";
@@ -10,6 +13,7 @@ import {
   productsBlock,
   sortSelect,
 } from "../../components/productCards/index";
+
 class MainPage extends Page {
   constructor(id: string) {
     super(id);
@@ -19,8 +23,15 @@ class MainPage extends Page {
     const mainWrapper: HTMLDivElement = document.createElement("div");
     mainWrapper.classList.add("main__wrapper");
 
-    const settings: HTMLDivElement = document.createElement("div");
-    settings.classList.add("main__settings");
+
+    const sliderBlock: HTMLDivElement = document.createElement('div');
+    sliderBlock.classList.add('main__slider');
+    const addHeaderSlider : HTMLDivElement = infinitySlider();
+    sliderBlock.append(addHeaderSlider);
+
+    const settings: HTMLDivElement = document.createElement('div');
+    settings.classList.add('main__settings');
+
 
     const btnBlock: HTMLDivElement = document.createElement("div");
     btnBlock.classList.add("settings__btn-block");
@@ -108,7 +119,7 @@ class MainPage extends Page {
     filtersBlock.append(addFilterBlock, rangePrice, rangeStock);
 
     mainContent.append(filtersBlock, productsBlock);
-    mainWrapper.append(settings, mainContent);
+    mainWrapper.append(sliderBlock, settings, mainContent);
     return mainWrapper;
   }
   render() {
@@ -119,3 +130,4 @@ class MainPage extends Page {
 }
 
 export default MainPage;
+
