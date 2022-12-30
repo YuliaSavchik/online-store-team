@@ -11,6 +11,10 @@
   @include display-flex(row, center, flex-start);
 }
 
+.main-block__product-card-block {
+  width: 100%;
+}
+
 .cart__main-block {
   width: 866px;
   @include display-flex(column, center, flex-start);

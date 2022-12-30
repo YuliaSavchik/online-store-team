@@ -4,7 +4,6 @@ import { CartProducts } from '../../components/cartProducts/index';
 import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
 import { productsInCart } from '../../index';
-
 import { priceProductsInCart } from '../../index';
 import { Product } from '../../types/interfaces';
 
@@ -83,12 +82,18 @@ class CartPage extends Page {
 export default CartPage;
 
 function createCartProduct(container: HTMLElement, itemsCount: HTMLElement) {
-  productsInCart.forEach((prod, item) => {
-    const product: CartProducts = new CartProducts(prod, item + 1);
-    container.append(product.render());
-    itemsCount.textContent = `items: ${countItemsInCart()}`;
-  })
-  return container;
+  if (productsInCart.length > 0) {
+    productsInCart.forEach((prod, item) => {
+      const product: CartProducts = new CartProducts(prod, item + 1);
+      container.append(product.render());
+      itemsCount.textContent = `items: ${countItemsInCart()}`;
+      console.log('корзина перерисована')
+      console.log(countItemsInCart())
+    })
+    return container;
+  }
+  container.innerHTML = '';
+  itemsCount.textContent = `items: 0`;
 }
 
 function countSumProductInCart() {
@@ -124,7 +129,7 @@ function countTotalSum(pricesCollection: number[]) {
   return 0;
 }
 
-export function showCountProductInCart() {
+export function showCountProductInCartIco() {
   const countContainer = document.querySelector<HTMLElement>('.header__wrapper__cart_circle-with-number');
   const countItem = document.querySelector('.circle-with-number__count') as HTMLElement;
   const count = countProductInCart();
@@ -162,18 +167,15 @@ function addProductInCartClickByAddToCard(item: HTMLElement) {
   addProductInCart(item, '.btn-add-card');
 }
 
-const wrapperForPage = (document.querySelector('.main') as HTMLElement);
+function changeTotalInSummaryAndHeader() {
+  const summaryCount = document.querySelector('.product-count_num') as HTMLElement;
+  const summaryTotal = document.querySelector('.total_sum') as HTMLElement;
 
-wrapperForPage.addEventListener('click', function(event) {
-  const item = event.target;
-  if (!item) return;
-
-  addProductInCartClickBtnAdd(item as HTMLDivElement);
-  addProductInCartClickByAddToCard(item as HTMLElement);
-  showCountProductInCart();
-  increaseCountProductInCart(item as HTMLElement);
-  decreaseCountProductInCart(item as HTMLElement);
-});
+  summaryCount.textContent = `${countProductInCart()}`;
+  summaryTotal.textContent = `${countSumProductInCart()}`;
+  showTotalSumInHeader();
+  showCountProductInCartIco();
+}
 
 export function addProductInCartClickByNow(dataSetId: string | undefined) {
   const itemId = Number(dataSetId);
@@ -186,35 +188,40 @@ export function addProductInCartClickByNow(dataSetId: string | undefined) {
   }
 }
 
+function changeCountsProductsInCard(dataSetId: string, countData: number, stockData: number, priceData: number) {
+  const inputNumber = document.getElementById(`input-id-${dataSetId}`) as HTMLElement;
+  const stock = document.getElementById(`stock-id-${dataSetId}`) as HTMLElement;
+  const price = document.getElementById(`price-id-${dataSetId}`) as HTMLElement;
+
+  inputNumber.textContent = `${countData}`;
+  stock.textContent = `${stockData}`;
+  price.textContent = `${priceData}`;
+}
+
 function increaseCountProductInCart(item: HTMLElement) {
   if ((item as HTMLElement).closest('.btn-count_plus')) {
     const dataSetId = (item as HTMLElement).dataset.idbtn;
     const cartProductNum = document.getElementById(`product-num-id-${dataSetId}`) as HTMLElement;
     const id = Number(cartProductNum.textContent) - 1;
-    const inputNumber = document.getElementById(`input-id-${dataSetId}`) as HTMLElement;
-    const stock = document.getElementById(`stock-id-${dataSetId}`) as HTMLElement;
-    const price = document.getElementById(`price-id-${dataSetId}`) as HTMLElement;
-    const summaryCount = document.querySelector('.product-count_num') as HTMLElement;
-    const summaryTotal = document.querySelector('.total_sum') as HTMLElement;
 
     if(productsInCart[id].stockForCart > 0) {
       productsInCart[id].initialQuality += 1;
       productsInCart[id].stockForCart -= 1;
       productsInCart[id].priceForCart = productsInCart[id].priceForCart + productsInCart[id].price;
 
-      summaryCount.textContent = `${countProductInCart()}`;
-      summaryTotal.textContent = `${countSumProductInCart()}`;
-      showTotalSumInHeader();
-      showCountProductInCart();
-
-      inputNumber.textContent = `${productsInCart[id].initialQuality}`;
-      stock.textContent = `${productsInCart[id].stockForCart}`;
-      price.textContent = `${productsInCart[id].priceForCart}`;
+      changeTotalInSummaryAndHeader()
+      changeCountsProductsInCard((dataSetId as string), 
+        productsInCart[id].initialQuality, 
+        productsInCart[id].stockForCart,
+        productsInCart[id].priceForCart
+      )
     }
     else if (productsInCart[id].stockForCart === 0) {
-      inputNumber.textContent = `${productsInCart[id].initialQuality}`;
-      stock.textContent = `${productsInCart[id].stockForCart}`;
-      price.textContent = `${productsInCart[id].priceForCart}`;
+      changeCountsProductsInCard((dataSetId as string), 
+        productsInCart[id].initialQuality, 
+        productsInCart[id].stockForCart,
+        productsInCart[id].priceForCart
+      )
     }
     
   }
@@ -225,41 +232,32 @@ function decreaseCountProductInCart (item: HTMLElement) {
     const dataSetId = (item as HTMLElement).dataset.idbtn;
     const cartProductNum = document.getElementById(`product-num-id-${dataSetId}`) as HTMLElement;
     const id = Number(cartProductNum.textContent) - 1;
-    const inputNumber = document.getElementById(`input-id-${dataSetId}`) as HTMLElement;
-    const stock = document.getElementById(`stock-id-${dataSetId}`) as HTMLElement;
-    const price = document.getElementById(`price-id-${dataSetId}`) as HTMLElement;
-    const summaryCount = document.querySelector('.product-count_num') as HTMLElement;
-    const summaryTotal = document.querySelector('.total_sum') as HTMLElement;
 
     if (productsInCart[id].initialQuality > 1) {
       productsInCart[id].initialQuality -= 1;
       productsInCart[id].stockForCart += 1;
       productsInCart[id].priceForCart = productsInCart[id].priceForCart - productsInCart[id].price;
 
-      summaryCount.textContent = `${countProductInCart()}`;
-      summaryTotal.textContent = `${countSumProductInCart()}`;
-      showTotalSumInHeader();
-      showCountProductInCart();
-      console.log(priceProductsInCart)
-
-      inputNumber.textContent = `${productsInCart[id].initialQuality}`;
-      stock.textContent = `${productsInCart[id].stockForCart}`;
-      price.textContent = `${productsInCart[id].priceForCart}`;
+      changeTotalInSummaryAndHeader()
+      changeCountsProductsInCard((dataSetId as string), 
+        productsInCart[id].initialQuality, 
+        productsInCart[id].stockForCart,
+        productsInCart[id].priceForCart
+      )
     }
     else if (productsInCart[id].initialQuality === 1) {
       const cardBlock = document.querySelector('.main-block__product-card-block') as HTMLElement;
       const itemCount = document.querySelector('.title-block__item-count') as HTMLElement;
-      inputNumber.textContent = `${productsInCart[id].initialQuality}`;
-      stock.textContent = `${productsInCart[id].stockForCart}`;
-      price.textContent = `${productsInCart[id].priceForCart}`;
+      changeCountsProductsInCard((dataSetId as string), 
+        productsInCart[id].initialQuality, 
+        productsInCart[id].stockForCart,
+        productsInCart[id].priceForCart
+      )
 
       removeProductInCart(productsInCart, (dataSetId as string));
       cardBlock.innerHTML = '';
       createCartProduct(cardBlock, itemCount);
-      summaryCount.textContent = `${countProductInCart()}`;
-      summaryTotal.textContent = `${countSumProductInCart()}`;
-      showTotalSumInHeader();
-      showCountProductInCart();
+      changeTotalInSummaryAndHeader()
     }
   }
 }
@@ -269,3 +267,16 @@ function removeProductInCart(arr: Product[], value: string) {
   const index = arr.findIndex((item) => item.id === id)
   return arr.splice(index, 1);
 }
+
+const wrapperForPage = (document.querySelector('.main') as HTMLElement);
+
+wrapperForPage.addEventListener('click', function(event) {
+  const item = event.target;
+  if (!item) return;
+
+  addProductInCartClickBtnAdd(item as HTMLDivElement);
+  addProductInCartClickByAddToCard(item as HTMLElement);
+  showCountProductInCartIco();
+  increaseCountProductInCart(item as HTMLElement);
+  decreaseCountProductInCart(item as HTMLElement);
+});
