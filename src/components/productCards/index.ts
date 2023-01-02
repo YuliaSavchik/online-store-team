@@ -2,10 +2,12 @@ import { Product } from "../../types/interfaces";
 import { products } from "../../data/data";
 import { createMainButtons, createSortSelect } from "../buttons/index";
 import {
+  createFilterBlock,
   fillFiltersObj,
   filtersObj,
 } from "../filters/index";
 import { createSearchInput } from "../inputs/index";
+import { target } from "../noUiSlider/nouislider";
 
 const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
 const btnMore = createMainButtons("more", "button_small-size", "btn-more");
@@ -224,11 +226,40 @@ function checkSort(cardsArr: Product[]) {
   return cardsArr;
 }
 
+export const addFilterBlock: HTMLElement = createFilterBlock();
+
 export function reset() {
   filtersObj.color = [];
   filtersObj.device = [];
   filtersObj.material = [];
   searchInput.value = "";
 
-  createCardsArea()
+  const filters = addFilterBlock.getElementsByTagName("*");
+
+  for (const child of filters) {
+    if (child instanceof HTMLInputElement) {
+      child.checked = false;
+    }
+  }
+
+  const rangePrice: target = document.querySelector('.range-slider__range-price') as target;
+  const minValuePrice = document.querySelector('.value_min-price') as HTMLElement;
+  const maxValuePrice = document.querySelector('.value_max-price') as HTMLElement;
+  const inputsValuePrice = [minValuePrice, maxValuePrice];
+
+  const rangeStock: target = document.querySelector('.range-slider__range-stock') as target;
+  const minValueStock = document.querySelector('.value_min-stock') as HTMLElement;
+  const maxValueStock = document.querySelector('.value_max-stock') as HTMLElement;
+
+  const inputsValueStock = [minValueStock, maxValueStock];
+
+  rangePrice.noUiSlider?.set([5, 100]);
+  inputsValuePrice[0].innerHTML = '5$';
+  inputsValuePrice[1].innerHTML = '100$';
+
+  rangeStock.noUiSlider?.set([1, 100]);
+  inputsValueStock[0].innerHTML = '1';
+  inputsValueStock[1].innerHTML = '100';
+
+  createCardsArea();
 }

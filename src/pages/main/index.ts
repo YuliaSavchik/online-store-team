@@ -3,9 +3,9 @@ import { infinitySlider } from "../../components/infinitySlider/index";
 //import { createCardsArea } from '../../components/productCards/index';
 import { createMainButtons } from "../../components/buttons/index";
 import { createViewPageButtons } from "../../components/buttons/index";
-import { createFilterBlock } from "../../components/filters/index";
 import { createNoUiSliderBlock } from "../../components/noUiSlider/index";
 import {
+  addFilterBlock,
   cardsArea,
   found,
   productsBlock,
@@ -110,7 +110,7 @@ class MainPage extends Page {
     mainContent.classList.add("main__content");
     const filtersBlock: HTMLDivElement = document.createElement("div");
     filtersBlock.classList.add("filters-block");
-    const addFilterBlock: HTMLElement = createFilterBlock();
+    
     const rangePrice = createNoUiSliderBlock("price");
     rangePrice.classList.add("range-slider_border");
     const rangeStock = createNoUiSliderBlock("stock");
