@@ -1,5 +1,5 @@
-import Page from '../../components/templates/page';
-import { infinitySlider } from '../../components/infinitySlider/index';
+import Page from "../../components/templates/page";
+import { infinitySlider } from "../../components/infinitySlider/index";
 //import { createCardsArea } from '../../components/productCards/index';
 import { createMainButtons } from "../../components/buttons/index";
 import { createSearchInput } from "../../components/inputs/index";
@@ -18,19 +18,17 @@ class MainPage extends Page {
     super(id);
   }
 
-  private createContent() {
+  static createContent() {
     const mainWrapper: HTMLDivElement = document.createElement("div");
     mainWrapper.classList.add("main__wrapper");
 
-
-    const sliderBlock: HTMLDivElement = document.createElement('div');
-    sliderBlock.classList.add('main__slider');
-    const addHeaderSlider : HTMLDivElement = infinitySlider();
+    const sliderBlock: HTMLDivElement = document.createElement("div");
+    sliderBlock.classList.add("main__slider");
+    const addHeaderSlider: HTMLDivElement = infinitySlider();
     sliderBlock.append(addHeaderSlider);
 
-    const settings: HTMLDivElement = document.createElement('div');
-    settings.classList.add('main__settings');
-
+    const settings: HTMLDivElement = document.createElement("div");
+    settings.classList.add("main__settings");
 
     const btnBlock: HTMLDivElement = document.createElement("div");
     btnBlock.classList.add("settings__btn-block");
@@ -71,9 +69,9 @@ class MainPage extends Page {
             el.classList.remove("two-col-shadow");
           }
           if (el.classList.contains("product-card_buttons")) {
-            el.classList.remove('two-col-btn-area')
-            for(const btn of el.children){
-              if(btn.classList.contains('button')){
+            el.classList.remove("two-col-btn-area");
+            for (const btn of el.children) {
+              if (btn.classList.contains("button")) {
                 btn.classList.remove("two-col-button");
               }
             }
@@ -94,9 +92,9 @@ class MainPage extends Page {
             el.classList.add("two-col-shadow");
           }
           if (el.classList.contains("product-card_buttons")) {
-            el.classList.add('two-col-btn-area')
-            for(const btn of el.children){
-              if(btn.classList.contains('button')){
+            el.classList.add("two-col-btn-area");
+            for (const btn of el.children) {
+              if (btn.classList.contains("button")) {
                 btn.classList.add("two-col-button");
               }
             }
@@ -122,11 +120,11 @@ class MainPage extends Page {
     return mainWrapper;
   }
   render() {
-    const content = this.createContent();
     this.container.append(content);
     return this.container;
   }
 }
 
-export default MainPage;
+const content = MainPage.createContent();
 
+export default MainPage;

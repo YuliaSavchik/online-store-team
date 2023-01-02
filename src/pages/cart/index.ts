@@ -11,7 +11,6 @@ class CartPage extends Page {
   constructor(id: string) {
     super(id);
   }
-
   private createContent() {
     const cartWrapper: HTMLDivElement = document.createElement('div');
     cartWrapper.classList.add('cart__wrapper');

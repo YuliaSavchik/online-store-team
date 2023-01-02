@@ -6,6 +6,22 @@ import { fillFiltersObj } from "../filters/index";
 const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
 const btnMore = createMainButtons("more", "button_small-size", "btn-more");
 
+const prodNotFound = document.createElement("div");
+prodNotFound.classList.add("product-not-found");
+prodNotFound.appendChild(document.createTextNode("Product not found"));
+
+export const productsBlock: HTMLDivElement = document.createElement("div");
+productsBlock.classList.add("products-block");
+
+export const sortSelect: HTMLSelectElement = createSortSelect("select-sort");
+sortSelect.addEventListener("change", fillFiltersObj);
+
+export const cardsArea: HTMLDivElement = document.createElement("div");
+cardsArea.classList.add("product-cards-area");
+
+export const found: HTMLDivElement = document.createElement("div");
+found.classList.add("found");
+
 class ProductCard {
   data: Product;
 
@@ -46,8 +62,8 @@ class ProductCard {
 
     const buttons: HTMLDivElement = document.createElement("div");
     buttons.classList.add("product-card_buttons");
-    btnAdd.setAttribute('data-idbtn', `${this.data.id}`);
-    btnMore.setAttribute('data-idcard', `${this.data.id}`);
+    btnAdd.setAttribute("data-idbtn", `${this.data.id}`);
+    btnMore.setAttribute("data-idcard", `${this.data.id}`);
     buttons.appendChild(btnAdd.cloneNode(true));
     buttons.appendChild(btnMore.cloneNode(true));
 
@@ -60,19 +76,7 @@ class ProductCard {
   }
 }
 
-export const productsBlock: HTMLDivElement = document.createElement("div");
-productsBlock.classList.add("products-block");
-
-export const sortSelect: HTMLSelectElement = createSortSelect("select-sort");
-sortSelect.addEventListener("change", fillFiltersObj);
-
-export const cardsArea: HTMLDivElement = document.createElement("div");
-cardsArea.classList.add("product-cards-area");
-
-export const found: HTMLDivElement = document.createElement("div");
-found.classList.add("found");
-
-export function createCardsArea(filtersObj: IFilters) : void{
+export function createCardsArea(filtersObj: IFilters): void {
   const colorsArr: string[] = [
     "#f2634c",
     "#b1c8f5",
@@ -116,11 +120,19 @@ export function createCardsArea(filtersObj: IFilters) : void{
 
   //create cards accordin to filter values
   for (let i = 0; i < cardsArr.length; i++) {
-    const card: ProductCard = new ProductCard(cardsArr[i]);
-    card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
-    cardsArea.appendChild(card.render());
+    if (
+      cardsArr[i].price >= Number(localStorage.getItem("sliderMinPrice")) &&
+      cardsArr[i].price <= Number(localStorage.getItem("sliderMaxPrice")) &&
+      cardsArr[i].stock >= Number(localStorage.getItem("sliderMinStock")) &&
+      cardsArr[i].stock <= Number(localStorage.getItem("sliderMaxStock"))
+    ) {
+      const card: ProductCard = new ProductCard(cardsArr[i]);
+      card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
+      cardsArea.appendChild(card.render());
+    }
   }
 
+  // card display type
   if (cardsArea.style.gridTemplateColumns === "auto auto") {
     for (const elem of cardsArea.children) {
       elem.classList.add("two-col");
@@ -139,8 +151,13 @@ export function createCardsArea(filtersObj: IFilters) : void{
       }
     }
   }
-  
-  found.textContent = `Found: ${cardsArr.length}`;
+
+  found.textContent = `Found: ${cardsArea.children.length}`;
+
+  if (cardsArea.children.length < 1) {
+    cardsArea.appendChild(prodNotFound);
+  }
+
   productsBlock.innerHTML = "";
   productsBlock.appendChild(cardsArea);
 }

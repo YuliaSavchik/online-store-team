@@ -6,6 +6,12 @@ import { createCardsArea } from "../productCards/index";
 
 const btnArrowTop = createArrowButtons("button-arrow_top");
 
+export const filtersObj: IFilters = {
+  device: [],
+  material: [],
+  color: [],
+};
+
 class Filter {
   items: string[];
   title: string;
@@ -150,80 +156,52 @@ export function createFilterBlock() {
     fillFiltersObj(event);
   });
 
-  return filterBlock
+  return filterBlock;
 }
 
-const filtersObj: IFilters = {
-  device: [],
-  material: [],
-  color: [],
-};
+window.addEventListener("load", fillFiltersObj);
 
-window.addEventListener('load', fillFiltersObj);
+function addFiltersToArr(
+  arr: string[],
+  str: string,
+  target: HTMLInputElement,
+  label: string | null | undefined
+) {
+  if (label && label === str && !arr.includes(label) && target.checked) {
+    arr.push(label);
+  } else if (label && arr.includes(label) && !target.checked) {
+    arr.splice(arr.indexOf(label), 1);
+  }
+}
 
 export function fillFiltersObj(event: Event) {
-  const target : EventTarget | null = event.target;
+  const target: EventTarget | null = event.target;
 
   if (target && target instanceof HTMLInputElement) {
-
     const label = document.querySelector(`label[for="${target.id}"]`);
-    
+    const labelToString: string | null | undefined =
+      label?.lastChild?.textContent;
+
     for (let i = 0; i < products.length; i++) {
-
-      if (
-        label &&
-        label.innerHTML === products[i].device &&
-        !filtersObj.device.includes(label.innerHTML) &&
-        target.checked
-      ) {
-        filtersObj.device.push(label.innerHTML);
-      } else if (
-        label &&
-        filtersObj.device.includes(label.innerHTML) &&
-        !target.checked
-      ) {
-        filtersObj.device.splice(filtersObj.device.indexOf(label.innerHTML), 1);
-      }
-
-      if (
-        label &&
-        label.innerHTML === products[i].material &&
-        !filtersObj.material.includes(label.innerHTML) &&
-        target.checked
-      ) {
-        filtersObj.material.push(label.innerHTML);
-      } else if (
-        label &&
-        filtersObj.material.includes(label.innerHTML) &&
-        !target.checked
-      ) {
-        filtersObj.material.splice(
-          filtersObj.material.indexOf(label.innerHTML),
-          1
-        );
-      }
-
-      const labelToString : string | null | undefined = label?.lastChild?.textContent
-      
-      if (
-        labelToString &&
-        labelToString === products[i].color &&
-        !filtersObj.color.includes(labelToString) &&
-        target.checked
-      ) {
-        filtersObj.color.push(labelToString);
-      } else if (
-        labelToString &&
-        filtersObj.color.includes(labelToString) &&
-        !target.checked
-      ) {
-        filtersObj.color.splice(
-          filtersObj.color.indexOf(labelToString),
-          1
-        );
-      }
+      addFiltersToArr(
+        filtersObj.device,
+        products[i].device,
+        target,
+        labelToString
+      );
+      addFiltersToArr(
+        filtersObj.material,
+        products[i].material,
+        target,
+        labelToString
+      );
+      addFiltersToArr(
+        filtersObj.color,
+        products[i].color,
+        target,
+        labelToString
+      );
     }
   }
-
   return createCardsArea(filtersObj);
 }
