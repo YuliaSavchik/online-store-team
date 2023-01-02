@@ -159,8 +159,6 @@ export function createFilterBlock() {
   return filterBlock;
 }
 
-window.addEventListener("load", fillFiltersObj);
-
 function addFiltersToArr(
   arr: string[],
   str: string,
@@ -203,5 +201,7 @@ export function fillFiltersObj(event: Event) {
       );
     }
   }
-  return createCardsArea(filtersObj);
+  return createCardsArea();
 }
+
+window.addEventListener("load", fillFiltersObj);

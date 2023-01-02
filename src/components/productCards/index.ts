@@ -1,7 +1,11 @@
-import { IFilters, Product } from "../../types/interfaces";
+import { Product } from "../../types/interfaces";
 import { products } from "../../data/data";
 import { createMainButtons, createSortSelect } from "../buttons/index";
-import { fillFiltersObj } from "../filters/index";
+import {
+  fillFiltersObj,
+  filtersObj,
+} from "../filters/index";
+import { createSearchInput } from "../inputs/index";
 
 const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
 const btnMore = createMainButtons("more", "button_small-size", "btn-more");
@@ -21,6 +25,11 @@ cardsArea.classList.add("product-cards-area");
 
 export const found: HTMLDivElement = document.createElement("div");
 found.classList.add("found");
+
+export const searchInput = createSearchInput();
+searchInput.addEventListener("input", () => {
+  createCardsArea();
+});
 
 class ProductCard {
   data: Product;
@@ -76,7 +85,7 @@ class ProductCard {
   }
 }
 
-export function createCardsArea(filtersObj: IFilters): void {
+export function createCardsArea(): void {
   const colorsArr: string[] = [
     "#f2634c",
     "#b1c8f5",
@@ -93,43 +102,19 @@ export function createCardsArea(filtersObj: IFilters): void {
   }
 
   //check filters
-  if (filtersObj.device.length > 0) {
-    cardsArr = cardsArr.filter((item) =>
-      filtersObj.device.includes(item.device)
-    );
-  }
-  if (filtersObj.material.length > 0) {
-    cardsArr = cardsArr.filter((item) =>
-      filtersObj.material.includes(item.material)
-    );
-  }
-  if (filtersObj.color.length > 0) {
-    cardsArr = cardsArr.filter((item) => filtersObj.color.includes(item.color));
-  }
+  cardsArr = checkFilters(cardsArr);
+
+  //check search
+  cardsArr = checkSearch(cardsArr);
 
   //check sort
-  if (sortSelect.options[1].selected) {
-    cardsArr.sort((a, b) => a.price - b.price);
-  } else if (sortSelect.options[2].selected) {
-    cardsArr.sort((a, b) => b.price - a.price);
-  } else if (sortSelect.options[3].selected) {
-    cardsArr.sort((a, b) => a.rating - b.rating);
-  } else if (sortSelect.options[4].selected) {
-    cardsArr.sort((a, b) => b.rating - a.rating);
-  }
+  cardsArr = checkSort(cardsArr);
 
   //create cards accordin to filter values
   for (let i = 0; i < cardsArr.length; i++) {
-    if (
-      cardsArr[i].price >= Number(localStorage.getItem("sliderMinPrice")) &&
-      cardsArr[i].price <= Number(localStorage.getItem("sliderMaxPrice")) &&
-      cardsArr[i].stock >= Number(localStorage.getItem("sliderMinStock")) &&
-      cardsArr[i].stock <= Number(localStorage.getItem("sliderMaxStock"))
-    ) {
-      const card: ProductCard = new ProductCard(cardsArr[i]);
-      card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
-      cardsArea.appendChild(card.render());
-    }
+    const card: ProductCard = new ProductCard(cardsArr[i]);
+    card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
+    cardsArea.appendChild(card.render());
   }
 
   // card display type
@@ -160,4 +145,90 @@ export function createCardsArea(filtersObj: IFilters): void {
 
   productsBlock.innerHTML = "";
   productsBlock.appendChild(cardsArea);
+}
+
+function checkFilters(cardsArr: Product[]) {
+  if (filtersObj.device.length > 0) {
+    cardsArr = cardsArr.filter((item) =>
+      filtersObj.device.includes(item.device)
+    );
+  }
+  if (filtersObj.material.length > 0) {
+    cardsArr = cardsArr.filter((item) =>
+      filtersObj.material.includes(item.material)
+    );
+  }
+  if (filtersObj.color.length > 0) {
+    cardsArr = cardsArr.filter((item) => filtersObj.color.includes(item.color));
+  }
+  cardsArr = cardsArr.filter(
+    (item) => item.price >= Number(localStorage.getItem("sliderMinPrice"))
+  );
+  cardsArr = cardsArr.filter(
+    (item) => item.price <= Number(localStorage.getItem("sliderMaxPrice"))
+  );
+  cardsArr = cardsArr.filter(
+    (item) => item.stock >= Number(localStorage.getItem("sliderMinStock"))
+  );
+  cardsArr = cardsArr.filter(
+    (item) => item.stock <= Number(localStorage.getItem("sliderMaxStock"))
+  );
+
+  return cardsArr;
+}
+
+function checkSearch(cardsArr: Product[]) {
+  cardsArr = cardsArr.filter(
+    (item) =>
+      item.name
+        .toLowerCase()
+        .includes(searchInput.value.toLowerCase().trim()) ||
+      item.device
+        .toLowerCase()
+        .includes(searchInput.value.toLowerCase().trim()) ||
+      item.description
+        .toLowerCase()
+        .includes(searchInput.value.toLowerCase().trim()) ||
+      item.material
+        .toLowerCase()
+        .includes(searchInput.value.toLowerCase().trim()) ||
+      `color ${item.color.toLowerCase()}`.includes(
+        searchInput.value.toLowerCase().trim()
+      ) ||
+      `${item.price.toString().toLowerCase()}$`.includes(
+        searchInput.value.toLowerCase().trim()
+      ) ||
+      item.stock
+        .toString()
+        .toLowerCase()
+        .includes(searchInput.value.toLowerCase().trim()) ||
+      `${item.rating.toString().toLowerCase()}/5`.includes(
+        searchInput.value.toLowerCase().trim()
+      )
+  );
+
+  return cardsArr;
+}
+
+function checkSort(cardsArr: Product[]) {
+  if (sortSelect.options[1].selected) {
+    cardsArr.sort((a, b) => a.price - b.price);
+  } else if (sortSelect.options[2].selected) {
+    cardsArr.sort((a, b) => b.price - a.price);
+  } else if (sortSelect.options[3].selected) {
+    cardsArr.sort((a, b) => a.rating - b.rating);
+  } else if (sortSelect.options[4].selected) {
+    cardsArr.sort((a, b) => b.rating - a.rating);
+  }
+
+  return cardsArr;
+}
+
+export function reset() {
+  filtersObj.color = [];
+  filtersObj.device = [];
+  filtersObj.material = [];
+  searchInput.value = "";
+
+  createCardsArea()
 }

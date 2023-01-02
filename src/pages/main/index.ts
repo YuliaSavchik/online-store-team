@@ -2,7 +2,6 @@ import Page from "../../components/templates/page";
 import { infinitySlider } from "../../components/infinitySlider/index";
 //import { createCardsArea } from '../../components/productCards/index';
 import { createMainButtons } from "../../components/buttons/index";
-import { createSearchInput } from "../../components/inputs/index";
 import { createViewPageButtons } from "../../components/buttons/index";
 import { createFilterBlock } from "../../components/filters/index";
 import { createNoUiSliderBlock } from "../../components/noUiSlider/index";
@@ -10,6 +9,8 @@ import {
   cardsArea,
   found,
   productsBlock,
+  reset,
+  searchInput,
   sortSelect,
 } from "../../components/productCards/index";
 
@@ -37,6 +38,8 @@ class MainPage extends Page {
       "button_meddium-size",
       "btn-reset"
     );
+
+    btnReset.addEventListener('click', reset)
     const btnCopyLink = createMainButtons(
       "copy link",
       "button_meddium-size",
@@ -45,8 +48,6 @@ class MainPage extends Page {
     btnBlock.append(btnReset, btnCopyLink);
 
     const btnSort = sortSelect;
-
-    const searchInput = createSearchInput();
 
     const btnViewBlock: HTMLDivElement = document.createElement("div");
     btnViewBlock.classList.add("btn-view-block");

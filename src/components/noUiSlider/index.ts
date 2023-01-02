@@ -1,6 +1,5 @@
 import noUiSlider from 'nouislider';
 import { target } from '../../../node_modules/nouislider/dist/nouislider';
-import { filtersObj } from '../filters/index';
 import { createCardsArea } from '../productCards/index';
 
 //title it's price or stock
@@ -64,7 +63,7 @@ function initPriceNoUiSlider() {
     inputsValue[handle].innerHTML = `${String(Math.ceil(num))}$`;
     localStorage.setItem('sliderMinPrice', `${Number(values[0])}`);
     localStorage.setItem('sliderMaxPrice', `${Number(values[1])}`);
-    createCardsArea(filtersObj)
+    createCardsArea()
   })
 }
 
@@ -93,7 +92,7 @@ function initStockNoUiSlider() {
     inputsValue[handle].innerHTML = `${String(Math.ceil(num))}`;
     localStorage.setItem('sliderMinStock', `${Number(values[0])}`);
     localStorage.setItem('sliderMaxStock', `${Number(values[1])}`);
-    createCardsArea(filtersObj)
+    createCardsArea()
   })
 }
 
