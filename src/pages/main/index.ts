@@ -9,10 +9,11 @@ import {
   cardsArea,
   found,
   productsBlock,
-  reset,
+  CreateCardsArea,
   searchInput,
   sortSelect,
 } from "../../components/productCards/index";
+import { CreateObjWithFilters } from "../../components/filters/index";
 
 class MainPage extends Page {
   constructor(id: string) {
@@ -39,7 +40,7 @@ class MainPage extends Page {
       "btn-reset"
     );
 
-    btnReset.addEventListener('click', reset)
+    btnReset.addEventListener('click', () => CreateCardsArea.reset(CreateObjWithFilters.filtersObj))
     const btnCopyLink = createMainButtons(
       "copy link",
       "button_meddium-size",
