@@ -29,3 +29,9 @@
 .hide-slide {
   opacity: 0;
 }
+
+@media screen and (max-width: 900px) {
+  .slider {
+    height: 150px;
+  }
+}

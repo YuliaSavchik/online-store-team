@@ -132,10 +132,12 @@
 
 .button-view_three-colums {
   background-image: url("assets/view-three-columns.png");
+  background-size: 80%;
 }
 
 .button-view_two-colums {
   background-image: url("assets/view-two-columns.png");
+  background-size: 80%;
 }
 
 .button-view_three-colums,
@@ -155,3 +157,15 @@
   transform: scale(1.1);
   box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.25);
 }
+
+@media screen and (max-width: 1300px) {
+  .select-sort {
+    width: 190px;
+  }
+
+  .button-view {
+    width: 30px;
+    height: 30px;
+  }
+}
+
