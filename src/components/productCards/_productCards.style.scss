@@ -16,12 +16,14 @@
     flex-direction: column;
     align-items: center;
     border-radius: 2px;
+    transition: all 0.5s ease-in-out;
 
     img {
       width: 200px;
       height: 200px;
       margin: 10px 0 20px 0;
       border-radius: 2px;
+      transition: all 0.5s ease-in-out;
     }
 
     .product-card_buttons {
@@ -50,6 +52,12 @@
   &:hover {
     opacity: 1;
   }
+}
+
+.product-not-found{
+  font-size: 3.4em;
+  color: $color_pink;
+  grid-column: 1 / -1;
 }
 
 .two-col{
