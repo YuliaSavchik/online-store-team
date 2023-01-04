@@ -26,7 +26,7 @@ class App {
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage === PagesId.CartPage) {
       page = new CartPage(idPage);
-    } else if (idPage === PagesId.ErrorPage) {
+    } else {
       page = new ErrorPage(idPage);
     }
 
