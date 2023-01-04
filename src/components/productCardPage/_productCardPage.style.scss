@@ -1,3 +1,28 @@
+.prod-card-navigation {
+  width: 45%;
+  height: 50px;
+  padding: 0 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+
+    .prod-card-navigation__main-page-link {
+      color: #000000;
+    }
+    .prod-card-navigation__main-page-link:hover {
+      transition: all 0.2s ease-in-out;
+      transform: scale(1.05);
+    }
+    .prod-card-navigation__device,
+    .prod-card-navigation__name-device {
+      text-decoration: underline;
+    }
+}
+
 .prod-card {
   display: grid;
   grid-template-columns: auto auto;

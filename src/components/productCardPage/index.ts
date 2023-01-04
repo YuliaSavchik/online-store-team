@@ -13,7 +13,36 @@ export class ProductCardPage {
   }
 
   render(){
-    //main block 'product card page'
+    //main block 
+    const wrapper : HTMLDivElement = document.createElement('div');
+    wrapper.classList.add('pro-card-wrapper');
+    //navigation
+    const navigation : HTMLDivElement = document.createElement('div');
+    navigation.classList.add('prod-card-navigation');
+
+    const linkForMainPage : HTMLAnchorElement = document.createElement('a');
+    linkForMainPage.classList.add('prod-card-navigation__main-page-link');
+    linkForMainPage.setAttribute('href', '#main-page');
+    linkForMainPage.textContent = 'store';
+
+    const device : HTMLDivElement = document.createElement('div');
+    device.classList.add('prod-card-navigation__device');
+    device.textContent = 'device';
+
+    const nameDevice : HTMLDivElement = document.createElement('div');
+    nameDevice.classList.add('prod-card-navigation__name-device');
+    nameDevice.textContent = `${this.data.device}`;
+
+    const arrow1 : HTMLDivElement = document.createElement('div');
+    arrow1.classList.add('prod-card-navigation__arrow');
+    arrow1.textContent = '>';
+    const arrow2 : HTMLDivElement = document.createElement('div');
+    arrow2.classList.add('prod-card-navigation__arrow');
+    arrow2.textContent = '>';
+
+    navigation.append(linkForMainPage, arrow1, device, arrow2, nameDevice)
+    
+    //block 'product card page'
     const productCardBlock : HTMLDivElement = document.createElement('div');
     productCardBlock.classList.add('prod-card');
 
@@ -87,8 +116,10 @@ export class ProductCardPage {
     descriptionBlock.append(titleDescriptionBlock, descriptionBlockMain, priceBlock)
     pageDescriptionBlock.append(descriptionBlock, buttonsArea)
     productCardBlock.append(imagesBlock, pageDescriptionBlock)
-
-    return productCardBlock
+    
+    wrapper.append(navigation, productCardBlock)
+    
+    return wrapper;
   }
 }
 

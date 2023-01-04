@@ -29,6 +29,7 @@ class App {
     } else if (idPage === PagesId.CartPage) {
       App.container.innerHTML = '';
       page = new CartPage(idPage);
+    } else {
     } else if (idPage === PagesId.ErrorPage) {
       App.container.innerHTML = '';
       page = new ErrorPage(idPage);
@@ -80,22 +81,23 @@ wrapperForPage.addEventListener('click', function(event) {
   if ((item as HTMLDivElement).closest('.product-card_shadow')) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage('product-description-page', `${dataSetId}`);
-    updateURL('product-description-page');
+    updateURL(`product-description-page/${dataSetId}`);
   }
 
   if ((item as HTMLDivElement).closest('.btn-more')) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage('product-description-page', `${dataSetId}`);
-    updateURL('product-description-page');
+    updateURL(`product-description-page/${dataSetId}`);
   }
 
   if ((item as HTMLDivElement).closest('.product-description__btn-buy-now')) {
     const dataSetId = (item as HTMLDivElement).dataset.idbtn;
     addProductInCartClickByNow(dataSetId, (item as HTMLElement));
     showCountProductInCartIco();
-
+    
     App.renderNewPage('cart-page');
     updateURL('cart-page');
+    showAvailablePromoCode();
   }
 });
 

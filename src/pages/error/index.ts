@@ -5,10 +5,14 @@ class ErrorPage extends Page {
     super(id);
   }
   private createContent() {
-    //test content
-    const content = document.createElement('h1');
-    content.innerHTML = 'Error Page';
-    return content;
+    const wrapper: HTMLDivElement = document.createElement('div');
+    wrapper.classList.add('wrapper-errop-page');
+    const content: HTMLParagraphElement = document.createElement('p');
+    content.classList.add('page-error-text');
+    content.textContent = 'Error 404. Page not found';
+    wrapper.append(content);
+
+    return wrapper;
   }
   render() {
     const content = this.createContent();

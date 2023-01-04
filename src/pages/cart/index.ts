@@ -7,6 +7,7 @@ import { productsInCart } from '../../index';
 import { Product } from '../../types/interfaces';
 import { createModalWindow } from '../../components/modalWindow/index';
 
+let numPage = 1;
 class CartPage extends Page {
   constructor(id: string) {
     super(id);
@@ -35,11 +36,13 @@ class CartPage extends Page {
     paginationTitle.textContent = 'pages:';
 
     const btnArrowleft = createArrowButtons('button-arrow_left');
+    btnArrowleft.classList.add('arrow-prev-page')
     const btnArrowRight = createArrowButtons('button-arrow_right');
+    btnArrowRight.classList.add('arrow-next-page')
 
     const pageNumber: HTMLDivElement = document.createElement('div');
     pageNumber.classList.add('pagination-block__page-namber');
-    pageNumber.textContent = `${1}`;
+    pageNumber.textContent = `${numPage}`;
 
     paginationBlock.append(
       paginationTitle,
@@ -56,7 +59,7 @@ class CartPage extends Page {
 
     const productCartBlock: HTMLDivElement = document.createElement('div');
     productCartBlock.classList.add('main-block__product-card-block');
-    createCartProduct(productCartBlock, itemsCount);
+    createCartProduct(productCartBlock, itemsCount, numPage);
 
     mainBlock.append(titleBlock, productCartBlock);
 
@@ -81,16 +84,34 @@ class CartPage extends Page {
 
 export default CartPage;
 
-function createCartProduct(container: HTMLElement, itemsCount: HTMLElement) {
+function splitItemsForPages(array: Product[]) {
+  const arrayWithProduct: Product[] = [];
+  array.forEach((item) => {
+    arrayWithProduct.push(item);
+  })
+  const result: Product[][] = [];
+  const length = 3;
+  while(arrayWithProduct.length) {
+    result.push(arrayWithProduct.splice(0,length)); 
+  }
+  return result;
+}
+
+function createCartProduct(container: HTMLElement, itemsCount: HTMLElement, numPage: number) {
   if (productsInCart.length > 0) {
-    productsInCart.forEach((prod, item) => {
-      const product: CartProducts = new CartProducts(prod, item + 1);
-      container.append(product.render());
-      itemsCount.textContent = `items: ${countItemsInCart()}`;
+    const itemsOnPage = splitItemsForPages(productsInCart);
+    productsInCart.forEach((item, index) => {
+      itemsOnPage[numPage - 1].forEach((prod) => {
+        if (item.id === prod.id) {
+          const product: CartProducts = new CartProducts(prod, index + 1);
+          container.append(product.render());
+          itemsCount.textContent = `items: ${countItemsInCart()}`;
+        }
+      })
     })
     return container;
   }
-  emptyCart()
+  emptyCart();
 }
 
 export function emptyCart() {
@@ -106,12 +127,39 @@ export function emptyCart() {
   summary.style.display = 'none';
 }
 
+function switchPages(item: HTMLElement) {
+  const container = document.querySelector<HTMLElement>('.main-block__product-card-block');
+  if(!container) return;
+  const itemCount = document.querySelector<HTMLElement>('.title-block__item-count');
+  if(!itemCount) return;
+  const paginationCount = document.querySelector('.pagination-block__page-namber') as HTMLElement;
+
+  if((item as HTMLElement).closest('.arrow-next-page')) {
+    const maxPage = Math.ceil(productsInCart.length / 3);
+    if (numPage < maxPage) {
+      numPage += 1;
+      container.textContent = '';
+      createCartProduct(container, itemCount, numPage);
+      paginationCount.textContent = `${numPage}`;
+    } 
+    else if (numPage === maxPage) return;
+  }
+  if((item as HTMLElement).closest('.arrow-prev-page')) {
+    if (numPage > 1) {
+      numPage -= 1;
+      container.textContent = '';
+      createCartProduct(container, itemCount, numPage);
+      paginationCount.textContent = `${numPage}`;
+    } else if (numPage === 1) return;
+  }
+
+}
+
 function countSumProductInCart() {
   const productPrices: number[] = [];
   productsInCart.forEach((product) => {
     productPrices.push(product.priceForCart);
   })
-  console.log(productPrices)
   return countTotalSum(productPrices);
 }
 
@@ -194,7 +242,6 @@ export function addProductInCartClickByNow(dataSetId: string | undefined, item: 
     productsInCart.push(products[itemId - 1]);
     showTotalSumInHeader();
   }
-
   openModalWindowInProductCart(item);
 }
 
@@ -264,10 +311,25 @@ function decreaseCountProductInCart (item: HTMLElement) {
         productsInCart[id].priceForCart
       )
 
+      console.log(Math.ceil(productsInCart.length / 3))
       removeProductInCart(productsInCart, (dataSetId as string));
-      cardBlock.innerHTML = '';
-      createCartProduct(cardBlock, itemCount);
-      changeTotalInSummaryAndHeader()
+      if (Math.ceil(productsInCart.length / 3) < numPage) {
+        numPage -= 1;
+        cardBlock.innerHTML = '';
+        createCartProduct(cardBlock, itemCount, numPage);
+        changeTotalInSummaryAndHeader();
+        if (productsInCart.length > 0) {
+          const paginationCount = document.querySelector<HTMLElement>('.pagination-block__page-namber');
+          if (!paginationCount) return;
+          paginationCount.textContent = `${numPage}`;
+        } else if (productsInCart.length === 0) {
+          numPage = 1;
+        }
+      } else {
+        cardBlock.innerHTML = '';
+        createCartProduct(cardBlock, itemCount, numPage);
+        changeTotalInSummaryAndHeader();
+      }
     }
   }
 }
@@ -382,6 +444,7 @@ function removePromoCode(item: HTMLElement) {
   const totalSum = Number(summaryTotalSum.textContent);
   const summaryTotalSumWithPromo = document.querySelector<HTMLElement>('.total_sum-with-promo');
   if (!summaryTotalSumWithPromo) return;
+
   if ((item as HTMLElement).closest('.promo-code-btn_drop')) {
     const dataSetId = item.dataset.iddrop;
     const delPromoBlock = document.getElementById(dataSetId as string) as HTMLElement;
@@ -404,14 +467,12 @@ function removePromoCode(item: HTMLElement) {
 function countSumWithPromo(sum: number) {
   const percent = (sum / 100) * 10;
   const result = Math.round(sum - percent);
-  console.log(result)
   return result;
 }
 
 function countSumDelitePromo(sum: number) {
   const percent = (sum / 100) * 10;
   const result = Math.round(sum + percent);
-  console.log(result)
   return result;
 }
 
@@ -433,15 +494,15 @@ function clouseModalWindow() {
   const modal = document.querySelector<HTMLElement>('.modal-window__shadow');
     if (!modal) return; 
     modal.addEventListener('click', (event) => {
-      const item = event.target;
+      const item = event.target as HTMLElement;
       if (!item) return;
 
-      if ((item as HTMLElement).closest('.modal-window__shadow')) {
+    const classes = item.classList;
+      if (classes.contains('modal-window__shadow')) {
         modal.remove();
       }
     })
 }
-
 
 const wrapperForPage = (document.querySelector('.main') as HTMLElement);
 
@@ -451,6 +512,7 @@ wrapperForPage.addEventListener('click', function(event) {
 
   addProductInCartClickBtnAdd(item as HTMLDivElement);
   addProductInCartClickByAddToCard(item as HTMLElement);
+  switchPages(item as HTMLElement);
   showCountProductInCartIco();
   increaseCountProductInCart(item as HTMLElement);
   decreaseCountProductInCart(item as HTMLElement);
@@ -458,7 +520,5 @@ wrapperForPage.addEventListener('click', function(event) {
   removePromoCode(item as HTMLDivElement);
   openModalWindowInCart(item as HTMLElement);
 });
-
-
 
 
