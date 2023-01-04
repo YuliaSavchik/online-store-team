@@ -1,5 +1,6 @@
 import noUiSlider from 'nouislider';
 import { target } from '../../../node_modules/nouislider/dist/nouislider';
+import { CreateCardsArea } from '../productCards/index';
 
 //title it's price or stock
 export function createNoUiSliderBlock(title: string) {
@@ -47,19 +48,22 @@ function initPriceNoUiSlider() {
   const inputsValue = [minValue, maxValue];
 
   noUiSlider.create(range, {
-    start: [10, 500],
+    start: [5, 100],
     connect: true,
     range: {
-      'min': 10,
-      'max': 500
+      'min': 5,
+      'max': 100
     },
-    step: 10,
+    step: 5,
     
   })
 
   range.noUiSlider?.on('update', function(values, handle){
     const num = Number(values[handle]);
     inputsValue[handle].innerHTML = `${String(Math.ceil(num))}$`;
+    localStorage.setItem('sliderMinPrice', `${Number(values[0])}`);
+    localStorage.setItem('sliderMaxPrice', `${Number(values[1])}`);
+    CreateCardsArea.render()
   })
 }
 
@@ -86,6 +90,9 @@ function initStockNoUiSlider() {
   range.noUiSlider?.on('update', function(values, handle){
     const num = Number(values[handle]);
     inputsValue[handle].innerHTML = `${String(Math.ceil(num))}`;
+    localStorage.setItem('sliderMinStock', `${Number(values[0])}`);
+    localStorage.setItem('sliderMaxStock', `${Number(values[1])}`);
+    CreateCardsArea.render()
   })
 }
 

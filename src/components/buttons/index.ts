@@ -31,15 +31,15 @@ export function createSortSelect(selectClassName: string){
   const select : HTMLSelectElement = document.createElement('select');
   select.classList.add(selectClassName);
   const option1 : HTMLOptionElement = document.createElement('option');
-  option1.innerHTML = 'SORT';
+  option1.innerHTML = 'SORT BY';
   const option2 : HTMLOptionElement = document.createElement('option');
-  option2.innerHTML = 'ascending price';
+  option2.innerHTML = 'ASC PRICE';
   const option3 : HTMLOptionElement = document.createElement('option');
-  option3.innerHTML = 'descending price';
+  option3.innerHTML = 'DESC PRICE';
   const option4 : HTMLOptionElement = document.createElement('option');
-  option4.innerHTML = 'ascending rating';
+  option4.innerHTML = 'ASC RATING';
   const option5 : HTMLOptionElement = document.createElement('option');
-  option5.innerHTML = 'descending rating';
+  option5.innerHTML = 'DESC RATING';
   select.append(option1, option2, option3, option4, option5);
    
   return select;

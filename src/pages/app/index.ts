@@ -17,16 +17,21 @@ class App {
   private mainPage: MainPage;
 
   static renderNewPage(idPage: string, idCard?: string) {
-    App.container.innerHTML = '';
+    // App.container.innerHTML = '';
     let page: Page | null = null;
 
     if(idPage === PagesId.MainPage) {
+      App.container.innerHTML = '';
       page = new MainPage(idPage);
     } else if (idPage === PagesId.ProductDescriptionPage) {
+      App.container.innerHTML = '';
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage === PagesId.CartPage) {
+      App.container.innerHTML = '';
       page = new CartPage(idPage);
     } else {
+    } else if (idPage === PagesId.ErrorPage) {
+      App.container.innerHTML = '';
       page = new ErrorPage(idPage);
     }
 
@@ -56,7 +61,7 @@ class App {
 
 export default App;
 
-function updateURL(pageId: string) {
+export function updateURL(pageId: string) {
   if (history.pushState) {
       const baseUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
       const newUrl = baseUrl + `#${pageId}`;

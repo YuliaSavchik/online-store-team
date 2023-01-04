@@ -2,7 +2,7 @@ import { products } from "../../data/data";
 import { Color, Device, Material } from "../../types/enums";
 import { IFilters } from "../../types/interfaces";
 import { createArrowButtons } from "../buttons/index";
-import { createCardsArea } from "../productCards/index";
+import { CreateCardsArea } from "../productCards/index";
 
 const btnArrowTop = createArrowButtons("button-arrow_top");
 
@@ -112,6 +112,59 @@ class ColorFilter extends Filter {
   }
 }
 
+export class CreateObjWithFilters {
+  static filtersObj: IFilters = {
+    device: [],
+    material: [],
+    color: [],
+  };
+
+  static addFiltersToArr(
+    arr: string[],
+    str: string,
+    target: HTMLInputElement,
+    label: string | null | undefined
+  ) {
+    if (label && label === str && !arr.includes(label) && target.checked) {
+      arr.push(label);
+    } else if (label && arr.includes(label) && !target.checked) {
+      arr.splice(arr.indexOf(label), 1);
+    }
+  }
+
+  static fillFiltersObj(event: Event) {
+    const target: EventTarget | null = event.target;
+
+    if (target && target instanceof HTMLInputElement) {
+      const label = document.querySelector(`label[for="${target.id}"]`);
+      const labelToString: string | null | undefined =
+        label?.lastChild?.textContent;
+
+      for (let i = 0; i < products.length; i++) {
+        this.addFiltersToArr(
+          this.filtersObj.device,
+          products[i].device,
+          target,
+          labelToString
+        );
+        this.addFiltersToArr(
+          this.filtersObj.material,
+          products[i].material,
+          target,
+          labelToString
+        );
+        this.addFiltersToArr(
+          this.filtersObj.color,
+          products[i].color,
+          target,
+          labelToString
+        );
+      }
+    }
+    return CreateCardsArea.render();
+  }
+}
+
 export function createFilterBlock() {
   const filterBlock: HTMLElement = document.createElement("div");
 
@@ -147,83 +200,10 @@ export function createFilterBlock() {
   );
 
   filterBlock.addEventListener("click", (event: Event) => {
-    fillFiltersObj(event);
+    CreateObjWithFilters.fillFiltersObj(event);
   });
 
-  return filterBlock
+  return filterBlock;
 }
 
-const filtersObj: IFilters = {
-  device: [],
-  material: [],
-  color: [],
-};
-
-window.addEventListener('load', fillFiltersObj);
-
-export function fillFiltersObj(event: Event) {
-  const target : EventTarget | null = event.target;
-
-  if (target && target instanceof HTMLInputElement) {
-
-    const label = document.querySelector(`label[for="${target.id}"]`);
-    
-    for (let i = 0; i < products.length; i++) {
-
-      if (
-        label &&
-        label.innerHTML === products[i].device &&
-        !filtersObj.device.includes(label.innerHTML) &&
-        target.checked
-      ) {
-        filtersObj.device.push(label.innerHTML);
-      } else if (
-        label &&
-        filtersObj.device.includes(label.innerHTML) &&
-        !target.checked
-      ) {
-        filtersObj.device.splice(filtersObj.device.indexOf(label.innerHTML), 1);
-      }
-
-      if (
-        label &&
-        label.innerHTML === products[i].material &&
-        !filtersObj.material.includes(label.innerHTML) &&
-        target.checked
-      ) {
-        filtersObj.material.push(label.innerHTML);
-      } else if (
-        label &&
-        filtersObj.material.includes(label.innerHTML) &&
-        !target.checked
-      ) {
-        filtersObj.material.splice(
-          filtersObj.material.indexOf(label.innerHTML),
-          1
-        );
-      }
-
-      const labelToString : string | null | undefined = label?.lastChild?.textContent
-      
-      if (
-        labelToString &&
-        labelToString === products[i].color &&
-        !filtersObj.color.includes(labelToString) &&
-        target.checked
-      ) {
-        filtersObj.color.push(labelToString);
-      } else if (
-        labelToString &&
-        filtersObj.color.includes(labelToString) &&
-        !target.checked
-      ) {
-        filtersObj.color.splice(
-          filtersObj.color.indexOf(labelToString),
-          1
-        );
-      }
-    }
-  }
-
-  return createCardsArea(filtersObj);
-}
+window.addEventListener("load", CreateObjWithFilters.fillFiltersObj);
