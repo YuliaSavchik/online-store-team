@@ -89,9 +89,10 @@ wrapperForPage.addEventListener('click', function(event) {
     const dataSetId = (item as HTMLDivElement).dataset.idbtn;
     addProductInCartClickByNow(dataSetId, (item as HTMLElement));
     showCountProductInCartIco();
-
+    
     App.renderNewPage('cart-page');
     updateURL('cart-page');
+    showAvailablePromoCode();
   }
 });
 

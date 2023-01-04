@@ -39,8 +39,7 @@ export function creatSummaryBlock(count: number, sum: number) {
   promoCodeText.textContent = 'promo code: RS, EPM';
 
   const promoCodeAdd: HTMLElement = document.createElement('div');
-  promoCodeAdd.classList.add('promo-code__block-add');
-
+  promoCodeAdd.classList.add('promo-code__block-add'); 
   const appliedPromoCodeBlock: HTMLElement = document.createElement('div');
   appliedPromoCodeBlock.classList.add('applied-promo-code-block');
   const appliedPromoCodeBlockTitle: HTMLElement = document.createElement('p');
@@ -51,7 +50,9 @@ export function creatSummaryBlock(count: number, sum: number) {
   const appliedPromoCodeEPM: HTMLElement = document.createElement('div');
   appliedPromoCodeEPM.classList.add('applied-promo-code-epm');
 
-  appliedPromoCodeBlock.append(appliedPromoCodeBlockTitle, appliedPromoCodeRS, appliedPromoCodeEPM)
+  appliedPromoCodeBlock.append(
+    appliedPromoCodeBlockTitle, appliedPromoCodeRS, appliedPromoCodeEPM
+  )
   promoCodeBlock.append(appliedPromoCodeBlock, inputPromoCode, promoCodeText, promoCodeAdd);
 
   promoCodeAdd.classList.add('promo-code-none');
