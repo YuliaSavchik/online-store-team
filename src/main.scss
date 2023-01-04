@@ -17,6 +17,7 @@ $border_style: 1px solid black;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: all 0.3s ease-in-out;
 }
 
 body {
@@ -138,6 +139,77 @@ body {
   }
 }
 
+@media screen and (max-width: 900px) {
+  .header__wrapper {
+    .header__wrapper__title {
+      font-size: 1.5em;
+      a {
+        padding: 10px 30px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .header__wrapper {
+    .header__wrapper__title {
+      font-size: 1.3em;
+      a {
+        padding: 10px 15px;
+      }
+    }
+    .header__wrapper__total-amount {
+      font-size: 1.2em;
+    }
+    .header__wrapper__cart {
+      padding: 10px;
+      .header__wrapper__cart_image {
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+      .header__wrapper__cart_circle-with-number {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .footer__wrapper {
+    .footer__wrapper__github {
+      padding-left: 20px;
+    }
+    .footer__wrapper__school-logo {
+      padding: 20px 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .header__wrapper {
+    .header__wrapper__title {
+      font-size: 1em;
+      a {
+        padding: 5px 10px;
+      }
+    }
+    .header__wrapper__total-amount {
+      font-size: 1em;
+    }
+    .header__wrapper__cart {
+      padding: 5px;
+
+    }
+  }
+  .footer__wrapper {
+    justify-content: space-between;
+    .footer__wrapper__create-year {
+      display: none;
+    }
+  }
+}
+
 @import "components/buttons/button.style";
 @import "components/inputs/inputs.style";
 @import "components/summary/summary.style";
@@ -151,4 +223,3 @@ body {
 @import "components/infinitySlider/infinitySlider.style";
 @import "pages/main/main.styles";
 @import "pages/cart/cart.style";
-
