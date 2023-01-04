@@ -76,13 +76,13 @@ wrapperForPage.addEventListener('click', function(event) {
   if ((item as HTMLDivElement).closest('.product-card_shadow')) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage('product-description-page', `${dataSetId}`);
-    updateURL('product-description-page');
+    updateURL(`product-description-page/${dataSetId}`);
   }
 
   if ((item as HTMLDivElement).closest('.btn-more')) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage('product-description-page', `${dataSetId}`);
-    updateURL('product-description-page');
+    updateURL(`product-description-page/${dataSetId}`);
   }
 
   if ((item as HTMLDivElement).closest('.product-description__btn-buy-now')) {
