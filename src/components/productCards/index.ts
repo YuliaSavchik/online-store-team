@@ -1,7 +1,11 @@
 import { IFilters, Product } from "../../types/interfaces";
 import { products } from "../../data/data";
 import { createMainButtons, createSortSelect } from "../buttons/index";
-import { createFilterBlock, CreateObjWithFilters } from "../filters/index";
+import {
+  createFilterBlock,
+  CreateObjWithFilters,
+  updateURLFilters,
+} from "../filters/index";
 import { createSearchInput } from "../inputs/index";
 import { target } from "../noUiSlider/nouislider";
 
@@ -16,7 +20,10 @@ export const productsBlock: HTMLDivElement = document.createElement("div");
 productsBlock.classList.add("products-block");
 
 export const sortSelect: HTMLSelectElement = createSortSelect("select-sort");
-sortSelect.addEventListener("change", CreateObjWithFilters.fillFiltersObj);
+sortSelect.addEventListener("change", (event) => {
+  updateURLFilters();
+  CreateObjWithFilters.fillFiltersObj(event);
+});
 
 export const cardsArea: HTMLDivElement = document.createElement("div");
 cardsArea.classList.add("product-cards-area");
@@ -26,6 +33,12 @@ found.classList.add("found");
 
 export const searchInput = createSearchInput();
 searchInput.addEventListener("input", () => {
+  updateURLFilters();
+  CreateCardsArea.render();
+});
+
+searchInput.addEventListener("change", () => {
+  updateURLFilters();
   CreateCardsArea.render();
 });
 
@@ -273,5 +286,7 @@ export class CreateCardsArea {
     inputsValueStock[1].innerHTML = "100";
 
     this.render();
+
+    window.location.hash = "#main-page";
   }
 }

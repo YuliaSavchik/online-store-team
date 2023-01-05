@@ -2,7 +2,12 @@ import { products } from "../../data/data";
 import { Color, Device, Material } from "../../types/enums";
 import { IFilters } from "../../types/interfaces";
 import { createArrowButtons } from "../buttons/index";
-import { CreateCardsArea } from "../productCards/index";
+import {
+  CreateCardsArea,
+  addFilterBlock,
+  sortSelect,
+  searchInput,
+} from "../productCards/index";
 
 const btnArrowTop = createArrowButtons("button-arrow_top");
 
@@ -124,7 +129,7 @@ export class CreateObjWithFilters {
     str: string,
     target: HTMLInputElement,
     label: string | null | undefined
-  ) {
+  ): void {
     if (label && label === str && !arr.includes(label) && target.checked) {
       arr.push(label);
     } else if (label && arr.includes(label) && !target.checked) {
@@ -132,7 +137,7 @@ export class CreateObjWithFilters {
     }
   }
 
-  static fillFiltersObj(event: Event) {
+  static fillFiltersObj(event: Event): void {
     const target: EventTarget | null = event.target;
 
     if (target && target instanceof HTMLInputElement) {
@@ -160,12 +165,13 @@ export class CreateObjWithFilters {
           labelToString
         );
       }
+      updateURLFilters();
     }
     return CreateCardsArea.render();
   }
 }
 
-export function createFilterBlock() {
+export function createFilterBlock(): HTMLElement {
   const filterBlock: HTMLElement = document.createElement("div");
 
   const deviceFilter = new Filter("device", [
@@ -206,4 +212,145 @@ export function createFilterBlock() {
   return filterBlock;
 }
 
-window.addEventListener("load", CreateObjWithFilters.fillFiltersObj);
+window.addEventListener("load", (event) => {
+  changeFilterObjByURL(window.location.hash, event);
+  checkHash(window.location.hash);
+});
+
+window.addEventListener("hashchange", (event) => {
+  changeFilterObjByURL(window.location.hash, event);
+  checkHash(window.location.hash);
+});
+
+function checkHash(hash: string): void {
+  //check filters
+  const filters = addFilterBlock.getElementsByTagName("*");
+
+  for (const child of filters) {
+    if (child instanceof HTMLInputElement) {
+      const label = document.querySelector(`label[for="${child.id}"]`);
+      const labelToString: string | null | undefined =
+        label?.lastChild?.textContent;
+
+      if (labelToString && hash.includes(labelToString.replace(/ /g, "_"))) {
+        child.checked = true;
+      } else if (
+        labelToString &&
+        !hash.includes(labelToString.replace(/ /g, "_"))
+      ) {
+        child.checked = false;
+      }
+    }
+  }
+
+  //check sort
+  const sort = sortSelect.getElementsByTagName("*");
+  for (const child of sort) {
+    if (child instanceof HTMLOptionElement) {
+      if (hash.includes(child.innerHTML.replace(/ /g, "_"))) {
+        child.selected = true;
+      }
+    }
+  }
+
+  //check input
+  if(hash.includes('input')){
+    searchInput.value = hash.slice(hash.indexOf('input=') + 'input='.length)
+  }
+}
+
+export function updateURLFilters(): void {
+  const URL: string[] = [];
+  const sortURL: string | undefined = getURLWithSort();
+  const filtersURL: string | undefined = getURLWithFilters(
+    CreateObjWithFilters.filtersObj
+  );
+  const inputURL = getURLWithInput();
+
+  if (filtersURL) URL.push(filtersURL);
+  if (sortURL) URL.push(sortURL);
+  if (inputURL) URL.push(inputURL);
+
+  if (history.pushState) {
+    history.pushState("", `${URL}`, `#main-page/${URL.join("|")}`);
+  } else {
+    console.warn("History API не поддерживается");
+  }
+}
+
+export function changeFilterObjByURL(URLStr: string, event: Event): void {
+  const URL = URLStr.split("/")[1];
+  const URLSplit: string[] = URL.includes("|") ? URL.split("|") : [URL];
+
+  const filters: Record<string, string> = {
+    device: "",
+    material: "",
+    color: "",
+  };
+
+  URLSplit.forEach((item) => {
+    const [key, value] = item.split("=");
+    filters[key] = value;
+  });
+
+  const deviceArr = filters.device ? filters.device.split("&") : [];
+  const materialArr = filters.material ? filters.material.split("&") : [];
+  const colorArr = filters.color ? filters.color.split("&") : [];
+
+  CreateObjWithFilters.filtersObj.device = deviceArr.map((item) =>
+    item.replace(/_/g, " ")
+  );
+  CreateObjWithFilters.filtersObj.material = materialArr.map((item) =>
+    item.replace(/_/g, " ")
+  );
+  CreateObjWithFilters.filtersObj.color = colorArr.map((item) =>
+    item.replace(/_/g, " ")
+  );
+
+  CreateObjWithFilters.fillFiltersObj(event);
+}
+
+export function getURLWithSort(): string | undefined {
+  const URL: string[] = [];
+  const sort = sortSelect.getElementsByTagName("*");
+  for (const child of sort) {
+    if (child instanceof HTMLOptionElement) {
+      if (child.selected && child.innerHTML === "SORT BY") {
+        URL.length = 0;
+      } else if (child.selected) {
+        URL.push(`sort=${child.innerHTML.replace(/ /g, "_")}`);
+      }
+    }
+  }
+  return URL.join("");
+}
+
+function getURLWithFilters(filtersObj?: IFilters): string | undefined {
+  const URL: string[] = [];
+  const device: string | undefined = `device=${filtersObj?.device
+    .map((item) => item.replace(/ /g, "_"))
+    .join("&")}`;
+  const material: string | undefined = `material=${filtersObj?.material
+    .map((item) => item.replace(/ /g, "_"))
+    .join("&")}`;
+  const color: string | undefined = `color=${filtersObj?.color
+    .map((item) => item.replace(/ /g, "_"))
+    .join("&")}`;
+
+  if (filtersObj && filtersObj.device.length > 0 && !URL.includes(device)) {
+    URL.push(device);
+  }
+  if (filtersObj && filtersObj.material.length > 0 && !URL.includes(material)) {
+    URL.push(material);
+  }
+  if (filtersObj && filtersObj.color.length > 0 && !URL.includes(color)) {
+    URL.push(color);
+  }
+  return URL.join("");
+}
+
+function getURLWithInput(): string | undefined {
+  const URL: string[] = [];
+  URL.push(`input=${searchInput.value}`);
+  return URL.join("");
+}

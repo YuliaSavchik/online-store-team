@@ -1,10 +1,5 @@
 import Page from '../../components/templates/page';
 import { infinitySlider } from '../../components/infinitySlider/index';
-//import { createCardsArea } from '../../components/productCards/index';
-//import Page from "../../components/templates/page";
-import Page from "../../components/templates/page";
-import { infinitySlider } from "../../components/infinitySlider/index";
-//import { createCardsArea } from '../../components/productCards/index';
 import { createMainButtons } from "../../components/buttons/index";
 import { createViewPageButtons } from "../../components/buttons/index";
 import { createNoUiSliderBlock } from "../../components/noUiSlider/index";
