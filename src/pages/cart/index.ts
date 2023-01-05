@@ -3,9 +3,16 @@ import { createArrowButtons } from '../../components/buttons/index';
 import { CartProducts } from '../../components/cartProducts/index';
 import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
-import { productsInCart } from '../../index';
+import { productsInCart, activPromoCode } from '../../index';
 import { Product } from '../../types/interfaces';
 import { createModalWindow } from '../../components/modalWindow/index';
+import { showAvailablePromoCode } from '../../components/summary/index';
+import { 
+  addDiscount, 
+  changeBlockTotalWitnPromo, 
+  decreaseDiscountWhenDecreaseProduct,
+  createPromoBlockIfCodeAdding
+} from '../../components/summary/index';
 
 let numPage = 1;
 class CartPage extends Page {
@@ -78,6 +85,7 @@ class CartPage extends Page {
     const content = this.createContent();
     this.container.append(content);
     showAvailablePromoCode();
+    createPromoBlockIfCodeAdding();
     return this.container;
   }
 }
@@ -125,6 +133,7 @@ export function emptyCart() {
   cartBlock.append(text);
   if(!summary) return;
   summary.style.display = 'none';
+  activPromoCode.length = 0;
 }
 
 function switchPages(item: HTMLElement) {
@@ -155,7 +164,7 @@ function switchPages(item: HTMLElement) {
 
 }
 
-function countSumProductInCart() {
+export function countSumProductInCart() {
   const productPrices: number[] = [];
   productsInCart.forEach((product) => {
     productPrices.push(product.priceForCart);
@@ -266,12 +275,14 @@ function increaseCountProductInCart(item: HTMLElement) {
       productsInCart[id].stockForCart -= 1;
       productsInCart[id].priceForCart = productsInCart[id].priceForCart + productsInCart[id].price;
 
-      changeTotalInSummaryAndHeader()
+      changeTotalInSummaryAndHeader();
       changeCountsProductsInCard((dataSetId as string), 
         productsInCart[id].initialQuality, 
         productsInCart[id].stockForCart,
         productsInCart[id].priceForCart
-      )
+      );
+      changeBlockTotalWitnPromo();
+      addDiscount();
     }
     else if (productsInCart[id].stockForCart === 0) {
       changeCountsProductsInCard((dataSetId as string), 
@@ -295,12 +306,16 @@ function decreaseCountProductInCart (item: HTMLElement) {
       productsInCart[id].stockForCart += 1;
       productsInCart[id].priceForCart = productsInCart[id].priceForCart - productsInCart[id].price;
 
-      changeTotalInSummaryAndHeader()
+      changeTotalInSummaryAndHeader();
       changeCountsProductsInCard((dataSetId as string), 
         productsInCart[id].initialQuality, 
         productsInCart[id].stockForCart,
         productsInCart[id].priceForCart
-      )
+      );
+
+      if (activPromoCode.length > 0) {
+        decreaseDiscountWhenDecreaseProduct();
+      }
     }
     else if (productsInCart[id].initialQuality === 1) {
       const cardBlock = document.querySelector('.main-block__product-card-block') as HTMLElement;
@@ -309,9 +324,8 @@ function decreaseCountProductInCart (item: HTMLElement) {
         productsInCart[id].initialQuality, 
         productsInCart[id].stockForCart,
         productsInCart[id].priceForCart
-      )
+      );
 
-      console.log(Math.ceil(productsInCart.length / 3))
       removeProductInCart(productsInCart, (dataSetId as string));
       if (Math.ceil(productsInCart.length / 3) < numPage) {
         numPage -= 1;
@@ -324,11 +338,16 @@ function decreaseCountProductInCart (item: HTMLElement) {
           paginationCount.textContent = `${numPage}`;
         } else if (productsInCart.length === 0) {
           numPage = 1;
+          activPromoCode.length = 0;
         }
       } else {
         cardBlock.innerHTML = '';
         createCartProduct(cardBlock, itemCount, numPage);
         changeTotalInSummaryAndHeader();
+      }
+
+      if (activPromoCode.length > 0) {
+        decreaseDiscountWhenDecreaseProduct();
       }
     }
   }
@@ -338,142 +357,6 @@ function removeProductInCart(arr: Product[], value: string) {
   const id = Number(value);
   const index = arr.findIndex((item) => item.id === id)
   return arr.splice(index, 1);
-}
-
-function createDescriptionPromoCode(promoId: string, namePromo: string, btnName: string, contaiter: HTMLElement) {
-  const promoCodeName: HTMLElement = document.createElement('div');
-  promoCodeName.classList.add('promo-code-name');
-  promoCodeName.textContent = `${namePromo} - 10%`;
-  const promoCodeBtn: HTMLButtonElement = document.createElement('button');
-  promoCodeBtn.classList.add('promo-code-btn');
-  promoCodeBtn.classList.add(`promo-code-btn_${btnName}`);
-  promoCodeBtn.setAttribute(`data-id${btnName}`, `id-${promoId}`);
-  promoCodeBtn.textContent = `${btnName}`;
-  contaiter.append(promoCodeName, promoCodeBtn);
-  contaiter.classList.remove('promo-code-none');
-
-  return contaiter;
-}
-
-export function showAvailablePromoCode() {
-  const input = document.querySelector<HTMLInputElement>('.summary-container__input-promo-code');
-  if(!input) return;
-  const containerForPromo = document.querySelector<HTMLElement>('.promo-code__block-add');
-  if(!containerForPromo) return;
-
-  input.addEventListener('input', () => {
-    if (input.value === 'RS') {
-      createDescriptionPromoCode(input.value, 'RSSchool', 'add', containerForPromo);
-    }
-    else if (input.value === 'EPM') {
-      createDescriptionPromoCode(input.value, 'EPAM System', 'add', containerForPromo);
-    }
-    else {
-      containerForPromo.textContent = '';
-    }
-  });
-}
-
-function addPromoCode(item: HTMLElement) {
-  const summary = document.querySelector<HTMLElement>('.summary-container');
-  if (!summary) return;
-  const containerForAdd = document.querySelector<HTMLElement>('.applied-promo-code-block');
-  if (!containerForAdd) return;
-  const conteinerAppliedRS = document.querySelector<HTMLElement>('.applied-promo-code-rs');
-  if(!conteinerAppliedRS) return;
-  const conteinerAppliedEPM = document.querySelector<HTMLElement>('.applied-promo-code-epm');
-  if(!conteinerAppliedEPM) return;
-  const containerForPromo = document.querySelector<HTMLElement>('.promo-code__block-add');
-  if(!containerForPromo) return;
-  const summaryTotalSum = document.querySelector<HTMLElement>('.total_sum');
-  if (!summaryTotalSum) return;
-
-  if ((item as HTMLElement).closest('.promo-code-btn_add')) {
-    if (item.dataset.idadd === 'id-RS') {
-      conteinerAppliedRS.setAttribute('id', 'id-RS');
-      containerForAdd.append(createDescriptionPromoCode('RS', 'RSSchool', 'drop', conteinerAppliedRS));
-      containerForAdd.classList.remove('promo-code-none');
-      containerForPromo.textContent = '';
-      summary.classList.add('add-promo-block');
-      if (summaryTotalSum.closest('.total-with-promo')) {
-        addSecondPromoCodeToPrice();
-      } else {
-        addFirstPromoCodeToPrice();
-      }
-     
-    }
-    else if (item.dataset.idadd === 'id-EPM') {
-      conteinerAppliedEPM.setAttribute('id', 'id-EPM')
-      containerForAdd.append(createDescriptionPromoCode('EPM', 'EPAM System', 'drop', conteinerAppliedEPM));
-      containerForAdd.classList.remove('promo-code-none');
-      containerForPromo.textContent = '';
-      summary.classList.add('add-promo-block');
-      if (summaryTotalSum.closest('.total-with-promo')) {
-        addSecondPromoCodeToPrice();
-      } else {
-        addFirstPromoCodeToPrice();
-      }
-    }
-  }
-}
-
-function addFirstPromoCodeToPrice() {
-  const summaryTotalSum = document.querySelector<HTMLElement>('.total_sum');
-  if (!summaryTotalSum) return;
-  const summaryTotalSumWithPromo = document.querySelector<HTMLElement>('.total_sum-with-promo');
-  if (!summaryTotalSumWithPromo) return;
-  const total = Number(summaryTotalSum.textContent);
-  summaryTotalSum.classList.add('total-with-promo');
-  summaryTotalSumWithPromo.textContent = `${countSumWithPromo(total)}`;
-}
-
-function addSecondPromoCodeToPrice() {
-  const summaryTotalSumWithPromo = document.querySelector<HTMLElement>('.total_sum-with-promo');
-  if (!summaryTotalSumWithPromo) return;
-  const totalWithPromo = Number(summaryTotalSumWithPromo.textContent);
-  summaryTotalSumWithPromo.textContent = `${countSumWithPromo(totalWithPromo)}`;
-}
-
-function removePromoCode(item: HTMLElement) {
-  const summary = document.querySelector<HTMLElement>('.summary-container');
-  if (!summary) return;
-  const containerForAdd = document.querySelector<HTMLElement>('.applied-promo-code-block');
-  if (!containerForAdd) return;
-  const summaryTotalSum = document.querySelector<HTMLElement>('.total_sum');
-  if (!summaryTotalSum) return;
-  const totalSum = Number(summaryTotalSum.textContent);
-  const summaryTotalSumWithPromo = document.querySelector<HTMLElement>('.total_sum-with-promo');
-  if (!summaryTotalSumWithPromo) return;
-
-  if ((item as HTMLElement).closest('.promo-code-btn_drop')) {
-    const dataSetId = item.dataset.iddrop;
-    const delPromoBlock = document.getElementById(dataSetId as string) as HTMLElement;
-    if (summaryTotalSumWithPromo.textContent !== '') {
-      const total = Number(summaryTotalSumWithPromo.textContent);
-      summaryTotalSumWithPromo.textContent = `${countSumDelitePromo(total)}`;
-      delPromoBlock.innerHTML = '';
-      const sumWithPromo = countSumDelitePromo(total)
-      if ( totalSum === sumWithPromo) {
-        summaryTotalSumWithPromo.textContent = '';
-        containerForAdd.classList.add('promo-code-none');
-        summaryTotalSum.classList.remove('total-with-promo');
-        summary.classList.remove('add-promo-block');
-      }
-    }
-
-  }
-}
-
-function countSumWithPromo(sum: number) {
-  const percent = (sum / 100) * 10;
-  const result = Math.round(sum - percent);
-  return result;
-}
-
-function countSumDelitePromo(sum: number) {
-  const percent = (sum / 100) * 10;
-  const result = Math.round(sum + percent);
-  return result;
 }
 
 function openModalWindowInCart(item: HTMLElement) {
@@ -516,8 +399,6 @@ wrapperForPage.addEventListener('click', function(event) {
   showCountProductInCartIco();
   increaseCountProductInCart(item as HTMLElement);
   decreaseCountProductInCart(item as HTMLElement);
-  addPromoCode(item as HTMLDivElement);
-  removePromoCode(item as HTMLDivElement);
   openModalWindowInCart(item as HTMLElement);
 });
 
