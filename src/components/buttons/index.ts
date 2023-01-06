@@ -60,6 +60,7 @@ const btnArrowDown = createArrowButtons('button-arrow_down');
 
 product description page
 const btnAddToCard = createMainButtons('add to card', 'button_meddium-size', 'btn-add-card');
+const btnRemoveFromCard = createMainButtons('remove', 'button_meddium-size', 'btn-remove-from-card');
 const btnBuyNowInDescription = createMainButtons('buy now', 'button_meddium-size', 'product-description__btn-buy-now');
 
 cart page

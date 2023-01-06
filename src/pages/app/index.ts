@@ -4,14 +4,16 @@ import ProductDescriptionPage from '../productDescription/index';
 import CartPage from '../cart/index';
 import ErrorPage from '../error/index';
 import { PagesId } from '../../types/enums';
+import { Product } from '../../types/interfaces';
 import { showCountProductInCartIco } from '../cart/index';
 import { addProductInCartClickByNow } from '../cart/index';
 import { showAvailablePromoCode, createPromoBlockIfCodeAdding } from '../../components/summary/index';
-import { productsInCart } from '../../index';
+//import { local} from '../../index';
 import { emptyCart } from '../cart/index';
 
 export const wrapperForPage = (document.querySelector('.main') as HTMLElement);
-
+export const productsInCart: Product[] = [];
+//export const local: Storage = localStorage;
 class App {
   private static container: HTMLElement = wrapperForPage;
   private mainPage: MainPage;
@@ -50,6 +52,7 @@ class App {
 
   renderPage() {
     App.renderNewPage('main-page');
+    //getProductInCartFromLocalStorage()
     this.enableRouteChange();
   }
 }
@@ -113,3 +116,10 @@ headerBtnCart.addEventListener('click', (event) => {
     }
   }
 });
+
+// function getProductInCartFromLocalStorage() {
+//   if (local.getItem('productInCart')) {
+//     productsInCart = JSON.parse(local.getItem('productInCart') as string);
+//     console.log(productsInCart);
+//   }
+// }

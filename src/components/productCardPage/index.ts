@@ -108,10 +108,13 @@ export class ProductCardPage {
     //buttons
     const buttonsArea : HTMLDivElement = document.createElement('div');
     buttonsArea.classList.add('prod-card__description__buttons');
+    const buttonsAddRemoveBox : HTMLDivElement = document.createElement('div');
+    buttonsAddRemoveBox.classList.add(`description-btn-box-${this.data.id}`);
     btnBuyNowInDescription.setAttribute('data-idbtn', `${this.data.id}`);
     btnAddToCard.setAttribute('data-idbtn', `${this.data.id}`);
+    buttonsAddRemoveBox.append(btnAddToCard.cloneNode(true));
     
-    buttonsArea.append(btnAddToCard.cloneNode(true), btnBuyNowInDescription.cloneNode(true))
+    buttonsArea.append(buttonsAddRemoveBox.cloneNode(true), btnBuyNowInDescription.cloneNode(true))
 
     descriptionBlock.append(titleDescriptionBlock, descriptionBlockMain, priceBlock)
     pageDescriptionBlock.append(descriptionBlock, buttonsArea)

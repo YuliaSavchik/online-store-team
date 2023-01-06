@@ -1,7 +1,7 @@
 import { createInputs } from "../inputs/index";
 import { createMainButtons } from "../buttons/index";
 import App from "../../pages/app/index";
-import { productsInCart } from "../../index";
+import { productsInCart } from "../../pages/app/index";
 import { showCountProductInCartIco, showTotalSumInHeader } from "../../pages/cart/index";
 import { updateURL } from "../../pages/app/index";
 
