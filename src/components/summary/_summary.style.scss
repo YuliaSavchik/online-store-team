@@ -57,14 +57,34 @@
   padding: 3px 0 5px;
 }
 
-.promo-code__block-add {
+.promo-code-container {
+  width: 100%;
+  @include display-flex(column, flex-start, center);
+}
+
+.promo-code-container__adding-block,
+.promo-code-container__total-block {
   width: 100%;
   @include display-flex(row, center, center);
 }
 
-.promo-code-name {
+.promo-code-container__applied-block {
+  width: 100%;
+  @include display-flex(column, center, center);
+}
+
+.applied-block {
+  width: 95%;
+  @include display-flex(row, center, center);
+  padding: 4px 0;
+  margin: 2px 0;
+  background-color: $color-blue;
+}
+
+.adding-block__promo-name {
   text-transform: none;
 }
+
 .promo-code-btn {
   width: 50px;
   height: 25px;
@@ -83,27 +103,13 @@
   box-shadow: inset 3px 3px 0px rgba(0, 0, 0, 0.25);
 }
 
-.applied-promo-code-block {
-  width: 100%;
-  border-radius: 2px;
-  border: $border_style;
-  margin: 0 0 7px 0;
-  @include display-flex(column, flex-start, center);
+.applied-block__promo-name {
+  text-transform: none;
+  text-decoration: underline;
 }
 
-.applied-promo-code-block__title {
-  width: 100%;
-  text-align: center;
-  padding: 3px 0;
-  background-color: $color-pink;
-}
-
-.applied-promo-code-epm,
-.applied-promo-code-rs {
-  width: 100%;
-  padding: 4px 0;
-  @include display-flex(row, center, center);
-  background-color: $color-blue;
+.total-block__total-with-promo {
+  @include font-size(24px, 33px);
 }
 
 .add-promo-block {
@@ -111,13 +117,6 @@
   padding: 30px 0 30px;
 }
 
-.promo-code-none {
-  display: none;
-}
-
 .total-with-promo {
-  margin: 0 10px 0 0;
-  @include font-size(16px, 20px);
-  font-weight: 400;
-  text-decoration: line-through 2px solid red;
+  text-decoration: line-through 2px solid $color-pink;
 }

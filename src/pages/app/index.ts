@@ -6,7 +6,7 @@ import ErrorPage from '../error/index';
 import { PagesId } from '../../types/enums';
 import { showCountProductInCartIco } from '../cart/index';
 import { addProductInCartClickByNow } from '../cart/index';
-import { showAvailablePromoCode } from '../cart/index';
+import { showAvailablePromoCode, createPromoBlockIfCodeAdding } from '../../components/summary/index';
 import { productsInCart } from '../../index';
 import { emptyCart } from '../cart/index';
 
@@ -17,21 +17,16 @@ class App {
   private mainPage: MainPage;
 
   static renderNewPage(idPage: string, idCard?: string) {
-    // App.container.innerHTML = '';
+    App.container.innerHTML = '';
     let page: Page | null = null;
 
     if(idPage === PagesId.MainPage) {
-      App.container.innerHTML = '';
       page = new MainPage(idPage);
     } else if (idPage === PagesId.ProductDescriptionPage) {
-      App.container.innerHTML = '';
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage === PagesId.CartPage) {
-      App.container.innerHTML = '';
       page = new CartPage(idPage);
     } else {
-    } else if (idPage === PagesId.ErrorPage) {
-      App.container.innerHTML = '';
       page = new ErrorPage(idPage);
     }
 
@@ -98,6 +93,7 @@ wrapperForPage.addEventListener('click', function(event) {
     App.renderNewPage('cart-page');
     updateURL('cart-page');
     showAvailablePromoCode();
+    createPromoBlockIfCodeAdding();
   }
 });
 
@@ -110,6 +106,7 @@ headerBtnCart.addEventListener('click', (event) => {
     App.renderNewPage('cart-page');
     updateURL('cart-page');
     showAvailablePromoCode();
+    createPromoBlockIfCodeAdding();
 
     if (productsInCart.length === 0) {
       emptyCart();
