@@ -3,6 +3,7 @@ import { createMainButtons } from "../buttons/index";
 import App from "../../pages/app/index";
 import { productsInCart } from "../../index";
 import { showCountProductInCartIco, showTotalSumInHeader } from "../../pages/cart/index";
+import { updateURL } from "../../pages/app/index";
 
 export function createModalWindow() {
   const shadowContainer: HTMLElement = document.createElement('div');
@@ -38,7 +39,7 @@ export function createModalWindow() {
   const inputAdress = createInputs('text', 'delivery adress');
   inputAdress.classList.add('modal-window__input');
   inputAdress.classList.add('input-adress');
-  inputAdress.setAttribute('data-reg', '([а-яА-ЯёЁa-zA-Z0-9]{5,})+ ([а-яА-ЯёЁa-zA-Z0-9]{5,})+ ([а-яА-ЯёЁa-zA-Z0-9]{5,})+$');
+  inputAdress.setAttribute('data-reg', '([а-яА-ЯёЁa-zA-Z0-9-/,.]{5,})+ ([а-яА-ЯёЁa-zA-Z0-9-/,.]{5,})+ ([а-яА-ЯёЁa-zA-Z0-9-/,.]{5,})+$');
   inputAdressBox.append(inputAdress);
 
   const inputEmailBox: HTMLElement = document.createElement('div');
@@ -251,6 +252,7 @@ function addEventListenerForForm() {
         if (!modal) return;
         modal.remove();
         App.renderNewPage('main-page');
+        updateURL('main-page');
         productsInCart.length = 0;
         showCountProductInCartIco();
         showTotalSumInHeader();
