@@ -208,7 +208,7 @@ export function showCountProductInCartIco() {
   }
 }
 
-function showTotalSumInHeader() {
+export function showTotalSumInHeader() {
   const totalProductSum = document.querySelector('.header__wrapper__total-amount_number') as HTMLElement;
   totalProductSum.textContent = `${countSumProductInCart()}`;
 }

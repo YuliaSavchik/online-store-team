@@ -14,6 +14,13 @@
   color: rgba($color: #000000, $alpha: 0.4);
 }
 
+@mixin input-text-style() {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+  text-align: center;
+}
+
 .modal-window__shadow {
   position: fixed;
   top: 0;
@@ -49,6 +56,8 @@
   height: 45px;
   padding: 0 0 0 20px;
   background-color: $color-pink;
+
+  @include input-text-style();
 }
 
 .modal-window__input::placeholder {
@@ -79,19 +88,49 @@
 
 .input-card-number {
   width: 270px;
-  padding: 0 0 0 20px;
   background-color: $color_blue;
+
+  @include input-text-style();
 }
 
 .input-card-date,
 .input-card-cvv {
   width: 150px;
-  text-align: center;
   background-color: $color_blue;
+
+  @include input-text-style();
 }
 
 .input-card-number::placeholder,
 .input-card-date::placeholder,
 .input-card-cvv::placeholder {
   @include placeholder();
+}
+
+.input_error .input {
+  border: 1.7px solid red;
+}
+
+.input_error .input_error-text {
+  font-size: 12px;
+  color: red;
+}
+
+.message-about-order {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: #000000, $alpha: 0.8);
+
+  @include display-flex(row, center, center);
+}
+
+.message-about-order__message {
+  font-size: 48px;
+  line-height: 50px;
+  font-weight: 600;
+  color: $color-green;
 }
