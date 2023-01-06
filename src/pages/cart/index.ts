@@ -222,6 +222,13 @@ function addProductInCart(item: HTMLElement, className: string) {
     if (result === -1) {
       productsInCart.push(products[index]);
       showTotalSumInHeader();
+      item.textContent = 'remove';
+    }
+    else if (result === 0) {
+      removeProductInCart(productsInCart, String(dataSetId));
+      item.textContent = 'add';
+      showCountProductInCartIco();
+      showTotalSumInHeader();
     }
   }
 }
