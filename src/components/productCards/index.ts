@@ -1,7 +1,11 @@
 import { IFilters, Product } from "../../types/interfaces";
 import { products } from "../../data/data";
 import { createMainButtons, createSortSelect } from "../buttons/index";
-import { createFilterBlock, CreateObjWithFilters } from "../filters/index";
+import {
+  createFilterBlock,
+  CreateObjWithFilters,
+  UpdateURL,
+} from "../filters/index";
 import { createSearchInput } from "../inputs/index";
 import { target } from "../noUiSlider/nouislider";
 
@@ -16,7 +20,10 @@ export const productsBlock: HTMLDivElement = document.createElement("div");
 productsBlock.classList.add("products-block");
 
 export const sortSelect: HTMLSelectElement = createSortSelect("select-sort");
-sortSelect.addEventListener("change", CreateObjWithFilters.fillFiltersObj);
+sortSelect.addEventListener("change", (event) => {
+  UpdateURL.changeURL();
+  CreateObjWithFilters.fillFiltersObj(event);
+});
 
 export const cardsArea: HTMLDivElement = document.createElement("div");
 cardsArea.classList.add("product-cards-area");
@@ -26,6 +33,7 @@ found.classList.add("found");
 
 export const searchInput = createSearchInput();
 searchInput.addEventListener("input", () => {
+  UpdateURL.changeURL();
   CreateCardsArea.render();
 });
 
@@ -119,24 +127,7 @@ export class CreateCardsArea {
     }
 
     // card display type
-    if (cardsArea.style.gridTemplateColumns === "auto auto") {
-      for (const elem of cardsArea.children) {
-        elem.classList.add("two-col");
-        for (const el of elem.children) {
-          if (el.classList.contains("product-card_shadow")) {
-            el.classList.add("two-col-shadow");
-          }
-          if (el.classList.contains("product-card_buttons")) {
-            el.classList.add("two-col-btn-area");
-            for (const btn of el.children) {
-              if (btn.classList.contains("button")) {
-                btn.classList.add("two-col-button");
-              }
-            }
-          }
-        }
-      }
-    }
+    
 
     found.textContent = `Found: ${cardsArea.children.length}`;
 
@@ -250,7 +241,7 @@ export class CreateCardsArea {
     const maxValuePrice = document.querySelector(
       ".value_max-price"
     ) as HTMLElement;
-    const inputsValuePrice = [minValuePrice, maxValuePrice];
+    
 
     const rangeStock: target = document.querySelector(
       ".range-slider__range-stock"
@@ -262,6 +253,7 @@ export class CreateCardsArea {
       ".value_max-stock"
     ) as HTMLElement;
 
+    const inputsValuePrice = [minValuePrice, maxValuePrice];
     const inputsValueStock = [minValueStock, maxValueStock];
 
     rangePrice.noUiSlider?.set([5, 100]);
@@ -273,5 +265,7 @@ export class CreateCardsArea {
     inputsValueStock[1].innerHTML = "100";
 
     this.render();
+
+    window.location.hash = "#main-page";
   }
 }
