@@ -221,10 +221,12 @@ export const addFilterBlock: HTMLElement = createFilterBlock();
 
 window.addEventListener("load", (event) => {
   RenderContentByURL.render(window.location.hash, event);
+  UpdateURL.changeURL(event)
 });
 
 window.addEventListener("hashchange", (event) => {
   RenderContentByURL.render(window.location.hash, event);
+  UpdateURL.changeURL(event)
 });
 
 class RenderContentByURL {

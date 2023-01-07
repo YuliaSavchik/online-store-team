@@ -17,7 +17,7 @@ export class CartProducts {
     const cartProductBlock : HTMLDivElement = document.createElement("div");
     cartProductBlock.classList.add('cart-products');
 
-    cartProductBlock.style.backgroundColor = colorsArr[this.num - 1 % colorsArr.length];
+    cartProductBlock.style.backgroundColor = colorsArr[(this.num - 1) % colorsArr.length];
 
     //product number
     const productNumber : HTMLDivElement = document.createElement("div");

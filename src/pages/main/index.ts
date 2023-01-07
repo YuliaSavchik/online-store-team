@@ -1,8 +1,5 @@
 import Page from "../../components/templates/page";
 import { infinitySlider } from "../../components/infinitySlider/index";
-//import { createCardsArea } from '../../components/productCards/index';
-//import Page from "../../components/templates/page";
-//import { createCardsArea } from '../../components/productCards/index';
 import {
   btnViewThreeColums,
   btnViewTwoColums,
@@ -127,8 +124,6 @@ export default MainPage;
 
 window.addEventListener('resize', () => {
   if(window.innerWidth < 1000){
-    // btnViewTwoColums.classList.remove("checked");
-    // btnViewThreeColums.classList.add("checked");
     cardsArea.style.gap = '30px'
     cardsArea.style.padding = '30px'
     for (const child of cardsArea.children) {
