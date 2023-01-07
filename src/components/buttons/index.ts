@@ -56,6 +56,7 @@ const btnReset = createMainButtons('reset', 'button_meddium-size', 'btn-reset');
 const btnCopyLink = createMainButtons('copy link', 'button_meddium-size', 'btn-copy-link');
 const btnSort = createMainButtons('sort', 'button_large-size', 'btn-sopt');
 const btnAdd = createMainButtons('add', 'button_small-size', 'btn-add');
+const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove');
 const btnMore = createMainButtons('more', 'button_small-size', 'btn-more');
 const btnViewThreeColums = createViewPageButtons('button-view_three-colums');
 const btnViewTwoColums = createViewPageButtons('button-view_two-colums');
@@ -64,6 +65,7 @@ const btnArrowDown = createArrowButtons('button-arrow_down');
 
 product description page
 const btnAddToCard = createMainButtons('add to card', 'button_meddium-size', 'btn-add-card');
+const btnRemoveFromCard = createMainButtons('remove', 'button_meddium-size', 'btn-remove-from-card');
 const btnBuyNowInDescription = createMainButtons('buy now', 'button_meddium-size', 'product-description__btn-buy-now');
 
 cart page

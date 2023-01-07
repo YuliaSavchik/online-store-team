@@ -79,10 +79,14 @@ class ProductCard {
 
     const buttons: HTMLDivElement = document.createElement("div");
     buttons.classList.add("product-card_buttons");
+    const buttonsAddRemoveBox: HTMLDivElement = document.createElement("div");
+    buttonsAddRemoveBox.classList.add('btn-box');
+    buttonsAddRemoveBox.classList.add(`btn-box-${this.data.id}`);
     btnAdd.setAttribute("data-idbtn", `${this.data.id}`);
+    buttonsAddRemoveBox.append(btnAdd.cloneNode(true));
     btnMore.setAttribute("data-idcard", `${this.data.id}`);
-    buttons.appendChild(btnAdd.cloneNode(true));
-    buttons.appendChild(btnMore.cloneNode(true));
+    buttons.append(buttonsAddRemoveBox.cloneNode(true));
+    buttons.append(btnMore.cloneNode(true));
 
     img.setAttribute("src", this.data.mainImage);
     this.card.appendChild(img);

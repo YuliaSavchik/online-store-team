@@ -1,9 +1,10 @@
 import Page from '../../components/templates/page';
-import { createArrowButtons } from '../../components/buttons/index';
+import { createArrowButtons, createMainButtons } from '../../components/buttons/index';
 import { CartProducts } from '../../components/cartProducts/index';
 import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
-import { productsInCart, activPromoCode } from '../../index';
+import { productsInCart /* local */ } from '../app/index';
+import { activPromoCode } from '../../index';
 import { Product } from '../../types/interfaces';
 import { createModalWindow } from '../../components/modalWindow/index';
 import { showAvailablePromoCode } from '../../components/summary/index';
@@ -208,29 +209,66 @@ export function showCountProductInCartIco() {
   }
 }
 
-function showTotalSumInHeader() {
+export function showTotalSumInHeader() {
   const totalProductSum = document.querySelector('.header__wrapper__total-amount_number') as HTMLElement;
   totalProductSum.textContent = `${countSumProductInCart()}`;
 }
 
-function addProductInCart(item: HTMLElement, className: string) {
+function addProductInCart(item: HTMLElement, className: string, btn: HTMLButtonElement) {
   if ((item as HTMLElement).closest(className)) {
     const dataSetId = Number((item as HTMLElement).dataset.idbtn);
     const index = dataSetId - 1;
     const result = productsInCart.findIndex((product) => product.id === dataSetId);
-
     if (result === -1) {
       productsInCart.push(products[index]);
       showTotalSumInHeader();
+      const bntBox = item.parentNode;
+      item.remove();
+      btn.classList.add('button');
+      btn.setAttribute("data-idbtn", `${dataSetId}`);
+      bntBox?.append(btn);
+      console.log(productsInCart)
+      //local.setItem('productInCart', JSON.stringify(productsInCart));
     }
   }
+  //local.setItem('productInCart', JSON.stringify(productsInCart));
 }
 function addProductInCartClickBtnAdd(item: HTMLElement) {
-  addProductInCart(item, '.btn-add');
+  const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove')
+  addProductInCart(item, '.btn-add', btnRemove);
 }
 
 function addProductInCartClickByAddToCard(item: HTMLElement) {
-  addProductInCart(item, '.btn-add-card');
+  const btnRemoveFromCard = createMainButtons('remove', 'button_meddium-size', 'btn-remove-from-card');
+  addProductInCart(item, '.btn-add-card', btnRemoveFromCard);
+}
+
+function removeProduct(item: HTMLElement, className: string, btn: HTMLButtonElement) {
+  if ((item as HTMLElement).closest(className)) {
+    const dataSetId = Number((item as HTMLElement).dataset.idbtn);
+    const result = productsInCart.findIndex((product) => product.id === dataSetId);
+    if (result >= 0) {
+      removeProductInCart(productsInCart, String(dataSetId));
+      showCountProductInCartIco();
+      showTotalSumInHeader();
+      const bntBox = item.parentNode;
+      item.remove();
+      btn.classList.add('button');
+      btn.setAttribute("data-idbtn", `${dataSetId}`);
+      bntBox?.append(btn);
+      console.log(productsInCart)
+    }
+  }
+}
+
+function removeProductClickMainBtnRemove(item: HTMLElement) {
+  const btnAdd = createMainButtons('add', 'button_small-size', 'btn-add');
+  removeProduct(item, '.btn-remove', btnAdd);
+}
+
+function removeProductClickDescriptionBtnRemove(item: HTMLElement) {
+  const btnAddToCard = createMainButtons('add to card', 'button_meddium-size', 'btn-add-card');
+  removeProduct(item, '.btn-remove-from-card', btnAddToCard);
 }
 
 function changeTotalInSummaryAndHeader() {
@@ -355,8 +393,10 @@ function decreaseCountProductInCart (item: HTMLElement) {
 
 function removeProductInCart(arr: Product[], value: string) {
   const id = Number(value);
-  const index = arr.findIndex((item) => item.id === id)
-  return arr.splice(index, 1);
+  const index = arr.findIndex((item) => item.id === id);
+  const result = arr.splice(index, 1);
+  //local.setItem('productInCart', JSON.stringify(result));
+  return result;
 }
 
 function openModalWindowInCart(item: HTMLElement) {
@@ -395,6 +435,8 @@ wrapperForPage.addEventListener('click', function(event) {
 
   addProductInCartClickBtnAdd(item as HTMLDivElement);
   addProductInCartClickByAddToCard(item as HTMLElement);
+  removeProductClickMainBtnRemove(item as HTMLElement);
+  removeProductClickDescriptionBtnRemove(item as HTMLElement);
   switchPages(item as HTMLElement);
   showCountProductInCartIco();
   increaseCountProductInCart(item as HTMLElement);

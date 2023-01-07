@@ -99,6 +99,7 @@ class MainPage extends Page {
     mainWrapper.append(sliderBlock, settings, mainContent);
     return mainWrapper;
   }
+
   render() {
     this.container.append(content);
     return this.container;
@@ -108,3 +109,4 @@ class MainPage extends Page {
 const content = MainPage.createContent();
 
 export default MainPage;
+

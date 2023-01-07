@@ -61,13 +61,15 @@
 }
 
 .btn-add,
+.btn-remove,
 .btn-more {
   border: $border_style;
   background-color: transparent;
   box-shadow: none;
 }
 
-.btn-add-card {
+.btn-add-card,
+.btn-remove-from-card {
   width: 140px;
   background-color: $color_green;
 }
