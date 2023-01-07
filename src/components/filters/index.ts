@@ -1,13 +1,18 @@
 import { products } from "../../data/data";
 import { Color, Device, Material } from "../../types/enums";
 import { IFilters } from "../../types/interfaces";
-import { createArrowButtons } from "../buttons/index";
+import {
+  btnViewThreeColums,
+  btnViewTwoColums,
+  createArrowButtons,
+} from "../buttons/index";
 import { target } from "../noUiSlider/nouislider";
 import {
   CreateCardsArea,
   addFilterBlock,
   sortSelect,
   searchInput,
+  cardsArea,
 } from "../productCards/index";
 
 const btnArrowTop = createArrowButtons("button-arrow_top");
@@ -232,6 +237,7 @@ class RenderContentByURL {
     input: "",
     price: "",
     stock: "",
+    view: "",
   };
 
   static checkSort(hash: string) {
@@ -337,8 +343,7 @@ class RenderContentByURL {
       }
     }
 
-    const URL = hash.split("/")[1];
-    const URLSplit: string[] = URL.includes("|") ? URL.split("|") : [URL];
+    const URL = hash.split("/")[1].split("|");
 
     const filters: Record<string, string> = {
       device: "",
@@ -346,7 +351,7 @@ class RenderContentByURL {
       color: "",
     };
 
-    URLSplit.forEach((item) => {
+    URL.forEach((item) => {
       const [key, value] = item.split("=");
       filters[key] = value;
     });
@@ -375,6 +380,17 @@ class RenderContentByURL {
       this.hashTypes[key] = value;
     });
 
+    //check view
+    if (this.hashTypes.view.includes("column") || !hash.includes("view")) {
+      btnViewTwoColums.classList.remove("checked");
+      btnViewThreeColums.classList.add("checked");
+      cardsArea.style.gridTemplateColumns = "auto auto auto";
+    } else {
+      btnViewThreeColums.classList.remove("checked");
+      btnViewTwoColums.classList.add("checked");
+      cardsArea.style.gridTemplateColumns = "auto auto";
+    }
+
     //check filters
     this.checkFilters(hash);
 
@@ -396,7 +412,7 @@ class RenderContentByURL {
 }
 
 export class UpdateURL {
-  static changeURL(): void {
+  static changeURL(event?: Event): void {
     const URL: string[] = [];
     const sortURL: string | undefined = this.getURLWithSort();
     const filtersURL: string | undefined = this.getURLWithFilters(
@@ -404,11 +420,13 @@ export class UpdateURL {
     );
     const inputURL: string | undefined = this.getURLWithInput();
     const priceNStockURL: string | undefined = this.getURLWithPriceNStock();
+    const viewURL: string | undefined = this.getURLWithView(event);
 
     if (filtersURL) URL.push(filtersURL);
     if (sortURL) URL.push(sortURL);
     if (inputURL) URL.push(inputURL);
     if (priceNStockURL) URL.push(priceNStockURL);
+    if (viewURL) URL.push(viewURL);
 
     if (history.pushState) {
       history.pushState("", `${URL}`, `#main-page/${URL.join("|")}`);
@@ -462,9 +480,8 @@ export class UpdateURL {
 
   static getURLWithInput(): string | undefined {
     const URL: string[] = [];
-    if (searchInput.value) {
-      URL.push(`input=${searchInput.value}`);
-    }
+    if (searchInput.value) URL.push(`input=${searchInput.value}`);
+
     return URL.join("");
   }
 
@@ -484,9 +501,33 @@ export class UpdateURL {
 
     return URL.join("|");
   }
+
+  static getURLWithView(event: Event | undefined): string | undefined {
+    let URL= "";
+    const target = event?.target;
+    if (target instanceof HTMLButtonElement) {
+      if (target.className.includes("button-view")) {
+        if (cardsArea.style.gridTemplateColumns === "auto auto") {
+          URL = "view=row";
+        } else {
+          URL = "view=column";
+        }
+      }
+    }
+
+    if(window.location.hash.includes('view')){
+      if (cardsArea.style.gridTemplateColumns === "auto auto") {
+        URL = "view=row";
+      } else {
+        URL = "view=column";
+      }
+    }
+
+    return URL;
+  }
 }
 
-export function copyText(text : string) {
+export function copyText(text: string) {
   const textArea = document.createElement("textarea");
   textArea.value = text;
   document.body.appendChild(textArea);
@@ -494,4 +535,3 @@ export function copyText(text : string) {
   document.execCommand("Copy");
   textArea.remove();
 }
-

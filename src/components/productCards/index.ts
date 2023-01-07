@@ -127,24 +127,7 @@ export class CreateCardsArea {
     }
 
     // card display type
-    if (cardsArea.style.gridTemplateColumns === "auto auto") {
-      for (const elem of cardsArea.children) {
-        elem.classList.add("two-col");
-        for (const el of elem.children) {
-          if (el.classList.contains("product-card_shadow")) {
-            el.classList.add("two-col-shadow");
-          }
-          if (el.classList.contains("product-card_buttons")) {
-            el.classList.add("two-col-btn-area");
-            for (const btn of el.children) {
-              if (btn.classList.contains("button")) {
-                btn.classList.add("two-col-button");
-              }
-            }
-          }
-        }
-      }
-    }
+    
 
     found.textContent = `Found: ${cardsArea.children.length}`;
 

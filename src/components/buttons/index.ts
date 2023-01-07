@@ -45,6 +45,11 @@ export function createSortSelect(selectClassName: string){
   return select;
 }
 
+export const btnViewThreeColums = createViewPageButtons(
+  "button-view_three-colums"
+);
+export const btnViewTwoColums = createViewPageButtons("button-view_two-colums");
+
 /* 
 main page
 const btnReset = createMainButtons('reset', 'button_meddium-size', 'btn-reset');
