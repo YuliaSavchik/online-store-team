@@ -116,15 +116,16 @@ export class ProductCardPage {
     btnAddToCard.setAttribute('data-idbtn', `${this.data.id}`);
     btnRemoveFromCard.setAttribute('data-idbtn', `${this.data.id}`);
     if (productsInCart.length > 0) {
-      buttonsAddRemoveBox.innerHTML = '';
-      productsInCart.forEach((prod) => {
-        if (prod.id === this.data.id) {
-          buttonsAddRemoveBox.append(btnRemoveFromCard.cloneNode(true));
-        } else {
-          buttonsAddRemoveBox.append(btnAddToCard.cloneNode(true));
-        }
-      })
+      const result = productsInCart.findIndex((product) => product.id === this.data.id);
+      if (result === -1) {
+        buttonsAddRemoveBox.innerHTML = '';
+        buttonsAddRemoveBox.append(btnAddToCard.cloneNode(true));
+      } else {
+        buttonsAddRemoveBox.innerHTML = '';
+        buttonsAddRemoveBox.append(btnRemoveFromCard.cloneNode(true));
+      }
     } else {
+      buttonsAddRemoveBox.innerHTML = '';
       buttonsAddRemoveBox.append(btnAddToCard.cloneNode(true));
     }
     

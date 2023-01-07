@@ -8,6 +8,7 @@ import {
 } from "../filters/index";
 import { createSearchInput } from "../inputs/index";
 import { target } from "../noUiSlider/nouislider";
+import { productsInCart } from "../../pages/app/index";
 
 const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
 const btnMore = createMainButtons("more", "button_small-size", "btn-more");
@@ -82,8 +83,23 @@ class ProductCard {
     const buttonsAddRemoveBox: HTMLDivElement = document.createElement("div");
     buttonsAddRemoveBox.classList.add('btn-box');
     buttonsAddRemoveBox.classList.add(`btn-box-${this.data.id}`);
+    buttonsAddRemoveBox.setAttribute('id', `${this.data.id}`);
     btnAdd.setAttribute("data-idbtn", `${this.data.id}`);
-    buttonsAddRemoveBox.append(btnAdd.cloneNode(true));
+    const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove');
+    btnRemove.setAttribute("data-idbtn", `${this.data.id}`);
+    if (productsInCart.length > 0) {
+      const result = productsInCart.findIndex((product) => product.id === this.data.id);
+      if (result === -1) {
+        buttonsAddRemoveBox.innerHTML = '';
+        buttonsAddRemoveBox.append(btnAdd.cloneNode(true));
+      } else {
+        buttonsAddRemoveBox.innerHTML = '';
+        buttonsAddRemoveBox.append(btnRemove.cloneNode(true));
+      }
+    } else {
+      buttonsAddRemoveBox.innerHTML = '';
+      buttonsAddRemoveBox.append(btnAdd.cloneNode(true));
+    }
     btnMore.setAttribute("data-idcard", `${this.data.id}`);
     buttons.append(buttonsAddRemoveBox.cloneNode(true));
     buttons.append(btnMore.cloneNode(true));
