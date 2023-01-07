@@ -4,7 +4,7 @@ import { createMainButtons, createSortSelect } from "../buttons/index";
 import {
   createFilterBlock,
   CreateObjWithFilters,
-  updateURLFilters,
+  UpdateURL,
 } from "../filters/index";
 import { createSearchInput } from "../inputs/index";
 import { target } from "../noUiSlider/nouislider";
@@ -21,7 +21,7 @@ productsBlock.classList.add("products-block");
 
 export const sortSelect: HTMLSelectElement = createSortSelect("select-sort");
 sortSelect.addEventListener("change", (event) => {
-  updateURLFilters();
+  UpdateURL.changeURL();
   CreateObjWithFilters.fillFiltersObj(event);
 });
 
@@ -33,12 +33,7 @@ found.classList.add("found");
 
 export const searchInput = createSearchInput();
 searchInput.addEventListener("input", () => {
-  updateURLFilters();
-  CreateCardsArea.render();
-});
-
-searchInput.addEventListener("change", () => {
-  updateURLFilters();
+  UpdateURL.changeURL();
   CreateCardsArea.render();
 });
 
@@ -263,7 +258,7 @@ export class CreateCardsArea {
     const maxValuePrice = document.querySelector(
       ".value_max-price"
     ) as HTMLElement;
-    const inputsValuePrice = [minValuePrice, maxValuePrice];
+    
 
     const rangeStock: target = document.querySelector(
       ".range-slider__range-stock"
@@ -275,6 +270,7 @@ export class CreateCardsArea {
       ".value_max-stock"
     ) as HTMLElement;
 
+    const inputsValuePrice = [minValuePrice, maxValuePrice];
     const inputsValueStock = [minValueStock, maxValueStock];
 
     rangePrice.noUiSlider?.set([5, 100]);

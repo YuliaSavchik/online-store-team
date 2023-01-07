@@ -45,11 +45,11 @@ class App {
   }
 
   constructor() {
-    this.mainPage = new MainPage('main-page');
+    this.mainPage = new MainPage('http://localhost:9000/#main-page/device=Iphone_13,_14&Iphone_12_Pro');
   }
 
   renderPage() {
-    App.renderNewPage('main-page');
+    App.renderNewPage('http://localhost:9000/#main-page/device=Iphone_13,_14&Iphone_12_Pro');
     this.enableRouteChange();
   }
 }

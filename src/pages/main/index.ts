@@ -12,7 +12,7 @@ import {
   searchInput,
   sortSelect,
 } from "../../components/productCards/index";
-import { CreateObjWithFilters } from "../../components/filters/index";
+import { copyText, CreateObjWithFilters } from "../../components/filters/index";
 
 class MainPage extends Page {
   constructor(id: string) {
@@ -40,11 +40,14 @@ class MainPage extends Page {
     );
 
     btnReset.addEventListener('click', () => CreateCardsArea.reset(CreateObjWithFilters.filtersObj))
+
     const btnCopyLink = createMainButtons(
-      "copy link",
+      "",
       "button_meddium-size",
       "btn-copy-link"
     );
+    btnCopyLink.addEventListener('click', () => copyText(window.location.href))
+
     btnBlock.append(btnReset, btnCopyLink);
 
     const btnSort = sortSelect;
