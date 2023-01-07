@@ -52,7 +52,7 @@ class App {
 
   renderPage() {
     App.renderNewPage('main-page');
-    //getProductInCartFromLocalStorage()
+    updateURL('main-page');
     this.enableRouteChange();
   }
 }
@@ -117,9 +117,13 @@ headerBtnCart.addEventListener('click', (event) => {
   }
 });
 
-// function getProductInCartFromLocalStorage() {
-//   if (local.getItem('productInCart')) {
-//     productsInCart = JSON.parse(local.getItem('productInCart') as string);
-//     console.log(productsInCart);
-//   }
-// }
+const mainPageLink = document.querySelector('.header__wrapper__link') as HTMLElement;
+mainPageLink.addEventListener('click', (event) => {
+  const item = event.target;
+  if (!item) return;
+ 
+  if ((item as HTMLElement).closest('.header__wrapper__link')) {
+    App.renderNewPage('main-page');
+    updateURL('main-page');
+  }
+})

@@ -72,6 +72,7 @@ class ProductCard {
     const buttons: HTMLDivElement = document.createElement("div");
     buttons.classList.add("product-card_buttons");
     const buttonsAddRemoveBox: HTMLDivElement = document.createElement("div");
+    buttonsAddRemoveBox.classList.add('btn-box');
     buttonsAddRemoveBox.classList.add(`btn-box-${this.data.id}`);
     btnAdd.setAttribute("data-idbtn", `${this.data.id}`);
     buttonsAddRemoveBox.append(btnAdd.cloneNode(true));

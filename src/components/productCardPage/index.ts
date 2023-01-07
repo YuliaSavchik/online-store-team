@@ -1,9 +1,11 @@
 //import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
 import { createMainButtons } from "../buttons/index";
+import { productsInCart } from "../../pages/app/index";
 
 const btnAddToCard = createMainButtons('add to card', 'button_meddium-size', 'btn-add-card');
 const btnBuyNowInDescription = createMainButtons('buy now', 'button_meddium-size', 'product-description__btn-buy-now');
+const btnRemoveFromCard = createMainButtons('remove', 'button_meddium-size', 'btn-remove-from-card');
 
 export class ProductCardPage {
   data: Product;
@@ -112,7 +114,19 @@ export class ProductCardPage {
     buttonsAddRemoveBox.classList.add(`description-btn-box-${this.data.id}`);
     btnBuyNowInDescription.setAttribute('data-idbtn', `${this.data.id}`);
     btnAddToCard.setAttribute('data-idbtn', `${this.data.id}`);
-    buttonsAddRemoveBox.append(btnAddToCard.cloneNode(true));
+    btnRemoveFromCard.setAttribute('data-idbtn', `${this.data.id}`);
+    if (productsInCart.length > 0) {
+      buttonsAddRemoveBox.innerHTML = '';
+      productsInCart.forEach((prod) => {
+        if (prod.id === this.data.id) {
+          buttonsAddRemoveBox.append(btnRemoveFromCard.cloneNode(true));
+        } else {
+          buttonsAddRemoveBox.append(btnAddToCard.cloneNode(true));
+        }
+      })
+    } else {
+      buttonsAddRemoveBox.append(btnAddToCard.cloneNode(true));
+    }
     
     buttonsArea.append(buttonsAddRemoveBox.cloneNode(true), btnBuyNowInDescription.cloneNode(true))
 

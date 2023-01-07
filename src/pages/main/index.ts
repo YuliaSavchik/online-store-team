@@ -1,8 +1,5 @@
 import Page from '../../components/templates/page';
 import { infinitySlider } from '../../components/infinitySlider/index';
-//import { createCardsArea } from '../../components/productCards/index';
-//import Page from "../../components/templates/page";
-//import { createCardsArea } from '../../components/productCards/index';
 import { createMainButtons } from "../../components/buttons/index";
 import { createViewPageButtons } from "../../components/buttons/index";
 import { createNoUiSliderBlock } from "../../components/noUiSlider/index";
@@ -16,6 +13,7 @@ import {
   sortSelect,
 } from "../../components/productCards/index";
 import { CreateObjWithFilters } from "../../components/filters/index";
+import { productsInCart } from '../app/index';
 
 class MainPage extends Page {
   constructor(id: string) {
@@ -123,6 +121,7 @@ class MainPage extends Page {
     mainWrapper.append(sliderBlock, settings, mainContent);
     return mainWrapper;
   }
+
   render() {
     this.container.append(content);
     return this.container;
@@ -132,3 +131,4 @@ class MainPage extends Page {
 const content = MainPage.createContent();
 
 export default MainPage;
+

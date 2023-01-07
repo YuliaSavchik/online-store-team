@@ -219,7 +219,6 @@ function addProductInCart(item: HTMLElement, className: string, btn: HTMLButtonE
     const dataSetId = Number((item as HTMLElement).dataset.idbtn);
     const index = dataSetId - 1;
     const result = productsInCart.findIndex((product) => product.id === dataSetId);
-
     if (result === -1) {
       productsInCart.push(products[index]);
       showTotalSumInHeader();
@@ -228,6 +227,7 @@ function addProductInCart(item: HTMLElement, className: string, btn: HTMLButtonE
       btn.classList.add('button');
       btn.setAttribute("data-idbtn", `${dataSetId}`);
       bntBox?.append(btn);
+      console.log(productsInCart)
       //local.setItem('productInCart', JSON.stringify(productsInCart));
     }
   }
@@ -247,8 +247,7 @@ function removeProduct(item: HTMLElement, className: string, btn: HTMLButtonElem
   if ((item as HTMLElement).closest(className)) {
     const dataSetId = Number((item as HTMLElement).dataset.idbtn);
     const result = productsInCart.findIndex((product) => product.id === dataSetId);
-
-    if (result === 0) {
+    if (result >= 0) {
       removeProductInCart(productsInCart, String(dataSetId));
       showCountProductInCartIco();
       showTotalSumInHeader();
@@ -257,6 +256,7 @@ function removeProduct(item: HTMLElement, className: string, btn: HTMLButtonElem
       btn.classList.add('button');
       btn.setAttribute("data-idbtn", `${dataSetId}`);
       bntBox?.append(btn);
+      console.log(productsInCart)
     }
   }
 }
