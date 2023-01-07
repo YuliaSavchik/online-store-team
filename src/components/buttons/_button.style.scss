@@ -43,6 +43,14 @@
   background-color: $color_blue;
 }
 
+.btn-copy-link::before{
+  content: 'copy link';
+}
+
+.btn-copy-link:active::before {
+  content: 'copied!';
+}
+
 .select-sort {
   border: $border_style;
   background-color: $color_pink;

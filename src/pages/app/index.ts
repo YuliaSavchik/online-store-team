@@ -22,13 +22,15 @@ class App {
     App.container.innerHTML = '';
     let page: Page | null = null;
 
-    if(idPage === PagesId.MainPage) {
+
+    if(idPage.includes(PagesId.MainPage)) {
       page = new MainPage(idPage);
-    } else if (idPage === PagesId.ProductDescriptionPage) {
+    } else if (idPage.includes(PagesId.ProductDescriptionPage)) {
       page = new ProductDescriptionPage(idPage, idCard as string);
-    } else if (idPage === PagesId.CartPage) {
+    } else if (idPage.includes(PagesId.CartPage)) {
       page = new CartPage(idPage);
-    } else {
+    } else if (idPage.includes(PagesId.ErrorPage)) {
+
       page = new ErrorPage(idPage);
     }
 
@@ -79,24 +81,26 @@ wrapperForPage.addEventListener('click', function(event) {
   if ((item as HTMLDivElement).closest('.product-card_shadow')) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage('product-description-page', `${dataSetId}`);
-    updateURL(`product-description-page/${dataSetId}`);
+    updateURL('product-description-page');
   }
 
   if ((item as HTMLDivElement).closest('.btn-more')) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage('product-description-page', `${dataSetId}`);
-    updateURL(`product-description-page/${dataSetId}`);
+    updateURL('product-description-page');
   }
 
   if ((item as HTMLDivElement).closest('.product-description__btn-buy-now')) {
     const dataSetId = (item as HTMLDivElement).dataset.idbtn;
     addProductInCartClickByNow(dataSetId, (item as HTMLElement));
     showCountProductInCartIco();
-    
+
     App.renderNewPage('cart-page');
     updateURL('cart-page');
+
     showAvailablePromoCode();
     createPromoBlockIfCodeAdding();
+
   }
 });
 
