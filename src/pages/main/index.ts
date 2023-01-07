@@ -13,7 +13,6 @@ import {
   sortSelect,
 } from "../../components/productCards/index";
 import { CreateObjWithFilters } from "../../components/filters/index";
-import { productsInCart } from '../app/index';
 
 class MainPage extends Page {
   constructor(id: string) {
