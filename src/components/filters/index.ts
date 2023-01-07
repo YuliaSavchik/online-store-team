@@ -9,7 +9,6 @@ import {
 import { target } from "../noUiSlider/nouislider";
 import {
   CreateCardsArea,
-  addFilterBlock,
   sortSelect,
   searchInput,
   cardsArea,
@@ -180,38 +179,36 @@ export class CreateObjWithFilters {
 export function createFilterBlock(): HTMLElement {
   const filterBlock: HTMLElement = document.createElement("div");
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const deviceFilter = new Filter("device", [
-      Device.i_12,
-      Device.ip_12,
-      Device.i_13_14,
-      Device.ip_13,
-      Device.ip_14,
-    ]);
+  const deviceFilter = new Filter("device", [
+    Device.i_12,
+    Device.ip_12,
+    Device.i_13_14,
+    Device.ip_13,
+    Device.ip_14,
+  ]);
 
-    const materialFilter = new Filter("material", [
-      Material.bamboo,
-      Material.leather,
-      Material.recycled,
-    ]);
+  const materialFilter = new Filter("material", [
+    Material.bamboo,
+    Material.leather,
+    Material.recycled,
+  ]);
 
-    const colorFilter = new ColorFilter("color", [
-      Color.red,
-      Color.orange,
-      Color.yellow,
-      Color.blue,
-      Color.green,
-      Color.purple,
-      Color.pink,
-      Color.black,
-    ]);
+  const colorFilter = new ColorFilter("color", [
+    Color.red,
+    Color.orange,
+    Color.yellow,
+    Color.blue,
+    Color.green,
+    Color.purple,
+    Color.pink,
+    Color.black,
+  ]);
 
-    filterBlock.append(
-      deviceFilter.render(),
-      materialFilter.render(),
-      colorFilter.render()
-    );
-  });
+  filterBlock.append(
+    deviceFilter.render(),
+    materialFilter.render(),
+    colorFilter.render()
+  );
 
   filterBlock.addEventListener("click", (event: Event) => {
     CreateObjWithFilters.fillFiltersObj(event);
@@ -219,6 +216,8 @@ export function createFilterBlock(): HTMLElement {
 
   return filterBlock;
 }
+
+export const addFilterBlock: HTMLElement = createFilterBlock();
 
 window.addEventListener("load", (event) => {
   RenderContentByURL.render(window.location.hash, event);
@@ -324,7 +323,6 @@ class RenderContentByURL {
 
   static checkFilters(hash: string): void {
     const filtersBlock = addFilterBlock.getElementsByTagName("*");
-
     for (const child of filtersBlock) {
       if (child instanceof HTMLInputElement) {
         const label = document.querySelector(`label[for="${child.id}"]`);
@@ -337,7 +335,10 @@ class RenderContentByURL {
           hash.includes(child.id.split("-")[0])
         ) {
           child.checked = true;
-        } else {
+        } else if (
+          (labelToString && !hash.includes(labelToString.replace(/ /g, "_"))) ||
+          !hash.includes(child.id.split("-")[0])
+        ) {
           child.checked = false;
         }
       }
@@ -392,6 +393,7 @@ class RenderContentByURL {
     }
 
     //check filters
+
     this.checkFilters(hash);
 
     //check sort
@@ -405,7 +407,9 @@ class RenderContentByURL {
     }
 
     //check slider
-    this.checkSlider(hash);
+    if (document.querySelector(".range-slider")) {
+      this.checkSlider(hash);
+    }
 
     CreateObjWithFilters.fillFiltersObj(event);
   }
@@ -503,7 +507,7 @@ export class UpdateURL {
   }
 
   static getURLWithView(event: Event | undefined): string | undefined {
-    let URL= "";
+    let URL = "";
     const target = event?.target;
     if (target instanceof HTMLButtonElement) {
       if (target.className.includes("button-view")) {
@@ -515,7 +519,7 @@ export class UpdateURL {
       }
     }
 
-    if(window.location.hash.includes('view')){
+    if (window.location.hash.includes("view")) {
       if (cardsArea.style.gridTemplateColumns === "auto auto") {
         URL = "view=row";
       } else {

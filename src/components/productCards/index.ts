@@ -2,7 +2,7 @@ import { IFilters, Product } from "../../types/interfaces";
 import { products } from "../../data/data";
 import { createMainButtons, createSortSelect } from "../buttons/index";
 import {
-  createFilterBlock,
+  addFilterBlock,
   CreateObjWithFilters,
   UpdateURL,
 } from "../filters/index";
@@ -37,7 +37,6 @@ searchInput.addEventListener("input", () => {
   CreateCardsArea.render();
 });
 
-export const addFilterBlock: HTMLElement = createFilterBlock();
 
 class ProductCard {
   data: Product;
@@ -129,9 +128,6 @@ export class CreateCardsArea {
       card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
       cardsArea.appendChild(card.render());
     }
-
-    // card display type
-    
 
     found.textContent = `Found: ${cardsArea.children.length}`;
 
