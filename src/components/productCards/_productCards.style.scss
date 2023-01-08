@@ -88,12 +88,14 @@
 }
 
 @media screen and (max-width: 1100px) {
-  .product-cards-area {
-    grid-template-columns: auto auto !important;
-  }
-
   .product-card_shadow{
     font-size: 0.9em;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .product-cards-area {
+    grid-template-columns: auto auto !important;
   }
 }
 

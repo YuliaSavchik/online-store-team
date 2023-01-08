@@ -33,13 +33,13 @@ export function createSortSelect(selectClassName: string){
   const option1 : HTMLOptionElement = document.createElement('option');
   option1.innerHTML = 'SORT BY';
   const option2 : HTMLOptionElement = document.createElement('option');
-  option2.innerHTML = 'ASC PRICE';
+  option2.innerHTML = 'asc price';
   const option3 : HTMLOptionElement = document.createElement('option');
-  option3.innerHTML = 'DESC PRICE';
+  option3.innerHTML = 'desc price';
   const option4 : HTMLOptionElement = document.createElement('option');
-  option4.innerHTML = 'ASC RATING';
+  option4.innerHTML = 'asc rating';
   const option5 : HTMLOptionElement = document.createElement('option');
-  option5.innerHTML = 'DESC RATING';
+  option5.innerHTML = 'desc rating';
   select.append(option1, option2, option3, option4, option5);
    
   return select;

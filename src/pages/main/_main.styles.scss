@@ -89,15 +89,17 @@
   }
 }
 
+@media screen and (max-width: 1020px) {
+  .btn-view-block {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .main__settings {
     display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: auto auto auto;
-  }
-
-  .btn-view-block {
-    display: none;
   }
 
   .settings__btn-block {

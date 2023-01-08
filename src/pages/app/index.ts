@@ -31,7 +31,7 @@ class App {
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage.includes(PagesId.CartPage)) {
       page = new CartPage(idPage);
-    } else {
+    } else if (idPage.includes(PagesId.ErrorPage)) {
       page = new ErrorPage(idPage);
     }
 
@@ -71,7 +71,7 @@ export function updateURL(pageId: string) {
       window.location.host +
       window.location.pathname;
     const newUrl = baseUrl + `#${pageId}`;
-    history.pushState(null, `${pageId}`, newUrl);
+    history.pushState({}, "", `${newUrl}`);
   } else {
     console.warn("History API не поддерживается");
   }
@@ -85,13 +85,13 @@ wrapperForPage.addEventListener("click", function (event) {
   if ((item as HTMLDivElement).closest(".product-card_shadow")) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage("product-description-page", `${dataSetId}`);
-    updateURL("product-description-page");
+    updateURL("product-description-page" + dataSetId);
   }
 
   if ((item as HTMLDivElement).closest(".btn-more")) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage("product-description-page", `${dataSetId}`);
-    updateURL("product-description-page");
+    updateURL("product-description-page" + dataSetId);
   }
 
   if ((item as HTMLDivElement).closest(".product-description__btn-buy-now")) {
@@ -134,7 +134,16 @@ mainPageLink.addEventListener("click", (event) => {
   if (!item) return;
 
   if ((item as HTMLElement).closest(".header__wrapper__link")) {
-    App.renderNewPage("main-page");
-    updateURL("main-page");
+    const link = localStorage.getItem("href");
+    if (link) {
+      App.renderNewPage(link);
+      updateURL(link);
+    }
   }
 });
+
+localStorage.setItem("href", "main-page");
+
+window.addEventListener("hashchange", () =>
+  localStorage.setItem("href", window.location.hash)
+);

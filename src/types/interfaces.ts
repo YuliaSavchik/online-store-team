@@ -23,3 +23,18 @@ export interface IFilters {
   material: string[];
   color: string[];
 }
+
+export interface DeviceCount {
+  i_12: number;
+  ip_12: number;
+  i_13_14: number;
+  ip_13: number;
+  ip_14: number;
+}
+
+export interface MaterialCount {
+  recycled: number;
+  bamboo: number;
+  leather: number;
+}
+

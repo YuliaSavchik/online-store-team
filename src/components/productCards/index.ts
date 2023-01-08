@@ -1,6 +1,15 @@
-import { IFilters, Product } from "../../types/interfaces";
+import {
+  DeviceCount,
+  IFilters,
+  MaterialCount,
+  Product,
+} from "../../types/interfaces";
 import { products } from "../../data/data";
-import { btnViewTwoColums, createMainButtons, createSortSelect } from "../buttons/index";
+import {
+  btnViewTwoColums,
+  createMainButtons,
+  createSortSelect,
+} from "../buttons/index";
 import {
   addFilterBlock,
   CreateObjWithFilters,
@@ -8,6 +17,7 @@ import {
 } from "../filters/index";
 import { createSearchInput } from "../inputs/index";
 import { target } from "../noUiSlider/nouislider";
+import { Device, Material } from "../../types/enums";
 
 const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
 const btnMore = createMainButtons("more", "button_small-size", "btn-more");
@@ -95,6 +105,58 @@ class ProductCard {
   }
 }
 
+const deviceArr: DeviceCount = {
+  i_12: 0,
+  ip_12: 0,
+  i_13_14: 0,
+  ip_13: 0,
+  ip_14: 0,
+};
+
+const materialArr: MaterialCount = {
+  recycled: 0,
+  bamboo: 0,
+  leather: 0,
+};
+
+function resetCount() {
+  deviceArr.i_12 = 0;
+  deviceArr.ip_12 = 0;
+  deviceArr.i_13_14 = 0;
+  deviceArr.ip_13 = 0;
+  deviceArr.ip_14 = 0;
+  materialArr.recycled = 0;
+  materialArr.bamboo = 0;
+  materialArr.leather = 0;
+}
+
+function writeCount(str: string, num: number) {
+  const filters = addFilterBlock.getElementsByTagName("*");
+  for (const child of filters) {
+    if (child instanceof HTMLLabelElement) {
+      if (child.innerHTML === str) {
+        const count = child.nextSibling;
+        if (count instanceof HTMLDivElement) {
+          count.innerHTML = String(num);
+        }
+      }
+    }
+  }
+}
+
+function checkCount(cardsArr: Product[]) {
+  for (let i = 0; i < cardsArr.length; i++) {
+    if (cardsArr[i].device === Device.i_12) deviceArr.i_12++;
+    if (cardsArr[i].device === Device.ip_12) deviceArr.ip_12++;
+    if (cardsArr[i].device === Device.i_13_14) deviceArr.i_13_14++;
+    if (cardsArr[i].device === Device.ip_13) deviceArr.ip_13++;
+    if (cardsArr[i].device === Device.ip_14) deviceArr.ip_14++;
+    if (cardsArr[i].material === Material.recycled) materialArr.recycled++;
+    if (cardsArr[i].material === Material.bamboo) materialArr.bamboo++;
+    if (cardsArr[i].material === Material.leather) materialArr.leather++;
+  }
+}
+
 export class CreateCardsArea {
   static render(): void {
     const colorsArr: string[] = [
@@ -121,8 +183,29 @@ export class CreateCardsArea {
     //check sort
     cardsArr = this.checkSort(cardsArr);
 
+    //check slider
+    cardsArr = this.checkSlider(cardsArr);
+
+    priceArr.length = 0;
+    stockArr.length = 0;
+
+    resetCount();
+    checkCount(cardsArr);
     //create cards accordin to filter values
     for (let i = 0; i < cardsArr.length; i++) {
+      priceArr.push(cardsArr[i].price);
+      stockArr.push(cardsArr[i].stock);
+
+      writeCount(Device.i_12, deviceArr.i_12);
+      writeCount(Device.ip_12, deviceArr.ip_12);
+      writeCount(Device.i_13_14, deviceArr.i_13_14);
+      writeCount(Device.ip_13, deviceArr.ip_13);
+      writeCount(Device.ip_14, deviceArr.ip_14);
+
+      writeCount(Material.recycled, materialArr.recycled);
+      writeCount(Material.bamboo, materialArr.bamboo);
+      writeCount(Material.leather, materialArr.leather);
+
       const card: ProductCard = new ProductCard(cardsArr[i]);
       card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
       cardsArea.appendChild(card.render());
@@ -167,18 +250,19 @@ export class CreateCardsArea {
         filtersObj.color.includes(item.color)
       );
     }
-    cardsArr = cardsArr.filter(
-      (item) => item.price >= Number(localStorage.getItem("sliderMinPrice"))
-    );
-    cardsArr = cardsArr.filter(
-      (item) => item.price <= Number(localStorage.getItem("sliderMaxPrice"))
-    );
-    cardsArr = cardsArr.filter(
-      (item) => item.stock >= Number(localStorage.getItem("sliderMinStock"))
-    );
-    cardsArr = cardsArr.filter(
-      (item) => item.stock <= Number(localStorage.getItem("sliderMaxStock"))
-    );
+    return cardsArr;
+  }
+
+  static checkSlider(cardsArr: Product[]) {
+    const priceMin = Number(localStorage.getItem("sliderMinPrice"));
+    const priceMax = Number(localStorage.getItem("sliderMaxPrice"));
+    const stockMin = Number(localStorage.getItem("sliderMinStock"));
+    const stockMax = Number(localStorage.getItem("sliderMaxStock"));
+
+    cardsArr = cardsArr.filter((item) => item.price >= priceMin);
+    cardsArr = cardsArr.filter((item) => item.price <= priceMax);
+    cardsArr = cardsArr.filter((item) => item.stock >= stockMin);
+    cardsArr = cardsArr.filter((item) => item.stock <= stockMax);
 
     return cardsArr;
   }
@@ -244,39 +328,50 @@ export class CreateCardsArea {
       }
     }
 
-    const rangePrice: target = document.querySelector(
-      ".range-slider__range-price"
-    ) as target;
-    const minValuePrice = document.querySelector(
-      ".value_min-price"
-    ) as HTMLElement;
-    const maxValuePrice = document.querySelector(
-      ".value_max-price"
-    ) as HTMLElement;
-
-    const rangeStock: target = document.querySelector(
-      ".range-slider__range-stock"
-    ) as target;
-    const minValueStock = document.querySelector(
-      ".value_min-stock"
-    ) as HTMLElement;
-    const maxValueStock = document.querySelector(
-      ".value_max-stock"
-    ) as HTMLElement;
-
-    const inputsValuePrice = [minValuePrice, maxValuePrice];
-    const inputsValueStock = [minValueStock, maxValueStock];
-
-    rangePrice.noUiSlider?.set([5, 100]);
-    inputsValuePrice[0].innerHTML = "5$";
-    inputsValuePrice[1].innerHTML = "100$";
-
-    rangeStock.noUiSlider?.set([1, 100]);
-    inputsValueStock[0].innerHTML = "1";
-    inputsValueStock[1].innerHTML = "100";
+    changePriceSlider(5, 100);
+    changeStockSlider(1, 100);
 
     this.render();
 
     window.location.hash = "#main-page";
   }
 }
+
+export function changePriceSlider(numPriceMin: number, numPriceMax: number) {
+  const rangePrice: target = document.querySelector(
+    ".range-slider__range-price"
+  ) as target;
+  const minValuePrice = document.querySelector(
+    ".value_min-price"
+  ) as HTMLElement;
+  const maxValuePrice = document.querySelector(
+    ".value_max-price"
+  ) as HTMLElement;
+
+  const inputsValuePrice = [minValuePrice, maxValuePrice];
+
+  rangePrice.noUiSlider?.set([numPriceMin, numPriceMax]);
+  inputsValuePrice[0].innerHTML = String(numPriceMin) + "$";
+  inputsValuePrice[1].innerHTML = String(numPriceMax) + "$";
+}
+
+export function changeStockSlider(numStockMin: number, numStockMax: number) {
+  const rangeStock: target = document.querySelector(
+    ".range-slider__range-stock"
+  ) as target;
+  const minValueStock = document.querySelector(
+    ".value_min-stock"
+  ) as HTMLElement;
+  const maxValueStock = document.querySelector(
+    ".value_max-stock"
+  ) as HTMLElement;
+
+  const inputsValueStock = [minValueStock, maxValueStock];
+
+  rangeStock.noUiSlider?.set([numStockMin, numStockMax]);
+  inputsValueStock[0].innerHTML = String(numStockMin);
+  inputsValueStock[1].innerHTML = String(numStockMax);
+}
+
+export const priceArr: number[] = [];
+export const stockArr: number[] = [];
