@@ -1,6 +1,6 @@
 import { createInputs } from "../inputs/index";
 import { createMainButtons } from "../buttons/index";
-import { activPromoCode } from "../../index";
+import { activPromoCode, local } from "../../pages/app/index";
 import { countSumProductInCart } from "../../pages/cart/index";
 
 export function creatSummaryBlock(count: number, sum: number) {
@@ -100,9 +100,9 @@ export function createAppliedPromoCodeBlock(code: string) {
   promoCodeBtn.textContent = 'drop';
   block.append(namePromoCode, promoCodeBtn)
   if (code === 'RS') {
-    namePromoCode.textContent = 'Applide RSSchool promo code';
+    namePromoCode.textContent = 'Applide RSSchool code - 10%';
   } else if (code === 'EPM') {
-    namePromoCode.textContent = 'Applide EPAM System promo code';
+    namePromoCode.textContent = 'Applide EPAM System code - 10%';
   }
 
   const container = document.querySelector<HTMLElement>('.promo-code-container__applied-block');
@@ -225,6 +225,7 @@ export function addingPromoCode(btnId: string) {
   }
 
   addDiscount();
+  local.setItem('activPromoCode', JSON.stringify(activPromoCode));
 }
 
 function countSumWithPromo(percent: number, total: number) {
@@ -279,6 +280,7 @@ export function removeDiscount() {
     removeUnderlineForMainTotal();
     removeStyleForSummary();
   }
+  local.setItem('activPromoCode', JSON.stringify(activPromoCode));
 }
 
 export function decreaseDiscountWhenDecreaseProduct() {

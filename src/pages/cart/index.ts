@@ -3,8 +3,7 @@ import { createArrowButtons, createMainButtons } from '../../components/buttons/
 import { CartProducts } from '../../components/cartProducts/index';
 import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
-import { productsInCart /* local */ } from '../app/index';
-import { activPromoCode } from '../../index';
+import { productsInCart, activPromoCode, local } from '../app/index';
 import { Product } from '../../types/interfaces';
 import { createModalWindow } from '../../components/modalWindow/index';
 import { showAvailablePromoCode } from '../../components/summary/index';
@@ -227,11 +226,9 @@ function addProductInCart(item: HTMLElement, className: string, btn: HTMLButtonE
       btn.classList.add('button');
       btn.setAttribute("data-idbtn", `${dataSetId}`);
       bntBox?.append(btn);
-      console.log(productsInCart)
-      //local.setItem('productInCart', JSON.stringify(productsInCart));
+      local.setItem('productInCart', JSON.stringify(productsInCart));
     }
   }
-  //local.setItem('productInCart', JSON.stringify(productsInCart));
 }
 function addProductInCartClickBtnAdd(item: HTMLElement) {
   const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove')
@@ -256,7 +253,7 @@ function removeProduct(item: HTMLElement, className: string, btn: HTMLButtonElem
       btn.classList.add('button');
       btn.setAttribute("data-idbtn", `${dataSetId}`);
       bntBox?.append(btn);
-      console.log(productsInCart)
+      local.setItem('productInCart', JSON.stringify(productsInCart));
     }
   }
 }
@@ -395,7 +392,6 @@ function removeProductInCart(arr: Product[], value: string) {
   const id = Number(value);
   const index = arr.findIndex((item) => item.id === id);
   const result = arr.splice(index, 1);
-  //local.setItem('productInCart', JSON.stringify(result));
   return result;
 }
 
