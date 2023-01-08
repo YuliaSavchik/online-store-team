@@ -395,8 +395,6 @@ class RenderContentByURL {
     //check slider
     if (document.querySelector(".range-slider")) {
       this.checkSlider(hash);
-      // changePriceSlider(Math.min(...priceArr), Math.max(...priceArr));
-      // changeStockSlider(Math.min(...stockArr), Math.max(...stockArr));
     }
 
     CreateObjWithFilters.fillFiltersObj(event);

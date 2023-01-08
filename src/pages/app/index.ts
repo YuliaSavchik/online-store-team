@@ -145,5 +145,5 @@ mainPageLink.addEventListener("click", (event) => {
 localStorage.setItem("href", "main-page");
 
 window.addEventListener("hashchange", () =>
-  localStorage.setItem("href", window.location.hash)
+  localStorage.setItem("href", window.location.hash.slice(1))
 );
