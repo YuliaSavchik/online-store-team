@@ -1,6 +1,6 @@
 import { IFilters, Product } from "../../types/interfaces";
 import { products } from "../../data/data";
-import { createMainButtons, createSortSelect } from "../buttons/index";
+import { btnViewTwoColums, createMainButtons, createSortSelect } from "../buttons/index";
 import {
   addFilterBlock,
   CreateObjWithFilters,
@@ -36,7 +36,6 @@ searchInput.addEventListener("input", () => {
   UpdateURL.changeURL();
   CreateCardsArea.render();
 });
-
 
 class ProductCard {
   data: Product;
@@ -79,7 +78,7 @@ class ProductCard {
     const buttons: HTMLDivElement = document.createElement("div");
     buttons.classList.add("product-card_buttons");
     const buttonsAddRemoveBox: HTMLDivElement = document.createElement("div");
-    buttonsAddRemoveBox.classList.add('btn-box');
+    buttonsAddRemoveBox.classList.add("btn-box");
     buttonsAddRemoveBox.classList.add(`btn-box-${this.data.id}`);
     btnAdd.setAttribute("data-idbtn", `${this.data.id}`);
     buttonsAddRemoveBox.append(btnAdd.cloneNode(true));
@@ -127,6 +126,19 @@ export class CreateCardsArea {
       const card: ProductCard = new ProductCard(cardsArr[i]);
       card.card.style.backgroundColor = colorsArr[i % colorsArr.length];
       cardsArea.appendChild(card.render());
+    }
+
+    //check view
+    if (
+      window.innerWidth > 1000 &&
+      btnViewTwoColums.classList.contains("checked")
+    ) {
+      cardsArea.style.gap = "70px";
+      cardsArea.style.padding = "60px";
+      for (const child of cardsArea.children) {
+        if (child instanceof HTMLDivElement)
+          child.style.transform = "scale(1.2)";
+      }
     }
 
     found.textContent = `Found: ${cardsArea.children.length}`;
@@ -241,7 +253,6 @@ export class CreateCardsArea {
     const maxValuePrice = document.querySelector(
       ".value_max-price"
     ) as HTMLElement;
-    
 
     const rangeStock: target = document.querySelector(
       ".range-slider__range-stock"

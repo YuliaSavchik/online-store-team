@@ -221,12 +221,12 @@ export const addFilterBlock: HTMLElement = createFilterBlock();
 
 window.addEventListener("load", (event) => {
   RenderContentByURL.render(window.location.hash, event);
-  UpdateURL.changeURL(event)
+  UpdateURL.changeURL(event);
 });
 
 window.addEventListener("hashchange", (event) => {
   RenderContentByURL.render(window.location.hash, event);
-  UpdateURL.changeURL(event)
+  UpdateURL.changeURL(event);
 });
 
 class RenderContentByURL {
@@ -376,7 +376,7 @@ class RenderContentByURL {
 
   static render(hash: string, event: Event): void {
     const URL = hash.split("/")[1];
-    const URLSplit: string[] = URL.includes("|") ? URL.split("|") : [URL];
+    const URLSplit: string[] = URL.split("|");
 
     URLSplit.forEach((item) => {
       const [key, value] = item.split("=");

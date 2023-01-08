@@ -1,4 +1,5 @@
 export enum Name {
+  i_11 = "Case for Iphone 11",
   i_12 = "Case for Iphone 12",
   ip_12 = "Case for Iphone 12 Pro",
   i_13_14 = "Case for Iphone 13, 14",

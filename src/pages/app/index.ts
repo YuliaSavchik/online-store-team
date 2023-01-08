@@ -31,7 +31,7 @@ class App {
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage.includes(PagesId.CartPage)) {
       page = new CartPage(idPage);
-    } else if (idPage.includes(PagesId.ErrorPage)) {
+    } else {
       page = new ErrorPage(idPage);
     }
 
@@ -56,7 +56,7 @@ class App {
   }
 
   renderPage() {
-    App.renderNewPage(window.location.href);
+    App.renderNewPage("main-page");
     this.enableRouteChange();
   }
 }
