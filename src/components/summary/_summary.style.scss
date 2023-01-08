@@ -26,10 +26,12 @@
   text-decoration: underline;
 }
 
-.summary-container__product-count,
-.summary-container__total,
-.total_sum-with-promo {
-  @include font-size(18px, 25px);
+.summary-container__product-count {
+  @include font-size(18px, 24px);
+}
+
+.summary-container__total {
+  @include font-size(24px, 33px);
 }
 
 .product-count_num,

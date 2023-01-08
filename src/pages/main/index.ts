@@ -1,10 +1,10 @@
-import Page from "../../components/templates/page";
-import { infinitySlider } from "../../components/infinitySlider/index";
-import {
-  btnViewThreeColums,
-  btnViewTwoColums,
-  createMainButtons,
-} from "../../components/buttons/index";
+import Page from '../../components/templates/page';
+import { infinitySlider } from '../../components/infinitySlider/index';
+//import { createCardsArea } from '../../components/productCards/index';
+//import Page from "../../components/templates/page";
+//import { createCardsArea } from '../../components/productCards/index';
+import { btnViewThreeColums, btnViewTwoColums, createMainButtons } from "../../components/buttons/index";
+//import { createViewPageButtons } from "../../components/buttons/index";
 import { createNoUiSliderBlock } from "../../components/noUiSlider/index";
 import {
   cardsArea,
@@ -122,6 +122,7 @@ const content = MainPage.createContent();
 
 export default MainPage;
 
+
 window.addEventListener('resize', () => {
   if(window.innerWidth < 1000){
     cardsArea.style.gap = '30px'
@@ -140,3 +141,4 @@ window.addEventListener('resize', () => {
     }
   }
 })
+

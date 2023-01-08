@@ -1,22 +1,24 @@
-import Page from "../../components/templates/page";
-import MainPage from "../main/index";
-import ProductDescriptionPage from "../productDescription/index";
-import CartPage from "../cart/index";
-import ErrorPage from "../error/index";
-import { PagesId } from "../../types/enums";
-import { Product } from "../../types/interfaces";
-import { showCountProductInCartIco } from "../cart/index";
-import { addProductInCartClickByNow } from "../cart/index";
-import {
-  showAvailablePromoCode,
-  createPromoBlockIfCodeAdding,
-} from "../../components/summary/index";
-//import { local} from '../../index';
-import { emptyCart } from "../cart/index";
+import Page from '../../components/templates/page';
+import MainPage from '../main/index';
+import ProductDescriptionPage from '../productDescription/index';
+import CartPage from '../cart/index';
+import ErrorPage from '../error/index';
+import { PagesId } from '../../types/enums';
+import { Product } from '../../types/interfaces';
+import { 
+  showCountProductInCartIco, 
+  showTotalSumInHeader, 
+  addProductInCartClickByNow, 
+  emptyCart 
+} from '../cart/index';
+import { showAvailablePromoCode, createPromoBlockIfCodeAdding } from '../../components/summary/index';
+import { createMainButtons } from '../../components/buttons/index';
 
-export const wrapperForPage = document.querySelector(".main") as HTMLElement;
-export const productsInCart: Product[] = [];
-//export const local: Storage = localStorage;
+export const wrapperForPage = (document.querySelector('.main') as HTMLElement);
+export let productsInCart: Product[] = [];
+export const local: Storage = localStorage;
+export let activPromoCode: string[] = [];
+
 class App {
   private static container: HTMLElement = wrapperForPage;
   private mainPage: MainPage;
@@ -133,12 +135,42 @@ mainPageLink.addEventListener("click", (event) => {
   const item = event.target;
   if (!item) return;
 
-  if ((item as HTMLElement).closest(".header__wrapper__link")) {
-    const link = localStorage.getItem("href");
-    if (link) {
-      App.renderNewPage(link);
-      updateURL(link);
-    }
+ 
+  if ((item as HTMLElement).closest('.header__wrapper__link')) {
+    App.renderNewPage('main-page');
+    updateURL('main-page');
+    
+    changeBtnAddOnRemoveAndBack();
+  }
+})
+
+function changeBtnAddOnRemoveAndBack() {
+  const collection = document.querySelectorAll('.btn-box');
+    collection.forEach((btnBox) => {
+      const id = Number(btnBox.getAttribute('id'));
+      const result = productsInCart.findIndex((product) => product.id === id);
+      if (result === -1) {
+        btnBox.innerHTML = '';
+        const btnAdd = createMainButtons('add', 'button_small-size', 'btn-add');
+        btnAdd.classList.add('button');
+        btnAdd.setAttribute("data-idbtn", `${id}`);
+        btnBox.append(btnAdd);
+      }
+    })
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (local.getItem('productInCart')) {
+    productsInCart = JSON.parse(local.getItem('productInCart') as string);
+    console.log(productsInCart);
+    changeBtnAddOnRemoveAndBack();
+    showTotalSumInHeader();
+    showCountProductInCartIco();
+  }
+
+  if (local.getItem('activPromoCode')) {
+    activPromoCode = JSON.parse(local.getItem('activPromoCode') as string);
+    createPromoBlockIfCodeAdding();
   }
 });
 
