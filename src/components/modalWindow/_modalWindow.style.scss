@@ -34,8 +34,8 @@
 }
 
 .modal-window {
-  width: 700px;
-  height: 780px;
+  width: 650px;
+  height: 650px;
   padding: 44px 0 47px;
   border-radius: 2px;
   background-color: #ffffff;
@@ -72,7 +72,7 @@
   border-radius: 2px;
   background-color: $color_blue;
 
-  @include display-flex(column, space-between, center); 
+  @include display-flex(column, space-between, center);
 }
 
 .credit-card-block__field {
@@ -133,4 +133,56 @@
   line-height: 50px;
   font-weight: 600;
   color: $color-green;
+}
+
+@media screen and (max-width: 700px) {
+  .modal-window {
+    width: 450px;
+  }
+
+  .modal-window__title {
+    text-align: center;
+  }
+
+  .modal-window__input,
+  .modal-window__credit-card-block {
+    width: 300px;
+  }
+
+  .input-card-number {
+    width: 160px;
+  }
+
+  .input-card-date,
+  .input-card-cvv {
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .modal-window {
+    width: 300px;
+  }
+
+  .modal-window__input,
+  .modal-window__credit-card-block {
+    width: 230px;
+  }
+
+  .modal-window__credit-card-block {
+    padding: 24px 8px 30px;
+  }
+
+  .input-card-number {
+    width: 210px;
+  }
+
+  .input-card-date,
+  .input-card-cvv {
+    width: 100px;
+  }
+
+  .credit-card-ico {
+    display: none;
+  }
 }

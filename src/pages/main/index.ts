@@ -7,7 +7,6 @@ import { btnViewThreeColums, btnViewTwoColums, createMainButtons } from "../../c
 //import { createViewPageButtons } from "../../components/buttons/index";
 import { createNoUiSliderBlock } from "../../components/noUiSlider/index";
 import {
-  addFilterBlock,
   cardsArea,
   found,
   productsBlock,
@@ -16,6 +15,7 @@ import {
   sortSelect,
 } from "../../components/productCards/index";
 import {
+  addFilterBlock,
   copyText,
   CreateObjWithFilters,
   UpdateURL,
@@ -75,12 +75,24 @@ class MainPage extends Page {
       btnViewTwoColums.classList.remove("checked");
       btnViewThreeColums.classList.add("checked");
       cardsArea.style.gridTemplateColumns = "auto auto auto";
+      cardsArea.style.gap = '30px'
+      cardsArea.style.padding = '30px'
+      for (const child of cardsArea.children) {
+        if (child instanceof HTMLDivElement)
+          child.style.transform = "scale(1)";
+      }
     });
 
     btnViewTwoColums.addEventListener("click", () => {
       btnViewThreeColums.classList.remove("checked");
       btnViewTwoColums.classList.add("checked");
       cardsArea.style.gridTemplateColumns = "auto auto";
+      cardsArea.style.gap = '70px'
+      cardsArea.style.padding = '60px'
+      for (const child of cardsArea.children) {
+        if (child instanceof HTMLDivElement)
+          child.style.transform = "scale(1.2)";
+      }
     });
 
     settings.append(btnBlock, btnSort, found, searchInput, btnViewBlock);
@@ -109,3 +121,24 @@ class MainPage extends Page {
 const content = MainPage.createContent();
 
 export default MainPage;
+
+
+window.addEventListener('resize', () => {
+  if(window.innerWidth < 1000){
+    cardsArea.style.gap = '30px'
+    cardsArea.style.padding = '30px'
+    for (const child of cardsArea.children) {
+      if (child instanceof HTMLDivElement)
+        child.style.transform = "scale(1)";
+    }
+  }
+  if(window.innerWidth > 1000 &&  btnViewTwoColums.classList.contains("checked")){
+    cardsArea.style.gap = '70px'
+    cardsArea.style.padding = '60px'
+    for (const child of cardsArea.children) {
+      if (child instanceof HTMLDivElement)
+        child.style.transform = "scale(1.2)";
+    }
+  }
+})
+

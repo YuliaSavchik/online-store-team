@@ -57,7 +57,15 @@
   }
 
   .btn-view-block {
-    display: none;
+    flex-direction: column;
+  }
+
+  .select-sort {
+    width: 150px;
+  }
+
+  .input.input-search {
+    width: 150px;
   }
 
   .settings__btn-block {
@@ -81,6 +89,12 @@
   }
 }
 
+@media screen and (max-width: 1020px) {
+  .btn-view-block {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .main__settings {
     display: grid;
@@ -98,10 +112,12 @@
   }
 
   .select-sort {
+    width: 190px;
     grid-area: 2 / 3 / 2 / 3;
   }
 
   .input.input-search {
+    width: 190px;
     grid-area: 1 / 3 / 1 / 3;
   }
 }

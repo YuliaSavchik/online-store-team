@@ -66,6 +66,19 @@
 
 .checkbox-field {
   transition: all 0.5s ease-in;
+  position: relative;
+}
+
+.count{
+  border: 1px solid $color_green;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  bottom: 20px;
+  left: 10px;
+  color: $color_green;
 }
 
 .arrow {

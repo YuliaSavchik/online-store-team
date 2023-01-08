@@ -6,13 +6,15 @@ import {
   btnViewTwoColums,
   createArrowButtons,
 } from "../buttons/index";
-import { target } from "../noUiSlider/nouislider";
 import {
   CreateCardsArea,
-  addFilterBlock,
   sortSelect,
   searchInput,
   cardsArea,
+  changePriceSlider,
+  changeStockSlider,
+  priceArr,
+  stockArr,
 } from "../productCards/index";
 
 const btnArrowTop = createArrowButtons("button-arrow_top");
@@ -72,6 +74,11 @@ class Filter {
       label.classList.add("label");
       label.innerHTML = this.items[i];
       this.form.appendChild(label);
+
+      const count: HTMLDivElement = document.createElement("div");
+      count.classList.add("count");
+      count.appendChild(document.createTextNode("1"));
+      this.form.appendChild(count);
     }
   }
 }
@@ -171,6 +178,7 @@ export class CreateObjWithFilters {
           labelToString
         );
       }
+
       UpdateURL.changeURL();
     }
     return CreateCardsArea.render();
@@ -180,52 +188,66 @@ export class CreateObjWithFilters {
 export function createFilterBlock(): HTMLElement {
   const filterBlock: HTMLElement = document.createElement("div");
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const deviceFilter = new Filter("device", [
-      Device.i_12,
-      Device.ip_12,
-      Device.i_13_14,
-      Device.ip_13,
-      Device.ip_14,
-    ]);
+  const deviceFilter = new Filter("device", [
+    Device.i_12,
+    Device.ip_12,
+    Device.i_13_14,
+    Device.ip_13,
+    Device.ip_14,
+  ]);
 
-    const materialFilter = new Filter("material", [
-      Material.bamboo,
-      Material.leather,
-      Material.recycled,
-    ]);
+  const materialFilter = new Filter("material", [
+    Material.bamboo,
+    Material.leather,
+    Material.recycled,
+  ]);
 
-    const colorFilter = new ColorFilter("color", [
-      Color.red,
-      Color.orange,
-      Color.yellow,
-      Color.blue,
-      Color.green,
-      Color.purple,
-      Color.pink,
-      Color.black,
-    ]);
+  const colorFilter = new ColorFilter("color", [
+    Color.red,
+    Color.orange,
+    Color.yellow,
+    Color.blue,
+    Color.green,
+    Color.purple,
+    Color.pink,
+    Color.black,
+  ]);
 
-    filterBlock.append(
-      deviceFilter.render(),
-      materialFilter.render(),
-      colorFilter.render()
-    );
-  });
-
-  filterBlock.addEventListener("click", (event: Event) => {
-    CreateObjWithFilters.fillFiltersObj(event);
-  });
+  filterBlock.append(
+    deviceFilter.render(),
+    materialFilter.render(),
+    colorFilter.render()
+  );
 
   return filterBlock;
 }
 
+export const addFilterBlock: HTMLElement = createFilterBlock();
+
+const filters = addFilterBlock.getElementsByTagName("*");
+
+for (const child of filters) {
+  if (child instanceof HTMLFormElement) {
+    child.addEventListener("click", (event) => {
+      CreateObjWithFilters.fillFiltersObj(event);
+      changePriceSlider(5, 100);
+      changeStockSlider(1, 100);
+      if (priceArr.length > 0)
+        changePriceSlider(Math.min(...priceArr), Math.max(...priceArr));
+      if (stockArr.length > 0)
+        changeStockSlider(Math.min(...stockArr), Math.max(...stockArr));
+    });
+  }
+}
+
 window.addEventListener("load", (event) => {
   RenderContentByURL.render(window.location.hash, event);
+  UpdateURL.changeURL(event);
 });
 
 window.addEventListener("hashchange", (event) => {
   RenderContentByURL.render(window.location.hash, event);
+  UpdateURL.changeURL(event);
 });
 
 class RenderContentByURL {
@@ -259,72 +281,27 @@ class RenderContentByURL {
   }
 
   static checkSlider(hash: string) {
-    const rangePrice: target = document.querySelector(
-      ".range-slider__range-price"
-    ) as target;
-    const minValuePrice = document.querySelector(
-      ".value_min-price"
-    ) as HTMLElement;
-    const maxValuePrice = document.querySelector(
-      ".value_max-price"
-    ) as HTMLElement;
-
-    const rangeStock: target = document.querySelector(
-      ".range-slider__range-stock"
-    ) as target;
-    const minValueStock = document.querySelector(
-      ".value_min-stock"
-    ) as HTMLElement;
-    const maxValueStock = document.querySelector(
-      ".value_max-stock"
-    ) as HTMLElement;
-
     if (hash.includes("price")) {
-      const inputsValuePrice = [minValuePrice, maxValuePrice];
-
-      const minPrice = this.hashTypes.price.split("%E2%86%95")[0];
-      const maxPrice = this.hashTypes.price.split("%E2%86%95")[1];
-
-      rangePrice.noUiSlider?.set([minPrice, maxPrice]);
-      inputsValuePrice[0].innerHTML = `${localStorage.getItem(
-        "sliderMinPrice"
-      )}$`;
-      inputsValuePrice[1].innerHTML = `${localStorage.getItem(
-        "sliderMaxPrice"
-      )}$`;
+      changePriceSlider(
+        Number(this.hashTypes.price.split("%E2%86%95")[0]),
+        Number(this.hashTypes.price.split("%E2%86%95")[1])
+      );
     } else {
-      const inputsValuePrice = [minValuePrice, maxValuePrice];
-
-      rangePrice.noUiSlider?.set([5, 100]);
-      inputsValuePrice[0].innerHTML = `5$`;
-      inputsValuePrice[1].innerHTML = `100$`;
+      changePriceSlider(5, 100);
     }
 
     if (hash.includes("stock")) {
-      const inputsValueStock = [minValueStock, maxValueStock];
-
-      const minStock = this.hashTypes.stock.split("%E2%86%95")[0];
-      const maxStock = this.hashTypes.stock.split("%E2%86%95")[1];
-
-      rangeStock.noUiSlider?.set([minStock, maxStock]);
-      inputsValueStock[0].innerHTML = `${localStorage.getItem(
-        "sliderMinStock"
-      )}`;
-      inputsValueStock[1].innerHTML = `${localStorage.getItem(
-        "sliderMaxStock"
-      )}`;
+      changeStockSlider(
+        Number(this.hashTypes.stock.split("%E2%86%95")[0]),
+        Number(this.hashTypes.stock.split("%E2%86%95")[1])
+      );
     } else {
-      const inputsValueStock = [minValueStock, maxValueStock];
-
-      rangeStock.noUiSlider?.set([1, 100]);
-      inputsValueStock[0].innerHTML = `1`;
-      inputsValueStock[1].innerHTML = `100`;
+      changeStockSlider(1, 100);
     }
   }
 
   static checkFilters(hash: string): void {
     const filtersBlock = addFilterBlock.getElementsByTagName("*");
-
     for (const child of filtersBlock) {
       if (child instanceof HTMLInputElement) {
         const label = document.querySelector(`label[for="${child.id}"]`);
@@ -337,13 +314,18 @@ class RenderContentByURL {
           hash.includes(child.id.split("-")[0])
         ) {
           child.checked = true;
-        } else {
+        } else if (
+          (labelToString && !hash.includes(labelToString.replace(/ /g, "_"))) ||
+          !hash.includes(child.id.split("-")[0])
+        ) {
           child.checked = false;
         }
       }
     }
 
-    const URL = hash.split("/")[1].split("|");
+    const URL = hash.includes("|")
+      ? hash.split("/")[1].split("|")
+      : [hash.split("/")[1]];
 
     const filters: Record<string, string> = {
       device: "",
@@ -352,8 +334,10 @@ class RenderContentByURL {
     };
 
     URL.forEach((item) => {
-      const [key, value] = item.split("=");
-      filters[key] = value;
+      if (item && item.includes("=")) {
+        const [key, value] = item.split("=");
+        filters[key] = value;
+      }
     });
 
     const deviceArr = filters.device ? filters.device.split("&") : [];
@@ -373,11 +357,14 @@ class RenderContentByURL {
 
   static render(hash: string, event: Event): void {
     const URL = hash.split("/")[1];
-    const URLSplit: string[] = URL.includes("|") ? URL.split("|") : [URL];
+    const URLSplit: string[] =
+      URL && URL.includes("|") ? URL.split("|") : [URL];
 
     URLSplit.forEach((item) => {
-      const [key, value] = item.split("=");
-      this.hashTypes[key] = value;
+      if (item && item.includes("=")) {
+        const [key, value] = item.split("=");
+        this.hashTypes[key] = value;
+      }
     });
 
     //check view
@@ -392,6 +379,7 @@ class RenderContentByURL {
     }
 
     //check filters
+
     this.checkFilters(hash);
 
     //check sort
@@ -405,15 +393,19 @@ class RenderContentByURL {
     }
 
     //check slider
-    this.checkSlider(hash);
+    if (document.querySelector(".range-slider")) {
+      this.checkSlider(hash);
+    }
 
     CreateObjWithFilters.fillFiltersObj(event);
   }
 }
 
+
 export class UpdateURL {
+  static URL: string[] = [];
   static changeURL(event?: Event): void {
-    const URL: string[] = [];
+    this.URL.length = 0;
     const sortURL: string | undefined = this.getURLWithSort();
     const filtersURL: string | undefined = this.getURLWithFilters(
       CreateObjWithFilters.filtersObj
@@ -422,17 +414,13 @@ export class UpdateURL {
     const priceNStockURL: string | undefined = this.getURLWithPriceNStock();
     const viewURL: string | undefined = this.getURLWithView(event);
 
-    if (filtersURL) URL.push(filtersURL);
-    if (sortURL) URL.push(sortURL);
-    if (inputURL) URL.push(inputURL);
-    if (priceNStockURL) URL.push(priceNStockURL);
-    if (viewURL) URL.push(viewURL);
+    if (filtersURL) this.URL.push(filtersURL);
+    if (sortURL) this.URL.push(sortURL);
+    if (inputURL) this.URL.push(inputURL);
+    if (priceNStockURL) this.URL.push(priceNStockURL);
+    if (viewURL) this.URL.push(viewURL);
 
-    if (history.pushState) {
-      history.pushState("", `${URL}`, `#main-page/${URL.join("|")}`);
-    } else {
-      console.warn("History API не поддерживается");
-    }
+    UpdateURL.pushURLtoHistory(this.URL);
   }
 
   static getURLWithSort(): string | undefined {
@@ -492,6 +480,7 @@ export class UpdateURL {
     const minStock: string | null = localStorage.getItem("sliderMinStock");
     const maxStock: string | null = localStorage.getItem("sliderMaxStock");
 
+    
     if (Number(minPrice) > 5 || Number(maxPrice) < 100) {
       URL.push(`price=${minPrice}↕${maxPrice}`);
     }
@@ -503,27 +492,39 @@ export class UpdateURL {
   }
 
   static getURLWithView(event: Event | undefined): string | undefined {
-    let URL= "";
+    let URL = "";
     const target = event?.target;
     if (target instanceof HTMLButtonElement) {
       if (target.className.includes("button-view")) {
         if (cardsArea.style.gridTemplateColumns === "auto auto") {
-          URL = "view=row";
+          URL = "view=2col";
         } else {
-          URL = "view=column";
+          URL = "view=3col";
         }
       }
     }
 
-    if(window.location.hash.includes('view')){
+    if (window.location.hash.includes("view")) {
       if (cardsArea.style.gridTemplateColumns === "auto auto") {
-        URL = "view=row";
+        URL = "view=2col";
       } else {
-        URL = "view=column";
+        URL = "view=3col";
       }
     }
 
     return URL;
+  }
+
+  static pushURLtoHistory(URL: string[]) {
+    if (history.pushState) {
+      if (history.state && history.state.url === `#main-page/${URL.join("|")}`) {
+        return
+      } else {
+        history.pushState({url:`#main-page/${URL.join("|")}`}, "", `#main-page/${URL.join("|")}`);
+      }
+    } else {
+      console.warn("History API не поддерживается");
+    }
   }
 }
 
@@ -535,3 +536,5 @@ export function copyText(text: string) {
   document.execCommand("Copy");
   textArea.remove();
 }
+
+history.pushState({url:`#main-page/`}, "", `#main-page/`);

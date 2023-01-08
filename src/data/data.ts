@@ -506,4 +506,44 @@ export const products: Product[] = [
     stockForCart: 15,
     priceForCart: 65,
   },
+  {
+    id: 26,
+    name: Name.i_11,
+    description: "Case for iphone 11 DRAGONS",
+    device: Device.i_12,
+    material: Material.recycled,
+    color: Color.orange,
+    rating: 3,
+    stock: 100,
+    price: 40,
+    mainImage:
+      "https://cdn-image02.casetify.com/usr/5386/1655386/~v122/9017505x2_iphone11_16001348.png.1000x1000-w.m80.jpg",
+    image_1:
+      "https://cdn-image02.casetify.com/usr/5386/1655386/~v122/9017505_iphone11_16001348__render8.png.560x560-w.m80.jpg",
+    image_2:
+      "https://cdn.casetify.com/img/case/side_color_preview_16001348_white.jpg",
+    initialQuality: 1,
+    stockForCart: 99,
+    priceForCart: 40,
+  },
+  {
+    id: 27,
+    name: Name.i_11,
+    description: "Case for iphone 11 Tattoo Flash",
+    device: Device.i_12,
+    material: Material.recycled,
+    color: Color.red,
+    rating: 5,
+    stock: 56,
+    price: 40,
+    mainImage:
+      "https://cdn-image02.casetify.com/usr/18313/22068313/~v29/24196980x2_iphone11_16000339.png.1000x1000-w.m80.jpg",
+    image_1:
+      "https://cdn-image02.casetify.com/usr/18313/22068313/~v29/24196980_iphone11_16000339__render8.png.560x560-w.m80.jpg",
+    image_2:
+      "https://cdn.casetify.com/img/case/side_color_preview_16000339_white.jpg",
+    initialQuality: 1,
+    stockForCart: 55,
+    priceForCart: 40,
+  },
 ];

@@ -25,6 +25,17 @@
 .button_small-size {
   height: 22px;
   width: 79px;
+  &:hover {
+    transform: none;
+    box-shadow: none;
+    background: rgba(211, 211, 211, 0.588);
+  }
+
+  &:active {
+    transform: none;
+    box-shadow: none;
+    opacity: 0.5;
+  }
 }
 
 .button_meddium-size {
@@ -41,14 +52,17 @@
 
 .btn-copy-link {
   background-color: $color_blue;
+  &:active {
+    background-color: $color_green;
+  }
 }
 
-.btn-copy-link::before{
-  content: 'copy link';
+.btn-copy-link::before {
+  content: "copy link";
 }
 
 .btn-copy-link:active::before {
-  content: 'copied!';
+  content: "copied!";
 }
 
 .select-sort {
@@ -68,10 +82,18 @@
   box-shadow: none;
 }
 
-.btn-add-card,
-.btn-remove-from-card {
+.btn-remove {
+  background-color: rgba(0, 0, 0, 0.264);
+}
+
+.btn-add-card {
   width: 140px;
   background-color: $color_green;
+}
+
+.btn-remove-from-card {
+  width: 140px;
+  background-color: $color_red;
 }
 
 .product-description__btn-buy-now {
@@ -179,4 +201,3 @@
     height: 30px;
   }
 }
-
