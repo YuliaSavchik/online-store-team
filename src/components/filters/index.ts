@@ -1,4 +1,5 @@
 import { products } from "../../data/data";
+import { updateURL } from "../../pages/app/index";
 import { Color, Device, Material } from "../../types/enums";
 import { IFilters } from "../../types/interfaces";
 import {
@@ -236,6 +237,8 @@ for (const child of filters) {
         changePriceSlider(Math.min(...priceArr), Math.max(...priceArr));
       if (stockArr.length > 0)
         changeStockSlider(Math.min(...stockArr), Math.max(...stockArr));
+      UpdateURL.changeURL();
+      localStorage.setItem("link", window.location.hash);
     });
   }
 }
@@ -248,9 +251,10 @@ window.addEventListener("load", (event) => {
 window.addEventListener("hashchange", (event) => {
   RenderContentByURL.render(window.location.hash, event);
   UpdateURL.changeURL(event);
+  localStorage.setItem("link", window.location.hash);
 });
 
-class RenderContentByURL {
+export class RenderContentByURL {
   static hashTypes: Record<string, string> = {
     device: "",
     material: "",
@@ -355,7 +359,7 @@ class RenderContentByURL {
     );
   }
 
-  static render(hash: string, event: Event): void {
+  static render(hash: string, event?: Event): void {
     const URL = hash.split("/")[1];
     const URLSplit: string[] =
       URL && URL.includes("|") ? URL.split("|") : [URL];
@@ -368,14 +372,22 @@ class RenderContentByURL {
     });
 
     //check view
-    if (this.hashTypes.view.includes("column") || !hash.includes("view")) {
-      btnViewTwoColums.classList.remove("checked");
-      btnViewThreeColums.classList.add("checked");
-      cardsArea.style.gridTemplateColumns = "auto auto auto";
+    if (this.hashTypes.view.includes("2col") || !hash.includes("view")) {
+      if (window.innerWidth > 1020) {
+        btnViewThreeColums.classList.remove("checked");
+        btnViewTwoColums.classList.add("checked");
+        cardsArea.style.gridTemplateColumns = "auto auto";
+        cardsArea.style.gap = "70px";
+        cardsArea.style.padding = "60px";
+      }
     } else {
-      btnViewThreeColums.classList.remove("checked");
-      btnViewTwoColums.classList.add("checked");
-      cardsArea.style.gridTemplateColumns = "auto auto";
+      if (window.innerWidth > 1020) {
+        btnViewTwoColums.classList.remove("checked");
+        btnViewThreeColums.classList.add("checked");
+        cardsArea.style.gridTemplateColumns = "auto auto auto";
+        cardsArea.style.gap = "30px";
+        cardsArea.style.padding = "30px";
+      }
     }
 
     //check filters
@@ -397,10 +409,9 @@ class RenderContentByURL {
       this.checkSlider(hash);
     }
 
-    CreateObjWithFilters.fillFiltersObj(event);
+    if (event) CreateObjWithFilters.fillFiltersObj(event);
   }
 }
-
 
 export class UpdateURL {
   static URL: string[] = [];
@@ -420,7 +431,9 @@ export class UpdateURL {
     if (priceNStockURL) this.URL.push(priceNStockURL);
     if (viewURL) this.URL.push(viewURL);
 
-    UpdateURL.pushURLtoHistory(this.URL);
+    if(window.location.href.includes('main-page')){
+      updateURL('main-page', this.URL.join("|"))
+    }
   }
 
   static getURLWithSort(): string | undefined {
@@ -480,7 +493,6 @@ export class UpdateURL {
     const minStock: string | null = localStorage.getItem("sliderMinStock");
     const maxStock: string | null = localStorage.getItem("sliderMaxStock");
 
-    
     if (Number(minPrice) > 5 || Number(maxPrice) < 100) {
       URL.push(`price=${minPrice}↕${maxPrice}`);
     }
@@ -512,19 +524,11 @@ export class UpdateURL {
       }
     }
 
-    return URL;
-  }
-
-  static pushURLtoHistory(URL: string[]) {
-    if (history.pushState) {
-      if (history.state && history.state.url === `#main-page/${URL.join("|")}`) {
-        return
-      } else {
-        history.pushState({url:`#main-page/${URL.join("|")}`}, "", `#main-page/${URL.join("|")}`);
-      }
-    } else {
-      console.warn("History API не поддерживается");
+    if (window.innerWidth < 1020) {
+      URL = "";
     }
+
+    return URL;
   }
 }
 
@@ -537,4 +541,3 @@ export function copyText(text: string) {
   textArea.remove();
 }
 
-history.pushState({url:`#main-page/`}, "", `#main-page/`);

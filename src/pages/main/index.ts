@@ -1,9 +1,13 @@
-import Page from '../../components/templates/page';
-import { infinitySlider } from '../../components/infinitySlider/index';
+import Page from "../../components/templates/page";
+import { infinitySlider } from "../../components/infinitySlider/index";
 //import { createCardsArea } from '../../components/productCards/index';
 //import Page from "../../components/templates/page";
 //import { createCardsArea } from '../../components/productCards/index';
-import { btnViewThreeColums, btnViewTwoColums, createMainButtons } from "../../components/buttons/index";
+import {
+  btnViewThreeColums,
+  btnViewTwoColums,
+  createMainButtons,
+} from "../../components/buttons/index";
 //import { createViewPageButtons } from "../../components/buttons/index";
 import { createNoUiSliderBlock } from "../../components/noUiSlider/index";
 import {
@@ -55,7 +59,10 @@ class MainPage extends Page {
       "button_meddium-size",
       "btn-copy-link"
     );
-    btnCopyLink.addEventListener("click", () => copyText(window.location.href));
+    btnCopyLink.addEventListener("click", () => {
+      copyText(window.location.href);
+      localStorage.setItem("link", window.location.hash);
+    });
 
     btnBlock.append(btnReset, btnCopyLink);
 
@@ -66,6 +73,7 @@ class MainPage extends Page {
 
     btnViewBlock.addEventListener("click", (event) => {
       UpdateURL.changeURL(event);
+      localStorage.setItem("link", window.location.hash);
     });
 
     btnViewBlock.append(btnViewThreeColums, btnViewTwoColums);
@@ -75,11 +83,10 @@ class MainPage extends Page {
       btnViewTwoColums.classList.remove("checked");
       btnViewThreeColums.classList.add("checked");
       cardsArea.style.gridTemplateColumns = "auto auto auto";
-      cardsArea.style.gap = '30px'
-      cardsArea.style.padding = '30px'
+      cardsArea.style.gap = "30px";
+      cardsArea.style.padding = "30px";
       for (const child of cardsArea.children) {
-        if (child instanceof HTMLDivElement)
-          child.style.transform = "scale(1)";
+        if (child instanceof HTMLDivElement) child.style.transform = "scale(1)";
       }
     });
 
@@ -87,8 +94,8 @@ class MainPage extends Page {
       btnViewThreeColums.classList.remove("checked");
       btnViewTwoColums.classList.add("checked");
       cardsArea.style.gridTemplateColumns = "auto auto";
-      cardsArea.style.gap = '70px'
-      cardsArea.style.padding = '60px'
+      cardsArea.style.gap = "70px";
+      cardsArea.style.padding = "60px";
       for (const child of cardsArea.children) {
         if (child instanceof HTMLDivElement)
           child.style.transform = "scale(1.2)";
@@ -122,23 +129,23 @@ const content = MainPage.createContent();
 
 export default MainPage;
 
-
-window.addEventListener('resize', () => {
-  if(window.innerWidth < 1000){
-    cardsArea.style.gap = '30px'
-    cardsArea.style.padding = '30px'
+window.addEventListener("resize", () => {
+  UpdateURL.changeURL();
+  if (window.innerWidth < 1000) {
+    cardsArea.style.gap = "30px";
+    cardsArea.style.padding = "30px";
     for (const child of cardsArea.children) {
-      if (child instanceof HTMLDivElement)
-        child.style.transform = "scale(1)";
+      if (child instanceof HTMLDivElement) child.style.transform = "scale(1)";
     }
   }
-  if(window.innerWidth > 1000 &&  btnViewTwoColums.classList.contains("checked")){
-    cardsArea.style.gap = '70px'
-    cardsArea.style.padding = '60px'
+  if (
+    window.innerWidth > 1000 &&
+    btnViewTwoColums.classList.contains("checked")
+  ) {
+    cardsArea.style.gap = "70px";
+    cardsArea.style.padding = "60px";
     for (const child of cardsArea.children) {
-      if (child instanceof HTMLDivElement)
-        child.style.transform = "scale(1.2)";
+      if (child instanceof HTMLDivElement) child.style.transform = "scale(1.2)";
     }
   }
-})
-
+});
