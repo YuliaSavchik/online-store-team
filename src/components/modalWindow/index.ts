@@ -144,8 +144,24 @@ function limitLengthCvvCode() {
 function addSpacesBetweenNumderCard() {
   const input = document.querySelector<HTMLInputElement>('.input-card-number');
   if (!input) return;
-  
+  const cardIco = document.querySelector<HTMLElement>('.credit-card-ico');
+  if (!cardIco) return;
   addDevisionsBetweenNumber(input, 16, '4');
+
+  input.addEventListener('input', () => {
+    if (input.value[0] === '4') {
+      cardIco.classList.add('credit-card-ico_viza');
+    } else if (input.value[0] === '5') {
+      cardIco.classList.add('credit-card-ico_master-card');
+    } else if (input.value[0] === '3') {
+      cardIco.classList.add('credit-card-ico_apple-pay');
+    } else {
+      cardIco.classList.remove('credit-card-ico_viza');
+      cardIco.classList.remove('credit-card-ico_master-card');
+      cardIco.classList.remove('credit-card-ico_apple-pay');
+    }
+  });
+  
 }
 
 function addSleshBetweenDataCard() {

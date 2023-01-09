@@ -34,6 +34,8 @@ class App {
     if (idPage.includes(PagesId.MainPage)) {
       page = new MainPage(idPage);
     } else if (idPage.includes(PagesId.ProductDescriptionPage)) {
+      const hash = window.location.hash.slice(1);
+      console.log(hash)
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage === PagesId.CartPage) {
       page = new CartPage(idPage);
@@ -157,24 +159,31 @@ mainPageLink.addEventListener("click", (event) => {
 });
 
 function changeBtnAddOnRemoveAndBack() {
-  const collection = document.querySelectorAll(".btn-box");
-  collection.forEach((btnBox) => {
-    const id = Number(btnBox.getAttribute("id"));
-    const result = productsInCart.findIndex((product) => product.id === id);
-    if (result === -1) {
-      btnBox.innerHTML = "";
-      const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
-      btnAdd.classList.add("button");
-      btnAdd.setAttribute("data-idbtn", `${id}`);
-      btnBox.append(btnAdd);
-    }
-  });
+
+  const collection = document.querySelectorAll('.btn-box');
+    collection.forEach((btnBox) => {
+      const id = Number(btnBox.getAttribute('id'));
+      const result = productsInCart.findIndex((product) => product.id === id);
+      if (result === -1) {
+        btnBox.innerHTML = '';
+        const btnAdd = createMainButtons('add', 'button_small-size', 'btn-add');
+        btnAdd.classList.add('button');
+        btnAdd.setAttribute("data-idbtn", `${id}`);
+        btnBox.append(btnAdd);
+      } else {
+        btnBox.innerHTML = '';
+        const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove');
+        btnRemove.classList.add('button');
+        btnRemove.setAttribute("data-idbtn", `${id}`);
+        btnBox.append(btnRemove);
+      }
+    })
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  if (local.getItem("productInCart")) {
-    productsInCart = JSON.parse(local.getItem("productInCart") as string);
-    console.log(productsInCart);
+window.addEventListener('DOMContentLoaded', () => {
+  if (local.getItem('productInCart')) {
+    productsInCart = JSON.parse(local.getItem('productInCart') as string);
+
     changeBtnAddOnRemoveAndBack();
     showTotalSumInHeader();
     showCountProductInCartIco();

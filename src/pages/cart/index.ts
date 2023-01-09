@@ -231,7 +231,7 @@ function addProductInCart(item: HTMLElement, className: string, btn: HTMLButtonE
   }
 }
 function addProductInCartClickBtnAdd(item: HTMLElement) {
-  const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove')
+  const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove');
   addProductInCart(item, '.btn-add', btnRemove);
 }
 
@@ -285,6 +285,7 @@ export function addProductInCartClickByNow(dataSetId: string | undefined, item: 
   if (result === -1) {
     productsInCart.push(products[itemId - 1]);
     showTotalSumInHeader();
+    local.setItem('productInCart', JSON.stringify(productsInCart));
   }
   openModalWindowInProductCart(item);
 }

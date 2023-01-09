@@ -83,7 +83,21 @@
 .credit-card-ico {
   width: 40px;
   height: 40px;
-  background: url("assets/ico-card.png") center no-repeat;
+  background-image: url("assets/ico-card.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.credit-card-ico_viza {
+  background-image: url("assets/viza.png");
+}
+
+.credit-card-ico_master-card {
+  background-image: url("assets/master-card.png");
+}
+
+.credit-card-ico_apple-pay {
+  background-image: url("assets/apple-pay.png");
 }
 
 .input-card-number {
