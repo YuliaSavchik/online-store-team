@@ -194,3 +194,5 @@ window.addEventListener('DOMContentLoaded', () => {
     createPromoBlockIfCodeAdding();
   }
 });
+
+updateURL('main-page')
