@@ -67,10 +67,9 @@ body {
     padding: 10px 40px;
     cursor: pointer;
     .header__wrapper__cart_image {
-      img {
-        width: 35px;
-        height: 35px;
-      }
+      width: 35px;
+      height: 35px;
+      background: url("assets/ion-cart-outline.png") center no-repeat;
     }
     .header__wrapper__cart_circle-with-number {
       background-color: $color_red;
@@ -117,10 +116,13 @@ body {
       &:hover {
         text-decoration: underline;
       }
-      img {
-        margin-right: 10px;
-      }
     }
+  }
+  .footer__wrapper__github_ico {
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    background: url("assets/ico-github.png") center no-repeat;
   }
 
   .footer__wrapper__create-year {
@@ -136,6 +138,12 @@ body {
       align-items: center;
       justify-content: center;
     }
+  }
+
+  .school-logo_ico {
+    width: 100px;
+    height: 53px;
+    background: url("assets/rs-logo.png") center no-repeat;
   }
 }
 
