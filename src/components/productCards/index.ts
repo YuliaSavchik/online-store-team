@@ -22,7 +22,6 @@ import { Device, Material } from "../../types/enums";
 
 import { productsInCart } from "../../pages/app/index";
 
-
 const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
 const btnMore = createMainButtons("more", "button_small-size", "btn-more");
 
@@ -34,8 +33,10 @@ export const productsBlock: HTMLDivElement = document.createElement("div");
 productsBlock.classList.add("products-block");
 
 export const sortSelect: HTMLSelectElement = createSortSelect("select-sort");
+
 sortSelect.addEventListener("change", (event) => {
   UpdateURL.changeURL();
+  localStorage.setItem("link", window.location.hash);
   CreateObjWithFilters.fillFiltersObj(event);
 });
 
@@ -48,6 +49,7 @@ found.classList.add("found");
 export const searchInput = createSearchInput();
 searchInput.addEventListener("input", () => {
   UpdateURL.changeURL();
+  localStorage.setItem("link", window.location.hash);
   CreateCardsArea.render();
 });
 
@@ -94,21 +96,27 @@ class ProductCard {
     const buttonsAddRemoveBox: HTMLDivElement = document.createElement("div");
     buttonsAddRemoveBox.classList.add("btn-box");
     buttonsAddRemoveBox.classList.add(`btn-box-${this.data.id}`);
-    buttonsAddRemoveBox.setAttribute('id', `${this.data.id}`);
+    buttonsAddRemoveBox.setAttribute("id", `${this.data.id}`);
     btnAdd.setAttribute("data-idbtn", `${this.data.id}`);
-    const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove');
+    const btnRemove = createMainButtons(
+      "remove",
+      "button_small-size",
+      "btn-remove"
+    );
     btnRemove.setAttribute("data-idbtn", `${this.data.id}`);
     if (productsInCart.length > 0) {
-      const result = productsInCart.findIndex((product) => product.id === this.data.id);
+      const result = productsInCart.findIndex(
+        (product) => product.id === this.data.id
+      );
       if (result === -1) {
-        buttonsAddRemoveBox.innerHTML = '';
+        buttonsAddRemoveBox.innerHTML = "";
         buttonsAddRemoveBox.append(btnAdd.cloneNode(true));
       } else {
-        buttonsAddRemoveBox.innerHTML = '';
+        buttonsAddRemoveBox.innerHTML = "";
         buttonsAddRemoveBox.append(btnRemove.cloneNode(true));
       }
     } else {
-      buttonsAddRemoveBox.innerHTML = '';
+      buttonsAddRemoveBox.innerHTML = "";
       buttonsAddRemoveBox.append(btnAdd.cloneNode(true));
     }
     btnMore.setAttribute("data-idcard", `${this.data.id}`);
@@ -352,6 +360,7 @@ export class CreateCardsArea {
 
     this.render();
 
+    localStorage.setItem("link", "#main-page");
     window.location.hash = "#main-page";
   }
 }

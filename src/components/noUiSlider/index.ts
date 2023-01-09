@@ -1,6 +1,6 @@
 import noUiSlider from "nouislider";
 import { target } from "../../../node_modules/nouislider/dist/nouislider";
-// import { UpdateURL } from "../filters/index";
+import { UpdateURL } from "../filters/index";
 import { CreateCardsArea } from "../productCards/index";
 
 //title it's price or stock
@@ -66,7 +66,11 @@ function initPriceNoUiSlider() {
     localStorage.setItem("sliderMinPrice", `${Number(values[0])}`);
     localStorage.setItem("sliderMaxPrice", `${Number(values[1])}`);
     CreateCardsArea.render();
-    // UpdateURL.changeURL();
+  });
+
+  range.addEventListener("mousemove", () => {
+    UpdateURL.changeURL();
+    localStorage.setItem("link", window.location.hash);
   });
 }
 
@@ -97,7 +101,11 @@ function initStockNoUiSlider() {
     localStorage.setItem("sliderMinStock", `${Number(values[0])}`);
     localStorage.setItem("sliderMaxStock", `${Number(values[1])}`);
     CreateCardsArea.render();
-    // UpdateURL.changeURL();
+  });
+
+  range.addEventListener("mousemove", () => {
+    UpdateURL.changeURL();
+    localStorage.setItem("link", window.location.hash);
   });
 }
 
