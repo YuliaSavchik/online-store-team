@@ -53,7 +53,15 @@ class App {
   private enableRouteChange() {
     window.addEventListener("hashchange", () => {
       const hash = window.location.hash.slice(1);
-      App.renderNewPage(hash);
+      if (hash.includes('product-description-page')) {
+        App.renderNewPage('product-description-page', `${hash.split('/')[1]}`);
+        updateURL(`product-description-page/${hash[hash.length - 2]}`);
+      } else if (hash.includes('cart-page')) {
+        App.renderNewPage(hash);
+        emptyCart();
+      } else {
+        App.renderNewPage(hash);
+      }
     });
   }
 
@@ -99,6 +107,7 @@ wrapperForPage.addEventListener("click", function (event) {
 
   if ((item as HTMLDivElement).closest(".product-card_shadow")) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
+
     App.renderNewPage("product-description-page", `${dataSetId}`);
     updateURL(`product-description-page/${dataSetId}`);
   }
@@ -156,7 +165,7 @@ mainPageLink.addEventListener("click", (event) => {
       changeBtnAddOnRemoveAndBack();
     } else {
       App.renderNewPage("main-page");
-      updateURL("main-page");
+      updateURL("main-page")
       changeBtnAddOnRemoveAndBack();
     }
   }
@@ -199,7 +208,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   if (hash.includes('product-description-page')) {
-    const productId = hash[hash.length - 2];
+    const productId = hash.split('/')[1];
     App.renderNewPage("product-description-page", `${productId}`);
     updateURL(`product-description-page/${productId}`);
   }
