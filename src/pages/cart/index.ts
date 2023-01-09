@@ -3,7 +3,7 @@ import { createArrowButtons, createMainButtons } from '../../components/buttons/
 import { CartProducts } from '../../components/cartProducts/index';
 import { products } from '../../data/data';
 import { creatSummaryBlock } from '../../components/summary/index';
-import { productsInCart, activPromoCode, local } from '../app/index';
+import { productsInCart, activPromoCode, local, updateURL } from '../app/index';
 import { Product } from '../../types/interfaces';
 import { createModalWindow } from '../../components/modalWindow/index';
 import { showAvailablePromoCode } from '../../components/summary/index';
@@ -67,6 +67,7 @@ class CartPage extends Page {
     const productCartBlock: HTMLDivElement = document.createElement('div');
     productCartBlock.classList.add('main-block__product-card-block');
     createCartProduct(productCartBlock, itemsCount, numPage);
+    updateURL(`cart-page`);
 
     mainBlock.append(titleBlock, productCartBlock);
 
