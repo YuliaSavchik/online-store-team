@@ -9,7 +9,7 @@ import {
   showCountProductInCartIco,
   showTotalSumInHeader,
   addProductInCartClickByNow,
-  emptyCart,
+  emptyCart
 } from "../cart/index";
 import {
   showAvailablePromoCode,
@@ -19,9 +19,11 @@ import { createMainButtons } from "../../components/buttons/index";
 import { RenderContentByURL, UpdateURL } from "../../components/filters/index";
 
 export const wrapperForPage = document.querySelector(".main") as HTMLElement;
+const hash = window.location.hash.slice(1);
 export let productsInCart: Product[] = [];
 export const local: Storage = localStorage;
 export let activPromoCode: string[] = [];
+
 
 class App {
   private static container: HTMLElement = wrapperForPage;
@@ -34,8 +36,6 @@ class App {
     if (idPage.includes(PagesId.MainPage)) {
       page = new MainPage(idPage);
     } else if (idPage.includes(PagesId.ProductDescriptionPage)) {
-      const hash = window.location.hash.slice(1);
-      console.log(hash)
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage === PagesId.CartPage) {
       page = new CartPage(idPage);
@@ -100,7 +100,7 @@ wrapperForPage.addEventListener("click", function (event) {
   if ((item as HTMLDivElement).closest(".product-card_shadow")) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage("product-description-page", `${dataSetId}`);
-    updateURL("product-description-page");
+    updateURL(`product-description-page/${dataSetId}`);
   }
 
   if ((item as HTMLDivElement).closest(".btn-more")) {
@@ -115,7 +115,7 @@ wrapperForPage.addEventListener("click", function (event) {
     showCountProductInCartIco();
 
     App.renderNewPage("cart-page");
-    updateURL("cart-page");
+    updateURL(`cart-page`);
 
     showAvailablePromoCode();
     createPromoBlockIfCodeAdding();
@@ -131,7 +131,7 @@ headerBtnCart.addEventListener("click", (event) => {
 
   if ((item as HTMLDivElement).closest(".header__wrapper__cart")) {
     App.renderNewPage("cart-page");
-    updateURL("cart-page");
+    updateURL(`cart-page`);
     showAvailablePromoCode();
     createPromoBlockIfCodeAdding();
 
@@ -191,6 +191,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (local.getItem("activPromoCode")) {
     activPromoCode = JSON.parse(local.getItem("activPromoCode") as string);
+    createPromoBlockIfCodeAdding();
+  }
+
+  if (hash.includes('product-description-page')) {
+    const productId = hash[hash.length - 2];
+    App.renderNewPage("product-description-page", `${productId}`);
+    updateURL(`product-description-page/${productId}`);
+  }
+
+  if (hash.includes('cart-page')) {
+    App.renderNewPage("cart-page");
+    updateURL(`cart-page`);
+    showAvailablePromoCode();
     createPromoBlockIfCodeAdding();
   }
 });
