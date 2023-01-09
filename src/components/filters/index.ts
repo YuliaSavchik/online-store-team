@@ -251,7 +251,9 @@ window.addEventListener("load", (event) => {
 window.addEventListener("hashchange", (event) => {
   RenderContentByURL.render(window.location.hash, event);
   UpdateURL.changeURL(event);
-  localStorage.setItem("link", window.location.hash);
+  if (window.location.hash.includes("main-page")) {
+    localStorage.setItem("link", window.location.hash);
+  }
 });
 
 export class RenderContentByURL {
@@ -285,7 +287,7 @@ export class RenderContentByURL {
   }
 
   static checkSlider(hash: string) {
-    if (hash.includes("price")) {
+    if (hash.includes("price=")) {
       changePriceSlider(
         Number(this.hashTypes.price.split("%E2%86%95")[0]),
         Number(this.hashTypes.price.split("%E2%86%95")[1])
@@ -294,7 +296,7 @@ export class RenderContentByURL {
       changePriceSlider(5, 100);
     }
 
-    if (hash.includes("stock")) {
+    if (hash.includes("stock=")) {
       changeStockSlider(
         Number(this.hashTypes.stock.split("%E2%86%95")[0]),
         Number(this.hashTypes.stock.split("%E2%86%95")[1])
@@ -372,21 +374,21 @@ export class RenderContentByURL {
     });
 
     //check view
-    if (this.hashTypes.view.includes("2col") || !hash.includes("view")) {
-      if (window.innerWidth > 1020) {
-        btnViewThreeColums.classList.remove("checked");
-        btnViewTwoColums.classList.add("checked");
-        cardsArea.style.gridTemplateColumns = "auto auto";
-        cardsArea.style.gap = "70px";
-        cardsArea.style.padding = "60px";
-      }
-    } else {
+    if (this.hashTypes.view.includes("3col") || !hash.includes("view=")) {
       if (window.innerWidth > 1020) {
         btnViewTwoColums.classList.remove("checked");
         btnViewThreeColums.classList.add("checked");
         cardsArea.style.gridTemplateColumns = "auto auto auto";
         cardsArea.style.gap = "30px";
         cardsArea.style.padding = "30px";
+      }
+    } else {
+      if (window.innerWidth > 1020) {
+        btnViewThreeColums.classList.remove("checked");
+        btnViewTwoColums.classList.add("checked");
+        cardsArea.style.gridTemplateColumns = "auto auto";
+        cardsArea.style.gap = "70px";
+        cardsArea.style.padding = "60px";
       }
     }
 
@@ -431,8 +433,8 @@ export class UpdateURL {
     if (priceNStockURL) this.URL.push(priceNStockURL);
     if (viewURL) this.URL.push(viewURL);
 
-    if(window.location.href.includes('main-page')){
-      updateURL('main-page', this.URL.join("|"))
+    if (window.location.href.includes("main-page")) {
+      updateURL("main-page", this.URL.join("|"));
     }
   }
 
@@ -516,7 +518,7 @@ export class UpdateURL {
       }
     }
 
-    if (window.location.hash.includes("view")) {
+    if (window.location.hash.includes("view=")) {
       if (cardsArea.style.gridTemplateColumns === "auto auto") {
         URL = "view=2col";
       } else {
@@ -540,4 +542,3 @@ export function copyText(text: string) {
   document.execCommand("Copy");
   textArea.remove();
 }
-

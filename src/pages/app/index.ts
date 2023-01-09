@@ -37,7 +37,7 @@ class App {
       page = new MainPage(idPage);
     } else if (idPage.includes(PagesId.ProductDescriptionPage)) {
       page = new ProductDescriptionPage(idPage, idCard as string);
-    } else if (idPage === PagesId.CartPage) {
+    } else if (idPage === PagesId.CartPage || idPage === PagesId.CartPage + '/') {
       page = new CartPage(idPage);
     } else {
       page = new ErrorPage(idPage);
@@ -154,6 +154,10 @@ mainPageLink.addEventListener("click", (event) => {
       App.renderNewPage("main-page");
       updateURL("main-page", link.split("/")[1])
       changeBtnAddOnRemoveAndBack();
+    } else {
+      App.renderNewPage("main-page");
+      updateURL("main-page");
+      changeBtnAddOnRemoveAndBack();
     }
   }
 });
@@ -207,3 +211,5 @@ window.addEventListener('DOMContentLoaded', () => {
     createPromoBlockIfCodeAdding();
   }
 });
+
+updateURL('main-page')
