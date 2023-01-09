@@ -30,6 +30,8 @@ class App {
     if (idPage.includes(PagesId.MainPage)) {
       page = new MainPage(idPage);
     } else if (idPage.includes(PagesId.ProductDescriptionPage)) {
+      const hash = window.location.hash.slice(1);
+      console.log(hash)
       page = new ProductDescriptionPage(idPage, idCard as string);
     } else if (idPage.includes(PagesId.CartPage)) {
       page = new CartPage(idPage);
@@ -139,7 +141,6 @@ mainPageLink.addEventListener("click", (event) => {
   if ((item as HTMLElement).closest('.header__wrapper__link')) {
     App.renderNewPage('main-page');
     updateURL('main-page');
-    
     changeBtnAddOnRemoveAndBack();
   }
 })
@@ -155,6 +156,12 @@ function changeBtnAddOnRemoveAndBack() {
         btnAdd.classList.add('button');
         btnAdd.setAttribute("data-idbtn", `${id}`);
         btnBox.append(btnAdd);
+      } else {
+        btnBox.innerHTML = '';
+        const btnRemove = createMainButtons('remove', 'button_small-size', 'btn-remove');
+        btnRemove.classList.add('button');
+        btnRemove.setAttribute("data-idbtn", `${id}`);
+        btnBox.append(btnRemove);
       }
     })
 }
@@ -162,7 +169,6 @@ function changeBtnAddOnRemoveAndBack() {
 window.addEventListener('DOMContentLoaded', () => {
   if (local.getItem('productInCart')) {
     productsInCart = JSON.parse(local.getItem('productInCart') as string);
-    console.log(productsInCart);
     changeBtnAddOnRemoveAndBack();
     showTotalSumInHeader();
     showCountProductInCartIco();
