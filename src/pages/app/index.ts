@@ -37,7 +37,7 @@ class App {
       const hash = window.location.hash.slice(1);
       console.log(hash)
       page = new ProductDescriptionPage(idPage, idCard as string);
-    } else if (idPage === PagesId.CartPage) {
+    } else if (idPage === PagesId.CartPage || idPage === PagesId.CartPage + '/') {
       page = new CartPage(idPage);
     } else {
       page = new ErrorPage(idPage);
@@ -153,6 +153,10 @@ mainPageLink.addEventListener("click", (event) => {
     if (link) {
       App.renderNewPage("main-page");
       updateURL("main-page", link.split("/")[1])
+      changeBtnAddOnRemoveAndBack();
+    } else {
+      App.renderNewPage("main-page");
+      updateURL("main-page");
       changeBtnAddOnRemoveAndBack();
     }
   }
