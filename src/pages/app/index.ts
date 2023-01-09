@@ -55,7 +55,7 @@ class App {
       const hash = window.location.hash.slice(1);
       if (hash.includes('product-description-page')) {
         App.renderNewPage('product-description-page', `${hash.split('/')[1]}`);
-        updateURL(`product-description-page/${hash[hash.length - 2]}`);
+        updateURL(`product-description-page/${hash.split('/')[1]}`);
       } else if (hash.includes('cart-page')) {
         App.renderNewPage(hash);
         emptyCart();
