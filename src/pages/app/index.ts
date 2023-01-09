@@ -35,7 +35,7 @@ class App {
       page = new MainPage(idPage);
     } else if (idPage.includes(PagesId.ProductDescriptionPage)) {
       page = new ProductDescriptionPage(idPage, idCard as string);
-    } else if (idPage.includes(PagesId.CartPage)) {
+    } else if (idPage === PagesId.CartPage) {
       page = new CartPage(idPage);
     } else {
       page = new ErrorPage(idPage);
@@ -72,7 +72,7 @@ class App {
 
 export default App;
 
-export function updateURL(pageId: string, URL?: string) {
+export function updateURL(pageId: string, URL = '') {
   if (history.pushState) {
     if (history.state && history.state.url === `#${pageId}/${URL}`) {
       return;
@@ -98,13 +98,13 @@ wrapperForPage.addEventListener("click", function (event) {
   if ((item as HTMLDivElement).closest(".product-card_shadow")) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage("product-description-page", `${dataSetId}`);
-    updateURL("product-description-page", "");
+    updateURL("product-description-page");
   }
 
   if ((item as HTMLDivElement).closest(".btn-more")) {
     const dataSetId = (item as HTMLDivElement).dataset.idcard;
     App.renderNewPage("product-description-page", `${dataSetId}`);
-    updateURL("product-description-page", "");
+    updateURL("product-description-page");
   }
 
   if ((item as HTMLDivElement).closest(".product-description__btn-buy-now")) {
@@ -113,7 +113,7 @@ wrapperForPage.addEventListener("click", function (event) {
     showCountProductInCartIco();
 
     App.renderNewPage("cart-page");
-    updateURL("cart-page", "");
+    updateURL("cart-page");
 
     showAvailablePromoCode();
     createPromoBlockIfCodeAdding();
@@ -129,7 +129,7 @@ headerBtnCart.addEventListener("click", (event) => {
 
   if ((item as HTMLDivElement).closest(".header__wrapper__cart")) {
     App.renderNewPage("cart-page");
-    updateURL("cart-page", "");
+    updateURL("cart-page");
     showAvailablePromoCode();
     createPromoBlockIfCodeAdding();
 
