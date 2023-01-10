@@ -320,6 +320,7 @@ function increaseCountProductInCart(item: HTMLElement) {
       );
       changeBlockTotalWitnPromo();
       addDiscount();
+      local.setItem('productInCart', JSON.stringify(productsInCart));
     }
     else if (productsInCart[id].stockForCart === 0) {
       changeCountsProductsInCard((dataSetId as string), 
@@ -386,6 +387,8 @@ function decreaseCountProductInCart (item: HTMLElement) {
       if (activPromoCode.length > 0) {
         decreaseDiscountWhenDecreaseProduct();
       }
+
+      local.setItem('productInCart', JSON.stringify(productsInCart));
     }
   }
 }
