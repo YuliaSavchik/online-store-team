@@ -70,6 +70,7 @@ body {
       width: 35px;
       height: 35px;
       background: url("assets/ion-cart-outline.png") center no-repeat;
+      background-size: contain;
     }
     .header__wrapper__cart_circle-with-number {
       background-color: $color_red;

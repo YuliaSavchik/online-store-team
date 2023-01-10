@@ -374,7 +374,7 @@ export class RenderContentByURL {
     });
 
     //check view
-    if (this.hashTypes.view.includes("3col") || !hash.includes("view=")) {
+    if (this.hashTypes.view.includes("3col")) {
       if (window.innerWidth > 1020) {
         btnViewTwoColums.classList.remove("checked");
         btnViewThreeColums.classList.add("checked");
@@ -518,12 +518,10 @@ export class UpdateURL {
       }
     }
 
-    if (window.location.hash.includes("view=")) {
-      if (cardsArea.style.gridTemplateColumns === "auto auto") {
-        URL = "view=2col";
-      } else {
-        URL = "view=3col";
-      }
+    if (btnViewThreeColums.classList.contains("checked")) {
+      URL = "view=3col";
+    } else if (btnViewTwoColums.classList.contains("checked")) {
+      URL = "view=2col";
     }
 
     if (window.innerWidth < 1020) {
