@@ -53,6 +53,7 @@ class CartPage extends Page {
       }
       productCartBlock.innerHTML = "";
       createCartProduct(productCartBlock, itemsCount, numPage);
+      localStorage.setItem('limit', limit.value);
     });
 
     const limitBlock: HTMLDivElement = document.createElement("div");
@@ -112,6 +113,9 @@ class CartPage extends Page {
 export default CartPage;
 
 const limit: HTMLInputElement = document.createElement("input");
+const localLimit = localStorage.getItem('limit');
+if (localLimit) {limit.value = localLimit;}
+
 
 function splitItemsForPages(array: Product[]) {
   const length = limit.value;
@@ -182,6 +186,7 @@ function switchPages(item: HTMLElement) {
       container.textContent = "";
       createCartProduct(container, itemCount, numPage);
       paginationCount.textContent = `${numPage}`;
+      if (numPage > 1) limit.setAttribute("readonly", "readonly");
     } else if (numPage === maxPage) return;
   }
   if ((item as HTMLElement).closest(".arrow-prev-page")) {
@@ -190,6 +195,7 @@ function switchPages(item: HTMLElement) {
       container.textContent = "";
       createCartProduct(container, itemCount, numPage);
       paginationCount.textContent = `${numPage}`;
+      if (numPage === 1) limit.removeAttribute("readonly");
     } else if (numPage === 1) return;
   }
 }
@@ -447,7 +453,8 @@ function decreaseCountProductInCart(item: HTMLElement) {
       );
 
       removeProductInCart(productsInCart, dataSetId as string);
-      if (Math.ceil(productsInCart.length / 3) < numPage) {
+      const length = Number(limit.value);
+      if (Math.ceil(productsInCart.length / length) < numPage) {
         numPage -= 1;
         cardBlock.innerHTML = "";
         createCartProduct(cardBlock, itemCount, numPage);
