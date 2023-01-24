@@ -51,4 +51,3 @@ class testChangeStockSlider {
     expect(maxValueStock.innerHTML).to.equal("15");
   }
 }
-
