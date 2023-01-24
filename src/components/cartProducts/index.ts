@@ -1,4 +1,3 @@
-//import { products } from "../../data/data";
 import { Product } from "../../types/interfaces";
 import {createInputCoutnInCart} from "../inputs/index";
 

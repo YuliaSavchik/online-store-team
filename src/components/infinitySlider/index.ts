@@ -1,3 +1,11 @@
+let currentSlide = 0;
+
+export function goToNextSlide(slidesArr: HTMLDivElement[]) {
+  slidesArr[currentSlide].classList.add("hide-slide");
+  currentSlide = (currentSlide + 1) % slidesArr.length;
+  slidesArr[currentSlide].classList.remove("hide-slide");
+}
+
 export function infinitySlider() {
   const slider: HTMLDivElement = document.createElement("div");
   slider.classList.add("slider");
@@ -14,16 +22,7 @@ export function infinitySlider() {
 
   const slidesArr: HTMLDivElement[] = [img3, img2, img1];
 
-  let currentSlide = 0;
-
-  function goToNextSlide() {
-    slidesArr[currentSlide].classList.add('hide-slide');
-    currentSlide = (currentSlide + 1) % slidesArr.length;
-    slidesArr[currentSlide].classList.remove('hide-slide');
-  }
-
-  setInterval(goToNextSlide, 10000);
+  setInterval(() => goToNextSlide(slidesArr), 10000);
 
   return slider;
 }
-

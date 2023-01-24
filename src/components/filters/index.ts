@@ -7,13 +7,12 @@ import {
   btnViewTwoColums,
   createArrowButtons,
 } from "../buttons/index";
+import { changePriceSlider, changeStockSlider } from "../changeSliders";
 import {
   CreateCardsArea,
   sortSelect,
   searchInput,
   cardsArea,
-  changePriceSlider,
-  changeStockSlider,
   priceArr,
   stockArr,
 } from "../productCards/index";
