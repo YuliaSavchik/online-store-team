@@ -27,7 +27,7 @@ body {
 }
 
 .wrapper {
-  padding: 2% 4% 4% 4%;
+  padding: 1% 5% 4% 5%;
 }
 
 .header__wrapper {
@@ -47,6 +47,7 @@ body {
       padding: 10px 50px;
       text-decoration: none;
       color: white;
+      cursor: pointer;
     }
   }
 
@@ -64,11 +65,12 @@ body {
     align-items: center;
     justify-content: center;
     padding: 10px 40px;
+    cursor: pointer;
     .header__wrapper__cart_image {
-      img {
-        width: 35px;
-        height: 35px;
-      }
+      width: 35px;
+      height: 35px;
+      background: url("assets/ion-cart-outline.png") center no-repeat;
+      background-size: contain;
     }
     .header__wrapper__cart_circle-with-number {
       background-color: $color_red;
@@ -79,7 +81,14 @@ body {
       justify-content: center;
       align-items: center;
     }
+    .circle-with-number_colored {
+      background-color: $color_green;
+    }
   }
+}
+
+.header__wrapper__total-amount_number {
+  margin: 0 0 0 5px;
 }
 
 .main {
@@ -108,10 +117,13 @@ body {
       &:hover {
         text-decoration: underline;
       }
-      img {
-        margin-right: 10px;
-      }
     }
+  }
+  .footer__wrapper__github_ico {
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    background: url("assets/ico-github.png") center no-repeat;
   }
 
   .footer__wrapper__create-year {
@@ -128,6 +140,87 @@ body {
       justify-content: center;
     }
   }
+
+  .school-logo_ico {
+    width: 100px;
+    height: 53px;
+    background: url("assets/rs-logo.png") center no-repeat;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .header__wrapper {
+    .header__wrapper__title {
+      font-size: 1.5em;
+      a {
+        padding: 10px 30px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .header__wrapper {
+    .header__wrapper__title {
+      font-size: 1.3em;
+      a {
+        padding: 10px 15px;
+      }
+    }
+    .header__wrapper__total-amount {
+      font-size: 1.2em;
+    }
+    .header__wrapper__cart {
+      padding: 10px;
+      .header__wrapper__cart_image {
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+      .header__wrapper__cart_circle-with-number {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .footer__wrapper {
+    font-size: 1em;
+    .footer__wrapper__github {
+      padding-left: 20px;
+    }
+    .footer__wrapper__school-logo {
+      padding: 20px 20px;
+      img{
+        width: 80px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .header__wrapper {
+    .header__wrapper__title {
+      font-size: 1em;
+      a {
+        padding: 5px 10px;
+      }
+    }
+    .header__wrapper__total-amount {
+      font-size: 1em;
+    }
+    .header__wrapper__cart {
+      padding: 5px;
+
+    }
+  }
+  .footer__wrapper {
+    justify-content: space-between;
+    .footer__wrapper__create-year {
+      display: none;
+    }
+  }
 }
 
 @import "components/buttons/button.style";
@@ -136,3 +229,11 @@ body {
 @import "components/filters/filters.style";
 @import "components/productCards/productCards.style";
 @import "components/productCardPage/productCardPage.style";
+@import "components/noUiSlider/\ nouislider.css";
+@import "components/noUiSlider/noUiSloder.styles";
+@import "components/modalWindow/modalWindow.style";
+@import "components/cartProducts/cartProducts.style.scss";
+@import "components/infinitySlider/infinitySlider.style";
+@import "pages/main/main.styles";
+@import "pages/cart/cart.style";
+@import "pages/error/error.style";

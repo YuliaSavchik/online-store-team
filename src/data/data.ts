@@ -19,6 +19,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/1146/16111146/~v76/15523580_iphone12_16001556__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://www.casetify.com/img/case/side_color_preview_16001556.jpg",
+    initialQuality: 1,
+    stockForCart: 14,
+    priceForCart: 50,
   },
   {
     id: 2,
@@ -37,6 +40,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/25496/1195496/~v73/19402957_iphone12_16001562__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://www.casetify.com/img/case/side_color_preview_16001562.jpg",
+    initialQuality: 1,
+    stockForCart: 9,
+    priceForCart: 50,
   },
   {
     id: 3,
@@ -55,6 +61,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/13600/2323600/~v127/4739385_iphone12_16002062__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16002062.jpg",
+    initialQuality: 1,
+    stockForCart: 44,
+    priceForCart: 50
   },
   {
     id: 4,
@@ -72,6 +81,9 @@ export const products: Product[] = [
       "https://ctgimage1.s3.amazonaws.com/cms/image/05e6e5e523869556949eddaa321a3663.png",
     image_2:
       "https://ctgimage1.s3.amazonaws.com/cms/image/2f069d248d617db9e23d4a25643386e2.png",
+    initialQuality: 1,
+    stockForCart: 17,
+    priceForCart: 45,
   },
   {
     id: 5,
@@ -89,6 +101,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/25821/14455821/~v8/26507716_iphone12_16002473__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://ctgimage1.s3.amazonaws.com/cms/image/b51b4e52d8889b997b7713e9e25824e6.png",
+    initialQuality: 1,
+    stockForCart: 6,
+    priceForCart: 55,
   },
   {
     id: 6,
@@ -106,6 +121,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/25821/14455821/~v1/26415946_iphone12-pro_16002484__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://ctgimage1.s3.amazonaws.com/cms/image/01e020f1d1f91e9b3a4b88376977adb3.png",
+    initialQuality: 1,
+    stockForCart: 30,
+    priceForCart: 55,
   },
   {
     id: 7,
@@ -123,6 +141,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/25821/14455821/~v72/7744388_iphone12-pro_16002478__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://ctgimage1.s3.amazonaws.com/cms/image/303943381ac10dcc9206fba4f122e12c.png",
+    initialQuality: 1,
+    stockForCart: 2,
+    priceForCart: 55,
   },
   {
     id: 8,
@@ -140,6 +161,9 @@ export const products: Product[] = [
       "https://ctgimage1.s3.amazonaws.com/cms/image/dd43f4bb12eee297732e383c2b09d5fc.png",
     image_2:
       "https://ctgimage1.s3.amazonaws.com/cms/image/7e26a893b4dbe77a0bcb78a2ec54b4ed.png",
+    initialQuality: 1,
+    stockForCart: 22,
+    priceForCart: 45,
   },
   {
     id: 9,
@@ -157,6 +181,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/4787/34787/~v1/26527976_iphone12-pro_16003881__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://ctgimage1.s3.amazonaws.com/cms/image/bf0c774b241e75bccce375473c8e0413.png",
+    initialQuality: 1,
+    stockForCart: 3,
+    priceForCart: 50,
   },
   {
     id: 10,
@@ -174,6 +201,9 @@ export const products: Product[] = [
       "https://ctgimage1.s3.amazonaws.com/cms/image/5aab27af2cd25de55995d0aae5aecf7c.png",
     image_2:
       "https://ctgimage1.s3.amazonaws.com/cms/image/1d9460374a84c99cbe135415d3dfed6c.png",
+    initialQuality: 1,
+    stockForCart: 47,
+    priceForCart: 45,
   },
   {
     id: 11,
@@ -192,6 +222,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/25496/1195496/~v91/5087162_iphone13_16004554__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16004554.jpg",
+    initialQuality: 1,
+    stockForCart: 20,
+    priceForCart: 65,
   },
   {
     id: 12,
@@ -209,6 +242,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/15727/25305727/~v49/23987841_iphone13_16004036__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16004036.jpg",
+    initialQuality: 1,
+    stockForCart: 50,
+    priceForCart: 65,
   },
   {
     id: 13,
@@ -226,6 +262,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/21934/22911934/~v39/24335200_iphone13_16003507__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://ctgimage1.s3.amazonaws.com/cms/image/60ee2043ff9463f6b4c223738b42bb40.png",
+    initialQuality: 1,
+    stockForCart: 2,
+    priceForCart: 45,
   },
   {
     id: 14,
@@ -243,6 +282,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/5090/16115090/~v73/16511694_iphone13_16003319__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16003319.jpg",
+    initialQuality: 1,
+    stockForCart: 32,
+    priceForCart: 55,
   },
   {
     id: 15,
@@ -260,6 +302,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/14315/17384315/~v59/22277741_iphone13_16003449__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16003449.jpg",
+    initialQuality: 1,
+    stockForCart: 7,
+    priceForCart: 65,
   },
   {
     id: 16,
@@ -277,6 +322,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/5435/19535435/~v75/19190000_iphone13-pro_16003426__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16003426.jpg",
+    initialQuality: 1,
+    stockForCart: 16,
+    priceForCart: 70,
   },
   {
     id: 17,
@@ -294,6 +342,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/25496/1195496/~v35/25616848_iphone13-pro_16003568__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16003568.jpg",
+    initialQuality: 1,
+    stockForCart: 13,
+    priceForCart: 55,
   },
   {
     id: 18,
@@ -311,6 +362,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/4787/34787/~v3/25140305_iphone13-pro_16003269__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16003269.jpg",
+    initialQuality: 1,
+    stockForCart: 28,
+    priceForCart: 60,
   },
   {
     id: 19,
@@ -328,6 +382,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/27391/11607391/~v83/18197436_iphone13-pro_16003280__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16003280.jpg",
+    initialQuality: 1,
+    stockForCart: 19,
+    priceForCart: 60,
   },
   {
     id: 20,
@@ -345,6 +402,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/4787/34787/~v1/24701144_iphone13-pro_16003389__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16003389.jpg",
+    initialQuality: 1,
+    stockForCart: 1,
+    priceForCart: 70,
   },
   {
     id: 21,
@@ -362,6 +422,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/5435/19535435/~v75/19190000_iphone-14-pro_16005233__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16005233.jpg",
+    initialQuality: 1,
+    stockForCart: 28,
+    priceForCart: 90,
   },
   {
     id: 22,
@@ -379,6 +442,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/27051/627051/~v151/4051523_iphone-14-pro_16005225__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16005225.jpg",
+    initialQuality: 1,
+    stockForCart: 18,
+    priceForCart: 90,
   },
   {
     id: 23,
@@ -396,6 +462,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/29073/1469073/~v88/4139472_iphone-14-pro_16004813__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16004813.jpg",
+    initialQuality: 1,
+    stockForCart: 10,
+    priceForCart: 75,
   },
   {
     id: 24,
@@ -413,6 +482,9 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/8773/188773/~v69/14483257_iphone-14-pro_16005221__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16005221.jpg",
+    initialQuality: 1,
+    stockForCart: 5,
+    priceForCart: 85,
   },
   {
     id: 25,
@@ -430,5 +502,48 @@ export const products: Product[] = [
       "https://cdn-image02.casetify.com/usr/4787/34787/~v1/26845620_iphone-14-pro_16004916__render8.png.560x560-w.m80.jpg",
     image_2:
       "https://cdn.casetify.com/img/case/side_color_preview_16004916.jpg",
+    initialQuality: 1,
+    stockForCart: 15,
+    priceForCart: 65,
+  },
+  {
+    id: 26,
+    name: Name.i_11,
+    description: "Case for iphone 11 DRAGONS",
+    device: Device.i_12,
+    material: Material.recycled,
+    color: Color.orange,
+    rating: 3,
+    stock: 100,
+    price: 40,
+    mainImage:
+      "https://cdn-image02.casetify.com/usr/5386/1655386/~v122/9017505x2_iphone11_16001348.png.1000x1000-w.m80.jpg",
+    image_1:
+      "https://cdn-image02.casetify.com/usr/5386/1655386/~v122/9017505_iphone11_16001348__render8.png.560x560-w.m80.jpg",
+    image_2:
+      "https://cdn.casetify.com/img/case/side_color_preview_16001348_white.jpg",
+    initialQuality: 1,
+    stockForCart: 99,
+    priceForCart: 40,
+  },
+  {
+    id: 27,
+    name: Name.i_11,
+    description: "Case for iphone 11 Tattoo Flash",
+    device: Device.i_12,
+    material: Material.recycled,
+    color: Color.red,
+    rating: 5,
+    stock: 56,
+    price: 40,
+    mainImage:
+      "https://cdn-image02.casetify.com/usr/18313/22068313/~v29/24196980x2_iphone11_16000339.png.1000x1000-w.m80.jpg",
+    image_1:
+      "https://cdn-image02.casetify.com/usr/18313/22068313/~v29/24196980_iphone11_16000339__render8.png.560x560-w.m80.jpg",
+    image_2:
+      "https://cdn.casetify.com/img/case/side_color_preview_16000339_white.jpg",
+    initialQuality: 1,
+    stockForCart: 55,
+    priceForCart: 40,
   },
 ];

@@ -7,11 +7,35 @@
   border-radius: 2px;
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease-in-out;
+  }
 }
 
 .button_small-size {
   height: 22px;
   width: 79px;
+  &:hover {
+    transform: none;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.422);
+  }
+
+  &:active {
+    transform: none;
+    box-shadow: none;
+    opacity: 0.5;
+  }
 }
 
 .button_meddium-size {
@@ -28,18 +52,38 @@
 
 .btn-copy-link {
   background-color: $color_blue;
+  &:active {
+    background-color: $color_green;
+  }
 }
 
-.btn-sopt {
+.btn-copy-link::before {
+  content: "copy link";
+}
+
+.btn-copy-link:active::before {
+  content: "copied!";
+}
+
+.select-sort {
   border: $border_style;
   background-color: $color_pink;
+  outline: none;
+  width: 220px;
+  height: 40px;
+  padding-left: 40px;
 }
 
 .btn-add,
+.btn-remove,
 .btn-more {
   border: $border_style;
   background-color: transparent;
   box-shadow: none;
+}
+
+.btn-remove {
+  background-color: rgba(0, 0, 0, 0.264);
 }
 
 .btn-add-card {
@@ -47,7 +91,12 @@
   background-color: $color_green;
 }
 
-.product-description__btn-buy-now{
+.btn-remove-from-card {
+  width: 140px;
+  background-color: $color_red;
+}
+
+.product-description__btn-buy-now {
   width: 140px;
   background-color: $color_blue;
 }
@@ -76,6 +125,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 @mixin button-arrow-direction($w, $h, $deg) {
@@ -114,9 +164,40 @@
 }
 
 .button-view_three-colums {
-  background-image: url('assets/view-three-columns.png');
+  background-image: url("assets/view-three-columns.png");
+  background-size: 80%;
 }
 
 .button-view_two-colums {
-  background-image: url('assets/view-two-columns.png');
+  background-image: url("assets/view-two-columns.png");
+  background-size: 80%;
+}
+
+.button-view_three-colums,
+.button-view_two-colums {
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.25);
+  }
+  &:active {
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
+
+.checked {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (max-width: 1300px) {
+  .select-sort {
+    width: 190px;
+  }
+
+  .button-view {
+    width: 30px;
+    height: 30px;
+  }
 }

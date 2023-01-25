@@ -2,7 +2,6 @@
   border-bottom: $border_style;
   background: white;
   padding: 20px 0 40px 0;
-  width: 25%;
   max-height: 500px;
   overflow: hidden;
   transition: max-height 1s ease-out;
@@ -33,7 +32,7 @@
     &:checked + .color-label:before {
       content: "✔";
       position: absolute;
-      top: 20px;
+      top: 25px;
       color: white;
       cursor: pointer;
     }
@@ -67,6 +66,19 @@
 
 .checkbox-field {
   transition: all 0.5s ease-in;
+  position: relative;
+}
+
+.count{
+  border: 1px solid $color_green;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  bottom: 20px;
+  left: 10px;
+  color: $color_green;
 }
 
 .arrow {
@@ -81,4 +93,19 @@
 .collapsible {
   max-height: 0;
   transition: max-height 0.5s ease-out;
+}
+
+@media screen and (max-width: 550px) {
+  .filter {
+    max-height: 0;
+  }
+  .collapsible {
+    max-height: 500px;
+  }
+  .arrow {
+    rotate: 180deg;
+  }
+  .rotate {
+    rotate: 0deg;
+  }
 }
