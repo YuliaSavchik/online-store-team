@@ -168,7 +168,7 @@ export function showAvailablePromoCode() {
   const containerForPromo = document.querySelector<HTMLElement>('.promo-code-container__adding-block');
   if(!containerForPromo) return;
 
-  input.addEventListener('input', () => {
+  input?.addEventListener('input', () => {
     if (activPromoCode.length === 0) {
       if (input.value === 'RS') {
         createAddingPromoCodeBlock('RS');
@@ -343,7 +343,7 @@ export function createPromoBlockIfCodeAdding() {
 }
 const wrapperForPage = (document.querySelector('.main') as HTMLElement);
 
-wrapperForPage.addEventListener('click', function(event: Event) {
+wrapperForPage?.addEventListener('click', function(event: Event) {
   const item = event.target;
 
   if ((item as HTMLElement).closest('.promo-btn-add_RS')) {

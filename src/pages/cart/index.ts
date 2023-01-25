@@ -53,7 +53,7 @@ class CartPage extends Page {
       }
       productCartBlock.innerHTML = "";
       createCartProduct(productCartBlock, itemsCount, numPage);
-      localStorage.setItem('limit', limit.value);
+      localStorage?.setItem('limit', limit.value);
     });
 
     const limitBlock: HTMLDivElement = document.createElement("div");
@@ -113,7 +113,7 @@ class CartPage extends Page {
 export default CartPage;
 
 const limit: HTMLInputElement = document.createElement("input");
-const localLimit = localStorage.getItem('limit');
+const localLimit = localStorage?.getItem('limit');
 if (localLimit) {limit.value = localLimit;}
 
 

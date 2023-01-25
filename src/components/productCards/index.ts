@@ -16,11 +16,11 @@ import {
   UpdateURL,
 } from "../filters/index";
 import { createSearchInput } from "../inputs/index";
-import { target } from "../noUiSlider/nouislider";
 
 import { Device, Material } from "../../types/enums";
 
 import { productsInCart } from "../../pages/app/index";
+import { changePriceSlider, changeStockSlider } from "../changeSliders";
 
 const btnAdd = createMainButtons("add", "button_small-size", "btn-add");
 const btnMore = createMainButtons("more", "button_small-size", "btn-more");
@@ -157,7 +157,7 @@ function resetCount() {
   materialArr.leather = 0;
 }
 
-function writeCount(str: string, num: number) {
+export function writeCount(str: string, num: number) {
   const filters = addFilterBlock.getElementsByTagName("*");
   for (const child of filters) {
     if (child instanceof HTMLLabelElement) {
@@ -363,42 +363,6 @@ export class CreateCardsArea {
     localStorage.setItem("link", "#main-page");
     window.location.hash = "#main-page";
   }
-}
-
-export function changePriceSlider(numPriceMin: number, numPriceMax: number) {
-  const rangePrice: target = document.querySelector(
-    ".range-slider__range-price"
-  ) as target;
-  const minValuePrice = document.querySelector(
-    ".value_min-price"
-  ) as HTMLElement;
-  const maxValuePrice = document.querySelector(
-    ".value_max-price"
-  ) as HTMLElement;
-
-  const inputsValuePrice = [minValuePrice, maxValuePrice];
-
-  rangePrice.noUiSlider?.set([numPriceMin, numPriceMax]);
-  inputsValuePrice[0].innerHTML = String(numPriceMin) + "$";
-  inputsValuePrice[1].innerHTML = String(numPriceMax) + "$";
-}
-
-export function changeStockSlider(numStockMin: number, numStockMax: number) {
-  const rangeStock: target = document.querySelector(
-    ".range-slider__range-stock"
-  ) as target;
-  const minValueStock = document.querySelector(
-    ".value_min-stock"
-  ) as HTMLElement;
-  const maxValueStock = document.querySelector(
-    ".value_max-stock"
-  ) as HTMLElement;
-
-  const inputsValueStock = [minValueStock, maxValueStock];
-
-  rangeStock.noUiSlider?.set([numStockMin, numStockMax]);
-  inputsValueStock[0].innerHTML = String(numStockMin);
-  inputsValueStock[1].innerHTML = String(numStockMax);
 }
 
 export const priceArr: number[] = [];
